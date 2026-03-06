@@ -187,7 +187,7 @@
 \makeatother
 
 \begin{document}
-% sezione (data)
+% sezione data)
 \section{Lezione del 05-03-26}
 
 % stili pagina
@@ -245,6 +245,37 @@ p(1-p)^N-1 \implies p_s = N p(1-p)^N-1
 $$
 da cui si ricava subito la probabilità che una trasmissione efficace avvenga fra tutti i nodi.
 
+Sia $p_s$ una funzione di $p$, e $N = 10$, cioè:
+$$
+p_s(p, N) = N p(1-p)^N-1, \quad p \in [0, 1], \ N = 10
+$$
+Potremmo tracciare tale funzione su un grafico come:
+\begin{center}
+	\includegraphics[scale=0.28]{../figures/aloha_max.png}
+\end{center}
+dove si evidenziato il valore ottimo $p^*$ di probabilità di trasmissione. Attraverso la derivazione nel documento allegato prima, o anche solo per intuizione, arriviamo alla conclusione che:
+$$
+p^* = \frac{1}{N} = = 0.1
+$$
+cioè la probabilità ottima è uno sul numero di utenti che trasmettono sulla rete. Sostituendo questo valore di $p$ in $p_s$, possiamo tracciare la funzione al variare degli utenti $N$, cioè:
+$$
+p_s(p, N) = N p(1-p)^N-1, \quad p = p^* = \frac{1}{N}, N \in \mathbb{N} \implies p_s(N) = (1 - \frac{1}{N})^N
+$$
+quseta funzione è nota e di limite immediato immaginando infiniti dispositivi (il caso peggiore):
+$$
+\lim_{N \rightarrow \infty} p_s(N) = \lim_{N \rightarrow \infty} (1 - \frac{1}{N})^N = \frac{1}{e}
+$$
+
+\newpage
+
+Possiamo tracciarla su un grafico per essere sicuri della derivazione:
+\begin{center}
+	\includegraphics[scale=0.28]{../figures/aloha_limit.png}
+\end{center}
+da dove si vede chiaramente che il ramo di funzione tende al valore $\frac{1}{e} \approx 0.37$.
+
+Abbiamo quindi trovato un problema legato al mondo delle comunicazioni numeriche, che teorie di tipo probabilistico riescono a descrivere, e attraverso le quali riusciamo ad avere buone stime dell'efficienza nel caso peggiore di operazione 
+
 \subsubsection{Trattazione matematica}
 La teoria della probabilità ha come obiettivo:
 \begin{itemize}
@@ -263,7 +294,7 @@ Un insieme $A = \{ x, y, ... \}$ è una \textit{collezione} di oggetti, i cui el
 Indichiamo con $\emptyset$ l'insieme vuoto.
 Notiamo che si possono indicare gli insiemi anche per proprietà comune: 
 $$ 
-[0, 1) = \{ x: 0 \leq x < 1 \}, \quad ...
+[0, 1 = \{ x: 0 \leq x < 1 \}, \quad ...
 $$ 
 
 Sugli insiemi sono definite le classiche operazioni $\cup$, $\cap$, $\setminus$, (unione, intersezione, differenza), e le relazioni $\subset$, $\subseteq$ (sottoinsieme stretto, sottoinsieme), ecc... Ricordiamo la proprietà:
@@ -286,36 +317,33 @@ $$
 \mathcal{P}(A) = \{ a_1, a_2, ... \} \ \text{t.c.} \ \bigcup_i a_i = A
 $$
 
-\newpage
-
 Ricordiamo quindi alcune leggi fondamentali sull'algebra degli insiemi:
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{lll}
-\hline
-\multicolumn{3}{|c|}{\textbf{Leggi di idempotenza}} \\ \hline
-1a. & $A \cup A = A$ & 1b. $A \cap A = A$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi di idempotenza}} \\ \hline
+1a. & $A \cup A = A$ & 1b. $A \cap A = A$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi associative}} \\ \hline
-2a. & $(A \cup B) \cup C = A \cup (B \cup C)$ & 2b. $(A \cap B) \cap C = A \cap (B \cap C)$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi associative}} \\ \hline
+2a. & $(A \cup B) \cup C = A \cup (B \cup C)$ & 2b. $(A \cap B) \cap C = A \cap (B \cap C)$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi commutative}} \\ \hline
-3a. & $A \cup B = B \cup A$ & 3b. $A \cap B = B \cap A$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi commutative}} \\ \hline
+3a. & $A \cup B = B \cup A$ & 3b. $A \cap B = B \cap A$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi distributive}} \\ \hline
-4a. & $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ & 4b. $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi distributive}} \\ \hline
+4a. & $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ & 4b. $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi di identità}} \\ \hline
-5a. & $A \cup \emptyset = A$ & 5b. $A \cap U = A$ \\ \hline
-6a. & $A \cup U = U$ & 6b. $A \cap \emptyset = \emptyset$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi di identità}} \\ \hline
+5a. & $A \cup \emptyset = A$ & 5b. $A \cap U = A$ \\ 
+6a. & $A \cup U = U$ & 6b. $A \cap \emptyset = \emptyset$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi di complementarietà}} \\ \hline
-7a. & $A \cup A^c = U$ & 7b. $A \cap A^c = \emptyset$ \\ \hline
-8a. & $(A^c)^c = A$ & 8b. $U^c = \emptyset$, $\emptyset^c = U$ \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi di complementarietà}} \\ \hline
+7a. & $A \cup A^c = U$ & 7b. $A \cap A^c = \emptyset$ \\ 
+8a. & $(A^c)^c = A$ & 8b. $U^c = \emptyset$, $\emptyset^c = U$ \\ 
 
-\multicolumn{3}{|c|}{\textbf{Leggi di De Morgan}} \\ \hline
+\multicolumn{3}{c}{\textbf{Leggi di De Morgan}} \\ \hline
 9a. & $(A \cup B)^c = A^c \cap B^c$ & 9b. $(A \cap B)^c = A^c \cup B^c$ \\ 
 
 \end{tabular}

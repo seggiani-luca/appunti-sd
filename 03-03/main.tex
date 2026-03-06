@@ -224,7 +224,7 @@ Oggi la tecnologia delle reti mobili si è evoluta per \textit{generazioni} (1G,
 
 \subsubsection{Teoria dell'informazione}
 La \textbf{teoria dell'informazione}, come abbiamo detto, viene formalizzata da Shanno nel 1948. 
-Ciò che si voleva capire era la \textbf{capacità} di bit al secondo che si potvano trasferire per un canale di comunicazione digitale (basato su bit 1/0) ad una certa frequenza (in $\mathrm{Hz}$).
+Ciò che si voleva capire era la \textbf{capacità} di bit al secondo che si potevano trasferire per un canale di comunicazione digitale (basato su bit 1/0) ad una certa frequenza (in $\mathrm{Hz}$).
 Nel dettaglio, si va a ricavare la seguente formula (teorema di \textit{Shannon-Hartley}):
 $$
 \text{Capacity} = \text{Bandwidth} \log_2 \left( 1 + \frac{\text{Signal}}{\text{Noise}} \right) \, \mathrm{bit}/\mathrm{s}/\mathrm{Hz}
@@ -257,11 +257,10 @@ Di base, questo è un sistema composto da:
 	\item Un \textbf{ricevitore} che riceve il segnale e lo riporta in informazione per consegnarla all'\textit{utente} dell'informazione.
 \end{itemize}
 
+In verità, possiamo vedere il sistema più nel dettaglio:
 \begin{center}
 	\includegraphics[scale=0.25]{../figures/sys_comp.png}
 \end{center}
-
-In verità, possiamo vedere il sistema più nel dettaglio:
 \begin{itemize}
 	\item Vediamo i componenti da cui è composto il \textbf{trasmettitore}:
 		\begin{itemize}
@@ -349,7 +348,7 @@ Esistono diversi approcci per effettuare l'accesso condiviso. In particolare not
 	\includegraphics[scale=0.15]{../figures/4g_part.png}
 \end{center}
 
-		In particolare, possiamo dire che il 4G \textit{LTE} sfrutta un apporccio \textit{ibrido} FDNA-TDMA, dove si divide il mezzo sia in slot temporali che bande di frequenza, ottenendo quindi una sorta di \textit{matrice} di slot disponibili per la trasmissione. Questi slot possono quindi essere allocati dalle \textit{base station} ai dispositivi cellulari in maniera dinamica, per permettere la comunicazione sulla rete. 
+		In particolare, possiamo dire che il 4G \textit{LTE} sfrutta un apporccio \textit{ibrido} FDMA-TDMA, dove si divide il mezzo sia in slot temporali che bande di frequenza, ottenendo quindi una sorta di \textit{matrice} di slot disponibili per la trasmissione. Questi slot possono quindi essere allocati dalle \textit{base station} ai dispositivi cellulari in maniera dinamica, per permettere la comunicazione sulla rete. 
 	\item \textbf{CDMA} (\textit{Code Division Multiple Access}): si associa ad ogni dispositivo trasmettitore un \textit{codice}. Questi codici verranno progettati in maniera da non interferire se più dispositivi comunicano contemporaneamente: sempre per questo motivo il partizionamento dei codici si comporta in maniera simile al partizionamento degli slot temporali o delle bande di frequenza.
 
 		Ad esempio, è stata introdotta in ambito militare e ha poi trovato applicazione nei sistemi cellulari di terza generazione (3G);
