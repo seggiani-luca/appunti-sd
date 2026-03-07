@@ -332,7 +332,7 @@ Notiamo che, nello scorso esempio, abbiamo visto diversi tipi di segnale. Possia
 	\includegraphics[scale=0.3]{../figures/anal_sig.png}
 \end{center}
 Questi corrispondono al segnale originale che volevamo campionare nello scorso esempio, come ai segnali elettrici campionati e poi amplificati ($v(t)$ e $x(t)$);
-	\item Chiamiamo \textbf{sequenze} i segnali disccontinui nel tempo e continui nelle ampiezze:
+	\item Chiamiamo \textbf{sequenze} i segnali discontinui nel tempo e continui nelle ampiezze:
 \begin{center}
 	\includegraphics[scale=0.3]{../figures/seq_sig.png}
 \end{center}
@@ -355,8 +355,6 @@ dove l'uguaglianza si ha nel caso banale in cui si rappresenta il campione con u
 
 \par\smallskip
 
-\newpage
-
 \noindent
 \textbf{\textsf{Sistemi di comunicazione a campionamento}}
 
@@ -365,6 +363,8 @@ Possiamo quindi confrontare le nozioni finora acquisite con quanto avevevamo dis
 \begin{center}
 	\includegraphics[scale=0.175]{../figures/sig_encode.png}
 \end{center}
+
+\newpage
 
 Adesso possiamo dare una descrizione reale di ciò che accade ai segnali nel corso della \textit{pipeline} di un \textbf{trasmettitore} che attraversano:
 \begin{enumerate}
@@ -406,10 +406,13 @@ $$
 P(t) = R I^2(t)
 $$
 
-Questa legge è applicabile in astratto, per cui dato un qualunque segnale $x(t)$ (qui era $I(t)$) la potenza \textit{istantanea} che esso esprime sarà proporzionale al suo quadrato:
+Questa legge è applicabile in astratto, per cui dato un qualunque segnale $x(t)$ (qui era $I(t)$) vale:
+\begin{definition}{Potenza istantanea}
+La \textbf{potenza istantanea} di un segnale $x(t)$ è proporzionale al suo quadrato:
 $$
-P(t) = |x|^2 (t)
+P(t) = |x(t)|^2
 $$
+\end{definition}
 
 \par\smallskip
 
@@ -417,14 +420,44 @@ $$
 \textbf{\textsf{Energia}}
 
 \noindent
-Data una definizione di \textit{potenza}, espressa come:
+Data una definizione di \textit{potenza} espressa in funzione dell'energia:
 $$
 P = \frac{E}{t}
 $$
-cioè energia $E$ su tempo $t$, è appunto semplice dare una definizione di \textbf{energia} dissipata su un certo periodo temporale. Questa, dagli strumenti di analisi, potrà essere calcolata come l'integrale:
+cioè energia $E$ su tempo $t$, è appunto semplice dare una definizione di \textbf{energia} dissipata su un certo periodo di tempo. Questa, dagli strumenti di analisi, potrà essere calcolata come l'integrale:
 $$
-E = \int P(t) \, dt = \int |x|^2 (t) \, dt
+E_{x_T} = \int_{t_0}^{t_1} P(t) \, dt = \int_{t_0}^{t_1} |x(t)|^2 \, dt
 $$
+su un certo intervallo temporale $[t_0, t_1]$.
+
+Molto più spesso, vorremo calcolare l'energia da $-\infty$ a $+\infty$ di un segnale, cioè quella su tutto $t \in \mathbb{R}$. Per fare ciò, prendiamo l'intervallo:
+$$
+[t_0, t_1] = \left[-\frac{T}{2}, \frac{T}{2}\right] 
+$$
+per una qualche dimensione di \textit{finestra} $T$, cioè la finestra centrata sull'origine, da cui otteniamo la nuova espressione di $E_{x_T}$:
+$$
+E_{x_T} = \int_{-\frac{T}{2}}^{\frac{T}{2}} P(t) \, dt = \int_{-\frac{T}{2}}^{\frac{T}{2}} |x(t)|^2 \, dt
+$$
+a questo punto basterà prende il limite per $T \rightarrow + \infty$ per ottenere:
+\begin{definition}{Energia}
+L'\textbf{energia} espressa sul dominio $\mathbb{R}$ da un segnale $x(t)$ è espressa come:
+$$
+E_x = \lim_{T \rightarrow + \infty} E_{x_T} = \lim_{T \rightarrow + \infty} \int_{-\frac{T}{2}}^{\frac{T}{2}} |x(t)|^2 \, dt
+$$
+\end{definition}
+questa sarà la definizione di energia complessiva che useremo da qui in poi.
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Segnale troncato}}
+
+\noindent
+Vediamo un dettaglio, prendiamo il segnale:
+$$
+x_T (t) = \{ t_0 < t < t_1 : \, x(t), \, 0 \text{ altrimenti} \}
+$$
+come la versione \textbf{troncata} sull'intervallo $[t_0, t_1]$ del segnale $x(t)$. Calcolare l'energia del segnale $x(t)$ sull'intervallo $[t_0, t_1]$ equivarrà a calcolare l'energia da $-\infty$ a $+\infty$ del segnale troncato. Vedremo subito come queste definizioni ci sono utili nella definizione di potenza media.
 
 \par\smallskip
 
@@ -436,26 +469,22 @@ Una volta che abbiamo un'idea di \textit{energia} dissipata o erogata nel tempo,
 $$
 P_{x_T} = \frac{E_{x_T}}{t_1 - t_0} \, \quad E_{x_T} = \int_{t_0}^{t_1} x^2 (t) \, ds
 $$
-su un certo intervallo temporale $[t_0, t_1]$. Prendiamo il segnale:
+Spostiamoci sull'intervallo:
 $$
-x_T (t) = \{ t_0 < t < t_1 : \, x(t), \, 0 \text{ altrimenti} \}
+[t_0, t_1] = \left[-\frac{T}{2}, \frac{T}{2}\right] 
 $$
-come la versione \textbf{troncata} sull'intervallo $[t_0, t_1]$ del segnale $x(t)$.
-Spostandoci sull'intervallo:
-$$
-[t_0, t_1] = [-\frac{T}{2}, \frac{T}{2}] 
-$$
-per una qualche dimensione di \textit{finestra} $T$, cioè la finestra centrata sull'origine, questo diventa:
+che è cio che avevamo fatto per ricavare l'energia complessiva su $\mathbb{R}$. Questo diventa quindi:
 $$
 P_{x_T} = \frac{E_{x_T}}{T} \, \quad E_{x_T} = \int_{-\frac{T}{2}}^{\frac{T}{2}} x^2 (t) \, dt
 $$
-di cui prendiamo il limite per $T \rightarrow + \infty$:
+di cui prendiamo il limite per $T \rightarrow + \infty$ per ottenere:
+\begin{definition}{Potenza media}
+La \textbf{potenza media} espressa sul dominio $\mathbb{R}$ da un segnale $x(t)$ è espressa come:	
 $$
 P_{x} = \lim_{T \rightarrow + \infty} P_{x_T} = \lim_{T \rightarrow + \infty} \frac{E_{x_T}}{T} = \lim_{T \rightarrow + \infty} \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} x^2 (t) \, dt 
 $$
-Useremo questa definizione come definizione effettiva di \textbf{potenza media}. 
-
-\newpage
+\end{definition}
+Generalmente, da qui in poi useremo questa definizione per riferirci alla potenza dei segnali. 
 
 Osserviamo che:
 \begin{itemize}
