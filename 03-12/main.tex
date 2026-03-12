@@ -388,7 +388,7 @@ $$
 M = k^N
 $$
 
-\par\smallskip
+\newpage
 
 \noindent
 \textbf{\textsf{Disposizioni semplici}}
@@ -421,6 +421,46 @@ $$
 C_{N, k} = \frac{D_{N, k}}{P_N} = \frac{N!}{(N - k)! k!} = \binom{N}{k}
 $$
 
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Disposizioni con ripetizione}}
+
+\noindent
+Con \textbf{disposizione con ripetizione} di $N$ oggetti presi $k$ a $k$ si definisce una sequenza ordinata di $k$ oggetti scelti tra gli $N$ assegnati con possibilità di ripetere lo stesso oggetto più volte. Questa si calcola come:
+$$
+D^{(r)}_{N,k} = N^k
+$$
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Permutazioni con ripetizione}}
+
+\noindent
+Con \textbf{permutazione con ripetizione} di $N$ oggetti, di cui $n_1$ uguali tra loro, $n_2$ uguali tra loro, \dots, $n_M$ uguali tra loro, con
+$$
+n_1 + n_2 + \dots + n_M = N
+$$
+si definisce una disposizione degli oggetti in cui gli elementi uguali sono indistinguibili. Il numero di permutazioni distinte è:
+$$
+P^{(r)}_N = \frac{P_N}{ \prod_{i = 1}^M P_{n_i} } = \frac{N!}{n_1! \, n_2! \dots n_M!}
+$$
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Combinazioni con ripetizione}}
+
+\noindent
+Per \textbf{combinazione con ripetizione} di $N$ oggetti presi $k$ a $k$ si intende una scelta non ordinata di $k$ oggetti tra gli $N$ dati, con possibilità di ripetere lo stesso oggetto più volte. Questa si calcola come:
+$$
+C^{(r)}_{N,k} =
+\binom{N + k - 1}{k}
+=
+\frac{(N + k - 1)!}{k!(N - 1)!}
+$$
+
 
 \subsubsection{Esperimento aleatorio composto}
 Consideriamo ora come combinare i risultati di due esperimenti aleatori separati. Prendiamo gli spazi campione $\Omega_1$ e $\Omega_2$:
@@ -448,7 +488,7 @@ P(a_2 \times \Omega_1) = P_2(a_2)
 $$
 cioè la probabilità dell'evento $a_1$ dato un qualsiasi esito dell'esperimento 2 deve eguagliare la probabilità dell'evento $a_1$ nel solo esperimento 1 (e viceversa). 
 
-\newpage
+\par\smallskip
 
 \noindent
 \textbf{\textsf{Esperimenti indipendenti}}
