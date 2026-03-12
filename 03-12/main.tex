@@ -1,0 +1,506 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Comunicazioni Numeriche}
+\author{Luca Seggiani}
+\date{2026}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=~\thetcbcounter: #2,
+	#1
+}
+
+% U.D.M
+\newcommand{\amp}{\ensuremath{\mathrm{A}}}
+\newcommand{\volt}{\ensuremath{\mathrm{V}}}
+\newcommand{\meter}{\ensuremath{\mathrm{m}}}
+\newcommand{\second}{\ensuremath{\mathrm{s}}}
+\newcommand{\farad}{\ensuremath{\mathrm{F}}}
+\newcommand{\henry}{\ensuremath{\mathrm{H}}}
+\newcommand{\siemens}{\ensuremath{\mathrm{S}}}
+
+% circuiti
+\usepackage{circuitikz}
+\usetikzlibrary{babel}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 12-03-26}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Probabilità condizionata}
+Nella lezione 2 avevamo visto la definizione di \textit{probabilità} (definizione classica in 2.2, frequentistica in 2.3, e infine assiomatica attraverso gli assiomi di Kolmogorov in 2.4). Vediamo adesso la definizione di un concetto che ne deriva direttamente, cioè la \textbf{probabilità condizionata}:
+\begin{definition}{Probabilità condizionata}
+	Siano $a$ e $b$ due eventi, e $P$ una funzione di probabilità valida. Chiamiamo probabilità condizionata di $a$ dato $b$:
+	$$
+	P[a | b] = \frac{P(a \cap b)}{P(b)}
+	$$
+\end{definition}
+
+Possiamo interpretare $P[a|b]$ come la probabilità dell'evento $a$, dato che l'evento $b$ si è verificato, cioè la probabilità condizionata cattura l'\textit{informazione parziale} che il verificarsi dell'evento $b$ fornisce sull'evento $a$.
+
+Notiamo che quando si dà una nuova definizione di probabilità (come quella condizionata su un solito evento $b$) dobbiamo comunque verificare che gli assiomi di Kolmogorov risultino verificati. Quindi:
+\begin{itemize}
+	\item L'assioma di \textit{normalizzazione} vale se si considera $\Omega$ come evento $a$, cioè:
+		$$
+	P[\Omega | b] = \frac{P(\Omega \cap b)}{P(b)} = 1
+		$$
+		in quanto $\Omega \cap b$ non è altro che $b$ stesso;
+	\item L'assioma di \textit{non negatività} è banale, dal fatto che $P[a|b]$ è rapporto di valori positivi;
+	\item L'assioma di \textit{additività} si verifica per via algebrica, dati $a_1$, $a_2$ disgiunti:
+		$$
+		P[a_1 | b] + P[a_1 | b] = \frac{P(a_1 \cap b) + P(a_2 \cap b)}{P(b)} = \frac{P((a_1 \cup a_2) \cap b)}{P(b)} = P[a_1 \cup a_2 | b]
+		$$
+		notando che se $a_1$ e $a_2$ sono disgiunti, lo saranno per forza anche $a_1 \cap b$ e $a_2 \cap b$, permettendoci di applicare l'assioma di additività definito su $P$. 
+\end{itemize}
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Interpretazione frequentista}}
+
+\noindent
+Vediamo velocemente cosa significa prendere la probabilità condizionata di $a$ dato $b$ se si prende come funzione $P$ quella frequentistica vista in 2.3:
+$$
+P(a) = \frac{n_A}{N}
+$$
+dati $N$ esperimenti.
+$$
+P[a | b] = \frac{P(a \cap b)}{P(b)} = \frac{ \frac{n_{a \cap b}}{N} }{ \frac{n_b}{N} } = \frac{n_{a \cap b}}{n_b}
+$$
+
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Teoremi di probabilità condizionata}}
+
+\noindent
+Vediamo quindi alcuni teoremi riguardanti la probabilità condizionata:
+\begin{enumerate}
+\item \begin{theorem}{Probabilità condizionata di eventi disgiunti}
+	Dati due eventi disgiunti $a$ e $b$, si ha:
+	$$
+	P[a | b] = 0
+	$$
+\end{theorem}
+Questo è banale dalla definizione, visto che $a \cap b = \emptyset$ e quindi $P(a \cap b) = 0$. \hfill $\square$
+
+\item \begin{theorem}{Probabilita condizionata con $a \subset b$}
+	Dati due eventi che rispettano $a \subset b$, si ha:
+	$$
+	P[a | b] \geq P(a)
+	$$
+\end{theorem}
+Questo si ha notando che se $a \subset b$, allora $a \cap b = a$ per cui:
+$$
+P[a | b] = \frac{P(a \cap b)}{P(b)} = \frac{P(a)}{P(b)} \geq P(b)
+$$
+visto che $P(b) \geq 0$ dall'assioma di non negatività. Questo, intuitivamente, significa che un evento che si verifica sempre assieme ad un secondo evento è più probabile dato il secondo evento. \hfill $\square$
+
+
+\item \begin{theorem}{Probabilita condizionata con $b \subset a$}
+	Dati due eventi che rispettano $b \subset a$, si ha:
+	$$
+	P[a | b] = 1 
+	$$
+\end{theorem}
+Questo è il duale del precedente, e si dimostra vedendo che $b se \subset a$, allora $a \cap b = b$, per cui:
+$$
+P[a | b] = \frac{P(a \cap b)}{P(b)} = \frac{P(v)}{P(b)} = 1
+$$
+easyyy \hfill $\square$
+
+\end{enumerate}
+
+\subsubsection{Teorema della probabilità totale}
+Vediamo un importante teorema basato sulla definizione di probabilità condizionata.
+\begin{theorem}{Teorema della probabilità totale}
+	Dato un evento $b$ e una partizione di $\Omega$ data dagli eventi $a_1, ..., a_K$, si ha:
+$$
+P(b) = \sum_{i = 1}^K P[b | a_i] P(a_i)
+$$
+\end{theorem}
+
+Questo si dimostra dicendo che, se $a_1, ..., a_k$ sono una partizione (quindi disgiunti) si può prendere:
+$$
+b = b \cap \Omega = b \cap \bigcup_{i=1}^K a_i = \bigcup_{i=1}^K b \cap a_i
+$$
+Con tutti gli eventi $b \cap a_i$ sempre disgiunti. A questo punto basta applicare l'additività nel calcolo della probabilità:
+$$
+P(b) = P\left( \bigcup_{i=1}^K b \cap a_i \right) = \bigcup_{i=1}^K P(b \cap a_i) = P[b | a_i] P(a_i)
+$$
+che è la tesi. \hfill $\square$
+
+In altri termini, il teorema della probabilità totale permette di calcolare la probabilità di un effetto (evento $b$) a partire dalle probabilità di tutte le sue possibili cause (eventi $a_i$) e dalle probabilità delle diverse combinazioni causa/effetto (probabilità condizionate $P[b|a_i]$).
+
+\subsubsection{Teorema di Bayes}
+Il teorema di Bayes ci permette di invertire la probabilità totale. In particolare:
+\begin{theorem}{Teorema di Bayes}
+Note $P[a|b]$, $P(a)$ e $P(b)$, vale che:
+$$
+P[b|a] = \frac{P[a | b]P(b)}{P(a)}
+$$
+\end{theorem}
+
+Questo deriva dalla definizione di probabilità condizionata:
+$$
+P(a \cap b) = P[a | b] P(b) = P[b | a] P(a)
+$$
+per cui, eguagliando:
+$$
+P[b|a] = \frac{P[a | b]P(b)}{P(a)}
+$$
+che è la tesi. \hfill $\square$
+
+\subsubsection{Eventi indipendenti}
+Supponiamo che il verificarsi dell'evento $a$ non fornisca alcuna informazione sull'evento $b$, cioè:
+$$
+P[b | a] = P(b), \quad P[a | b] = P(a)
+$$
+dove la seconda equazione viene direttamente dal teorema di Bayes. 
+Diciamo che due eventi $a$ e $b$ di questo tipo sono \textbf{eventi indipendenti}. Per questi vale:
+\begin{theorem}{Eventi indipendenti}
+	Dati $a$, $b$ eventi indipendenti, si ha:
+	$$
+	P(a \cap b) = P(a)P(b)
+	$$
+\end{theorem}
+Questo è di facile dimostrazione dalle due equazioni sopra, in quanto:
+$$
+P[a | b] = P(a) = \frac{P(a \cap b)}{P(b)} \quad P(a \cap b) = P(a)P(b)
+$$
+che è la tesi. \hfill $\square$
+
+Notiamo che l'opposto di questa affermazione è:
+$$
+P(a \cap b) = 0
+$$
+nel caso di eventi disgiunti, che era il primo teorema che avevamo dimostrato per la probabilità condizionata. 
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Interpretazione frequentista}}
+
+\noindent
+Vediamo cosa significa il teorema degli eventi indipendenti nell'interpretazione frequentistica della probabilità $P$. Se $a$ e $b$ sono indipendenti, vale:
+$$
+P[b | a] = P(b), \quad P[a | b] = P(a)
+$$
+e in generale conoscere $b$ non dà alcuna informazione riguardo al conoscere $a$, e viceversa.
+
+Questo significherà che:
+$$
+\frac{n_{a \cap b}}{n_a} \approx \frac{n_b}{N}, \quad \frac{n_{a \cap b}}{n_b} \approx \frac{n_a}{N}
+$$
+cioè rispettivamente:
+\begin{itemize}
+	\item La frequenza di $b$, nella sequenza di $N$ ripetizioni dell’esperimento, approssima la frequenza di $b$ nella sequenza di $n_a$ ripetizioni in cui si è presentato $a$;
+	\item La frequenza di $a$, nella sequenza di $N$ ripetizioni dell’esperimento, approssima la frequenza di $a$ nella sequenza di $n_b$ ripetizioni in cui si è presentato $b$.
+\end{itemize}
+
+Questo vale e diventa esatto nel limite ad infinito, cioè si può dire:
+$$
+\lim_{N \rightarrow \infty} \frac{n_b}{N} = \frac{n_{a \cap b}}{n_a}, \quad \lim_{N \rightarrow \infty} \frac{n_a}{N} = \frac{n_{a \cap b}}{n_b}
+$$
+sempre prendendo $n_a$ ed $n_b$ come sottoinsiemi di tutte le istanze di esperimnento $N$.
+
+\subsection{Richiami di calcolo combinatorio}
+Concludiamo facendo alcuni richiami di \textbf{calcolo combinatorio}, in quanto spesso questo torna utile nel campo della probabilità.
+
+\begin{definition}{Principio fondamentale del calcolo combinatorio}
+Se una procedura è composta di $N$ passi, il primo dei quali può essere svolto in $k_1$ modi diversi, il secondo in $k_2$ modi diversi, e via dicendo fino a $k_N$, allora il numero $M$ di modi in cui si può realizzare la procedura è:
+$$
+M = k_1 \cdot k_2 \cdot ... \cdot k_N = \prod_{i = 1}^N k_i
+$$
+\end{definition}
+
+Nel caso per ogni passo si abbia lo stesso numero $k$ di modi, questo semplifica a:
+$$
+M = k^N
+$$
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Disposizioni semplici}}
+
+\noindent
+Con \textbf{disposizione} (semplice, senza ripetizioni) di $N$ oggetti presi $k$ a $k$ si definisce una sequenza ordinata di $k$ oggetti scelti tra gli $N$ assegnati. Questa si calcola come:
+$$
+D_{N. k} = N (N - 1) (N - 2) ... (N - k + 1) = \frac{N!}{(N - k)!}
+$$
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Permutazioni semplici}}
+
+\noindent
+Con \textbf{permutazione} (semplice, senza ripetizioni) di $N$ oggetti si definisce una disposizione con $k = N$ degli oggetti. Questa si calcola come:
+$$
+P_N = D_{N, N} = N!
+$$
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Combinazioni semplici}}
+
+\noindent
+Per \textbf{combinazione} (semplice, senza ripetizioni) di $N$ oggetti presi $k$ a $k$ si intende una sequenza non ordinata di $k$ oggetti scelti fra gli $N$ dati (ovvero, due sequenze formate dagli stessi elementi in ordine diverso sono indistinguibili). Questa si calcola come:
+$$
+C_{N, k} = \frac{D_{N, k}}{P_N} = \frac{N!}{(N - k)! k!} = \binom{N}{k}
+$$
+
+
+\subsubsection{Esperimento aleatorio composto}
+Consideriamo ora come combinare i risultati di due esperimenti aleatori separati. Prendiamo gli spazi campione $\Omega_1$ e $\Omega_2$:
+$$
+\Omega_1 = \{ \xi_1, \xi_2, ... \xi_N \}, \quad
+\Omega_2 = \{ \lambda_1, \lambda_2, ... \lambda_N \}
+$$
+
+Indichiamo con $a_1$ il generico evento del primo esperimento e con $a_2$ il generico evento del secondo esperimento. Inoltre prendiamo le funzioni di probabilità $P_1$ e $P_2$.
+
+Possiamo quindi definire l'\textbf{esperimento composto} (o a volte \textit{esperimento congiunto}):
+\begin{definition}{Esperimento composto}
+	Un esperimento composto da due esperimenti di spazio campione $\Omega_1$, $\Omega_2$ (detti \textit{componenti}), è definito con:
+\begin{itemize}
+	\item Come \textit{risultati} le coppie ordinate $(\xi_i, \lambda_j)$ dei risultati degli esperimenti componenti;
+	\item Come \textit{spazio campione} il prodotto cartesiano $\Omega_1 \times \Omega_2$ degli spazi campione;
+	\item Come \textit{eventi} tutti i sottoinsiemi di $\Omega$ di tipo $a_1 \times a_2$.
+\end{itemize}
+\end{definition}
+
+Per specificare completamente l’esperimento composto dobbiamo assegnare la sua funzione probabilità $P$. Come minimo, vorremo che questa rispetti:
+$$
+P(a_1 \times \Omega_2) = P_1(a_1), \quad
+P(a_2 \times \Omega_1) = P_2(a_2)
+$$
+cioè la probabilità dell'evento $a_1$ dato un qualsiasi esito dell'esperimento 2 deve eguagliare la probabilità dell'evento $a_1$ nel solo esperimento 1 (e viceversa). 
+
+\newpage
+
+\noindent
+\textbf{\textsf{Esperimenti indipendenti}}
+
+\noindent
+Consideriamo un evento $a_1$ nello spazio campione $\Omega_1$ e un evento $a_2$ nello spazio campione $\Omega_2$: vogliamo calcolare la probabilità dell’evento:
+$$
+a = a_1 \times a_2
+$$
+nello spazio campione $\Omega$ dell'esperimento composto a partire dalla conoscenza di $P_1(a_1)$ e $P_2(a_2)$. Tale problema non ha, in generale, una soluzione: dalla conoscenza delle leggi di probabilità dei singoli esperimenti non è possibile ricavare la legge di probabilità dell’esperimento composto. 
+
+Una importate eccezione è rappresentata dagli \textbf{esperimenti indipendenti}. Se scegliamo di imporre le proprietà della funzione di probabilità $P$ definita sull'esperimento composto, otteniamo che, stabilito:
+$$
+a_1 \times a_2 = (a_1 \times \Omega_2) \cap (a_2 \times \Omega_1)
+$$
+si ha che l'indipendenza è verificata quando:
+$$
+P(a) = P(a_1 \times a_2) = P((a_1 \times \Omega_2) \cap (a_2 \times \Omega_1)) = P(a_1 \times \Omega_2) P(\Omega_1 \times a_2) = P_1(a_1) P_2(a_2)
+$$
+ovvero quando concediamo il passaggio $P((a_1 \times \Omega_2) \cap (a_2 \times \Omega_1)) = P(a_1 \times \Omega_2) P(\Omega_1 \times a_2)$, cioè:
+\begin{theorem}{Esperimenti indipendenti}
+Imporre che 2 esperimenti, formato un esperimento composto, sono indipendenti, significa imporre che $a_1 \times \Omega_2$ e $\Omega_1 \times a_2$ rappresentano sempre eventi indipendenti.
+\end{theorem}
+
+\subsection{Prove ripetute}
+Vediamo quindi la teoria delle \textbf{prove ripetute}, assumendo un esperimento con spazio campione $\Omega$ binario:
+$$
+\Omega = \{ a, \bar{a} \}
+$$
+da cui si ricava subito riguardo alla funzione di probabilità che:
+$$
+P(a) = p \implies P(\bar{a}) = 1 - p = q
+$$
+
+Quello che vogliamo fare è trovare la possibilità che l'evento $a$ si ripeta $k$ volte su $N$ prove, in qualsiasi ordine. In altre parole, vogliamo trovare la probabilità che si abbiano $a$ elementi positivi nel caso dell'esperimento composto $N$ volte, assumendo che l'esperimento in sé per sé sia \textit{indipendente}.
+
+Prima di tutto, calcoliamo la probabilità che si verifichi un \textit{singolo} evento che rispetta le condizioni date:
+$$
+P(e) = p^k q^{N - k} = p^k (1 - p)^{N - k}
+$$
+
+A questo punto vorremo conoscere il numero $R$ di sequenze distinte che contengono $k$ eventi $a$, che equivale alle combinazioni di $N$ oggetti presi $k$ a $k$:
+$$
+C_{N, k} = \frac{D_{N, k}}{P_N} = \frac{N!}{(N - k)! k!} = \binom{N}{k}
+$$
+
+Ciò che ricaviamo è la cosiddetta \textbf{formula di Bernoulli}:
+\begin{theorem}{Formula di Bernoulli}
+La possibilità $P$ che l'evento $a$ si ripeta $k$ volte su $N$ prove sarà data da:
+$$
+P = \frac{N!}{(N - k)! k!} p^k (1 - p)^{N - k}
+$$
+\end{theorem}
+
+\end{document}
