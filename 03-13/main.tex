@@ -200,7 +200,7 @@ La \textit{trasformata continua di Fourier} permette di portare un segnale $X(t)
 \begin{definition}{Trasformata di Fourier continua}
 Data una funzione $x(t)$, la sua trasformata di Fourier continua $X(f)$ è:
 $$
-X(f) = \int x(t) e^{-j 2 \pi f t} \, dt \quad \quad \text{(equazione di analisi)}
+X(f) = \int_{-\infty}^{+\infty} x(t) e^{-i 2 \pi f t} \, dt \quad \quad \text{(equazione di analisi)}
 $$
 \end{definition}
 Chiamiamo la formula data anche \textit{equazione di analisi}, in quanto permette di passare allo spettro (dominio di frequenze) del segnale (\textit{analizzarlo}).
@@ -213,10 +213,39 @@ Per riportarci alla rappresentazione sul dominio del tempo $t$ originale, possia
 \begin{definition}{Antitrasformata di Fourier continua}
 Data una funzione $X(f)$, la sua antitrasformata di Fourier continua $x(t)$ è:
 $$
-x(t) = \int X(f) e^{j 2 \pi f t} \, df \quad \quad \text{(equazione di sintesi)}
+x(t) = \int_{-\infty}^{+\infty} X(f) e^{i 2 \pi f t} \, df \quad \quad \text{(equazione di sintesi)}
 $$
 \end{definition}
 Chiamiamo la formula data anche \textit{equazione di sintesi}, in quanto permette di ricostruire un segnale dal suo spettro (dominio di frequenze) (\textit{sintetizzarlo}).
+
+\par\smallskip
+
+Riguardo al meccanismo che si cela dietro alla trasformata di Fourier, possiamo dire che questa rappresenta una versione limitata all'asse complesso della trasformata di Laplace, vista in \url{https://raw.githubusercontent.com/seggiani-luca/appunti-ct/0ebb34499894cba25561c0b7a7bbf3db1cf0147b/master/master.pdf} probabilmente sfruttando la stessa intuizione. 
+In particolare, avevamo preso la funzione "modello" della generica risposta all'impulso di un sistema di secondo grado:
+$$
+x(t) = e^{-st}, \quad s = \sigma + \omega t
+$$
+dove ricordiamo, per le formule di Eulero (viste in 1.3.2 di questi appunti):
+\begin{itemize}
+	\item $\sigma$ rappresentava la componente \textit{impulsiva} della risposta, cioè il decadimento esponenziale dal picco in $t = 0$ verso $t \rightarrow +\infty$;
+	\item $\omega$ rappresentava la componente \textit{periodica} della risposta, cioè le risonanze sinusoidali attorno allo zero delle ordinate che decadevano secondo $\sigma$. Nel caso $\sigma = 0$, l'intero segnale era periodico senza decadimento (diremmo, per le definizioni viste in 3.2, che è ad \textit{energia infinita}).
+\end{itemize}
+
+Potevamo quindi valutare la risposta di un sistema in confronto a tali versioni "modello" al variare di $s$ prendendo l'integrale di convoluzione  
+$$
+\mathcal{L}[x(t)](s) = \int_0^{+\infty} x(t) e^{-st} \, dt, \quad s = \sigma + \omega t
+$$
+che era appunto la trasformata di \textit{Laplace} di $x(t)$. In termini matematicamente più accurati, avevamo portato la funzione $x(t)$ dal dominio tempo al dominio $s$ (o dominio di \textit{Laplace}).
+
+Ciò che facciamo per passare alla trasformata di \textit{Fourier} è quindi imporre $\sigma = 0$, lasciando la sola componente $\omega$. Inoltre, per avere un'espressione legata alla frequenza $f$ (solitamente misurata in $\mathrm{Hz}$) e non alla pulsazione $\omega$, sfruttiamo le classiche relazioni:
+$$
+f = \frac{\omega}{2 \pi}, \quad \omega = 2 \pi f \implies s = i 2 \pi f
+$$
+Inoltre, consideriamo il segnale su tutto $t \in \mathbb{R}$, in quanto questo è periodico e non più legato a un transiente che fissavamo a $t = 0$ (gli estremi di integrazione sono quindi $\pm \infty$). Il risultato finale di queste modifiche è:
+$$
+X(f) = \int_{-\infty}^{+\infty} x(t) e^{-i 2 \pi f t} \, dt 
+$$
+che è esattamente l'espressione dell'equazione di analisi trasformata di Fourier in 6.1. Notiamo che un vantaggio di aver preso questa forma è che l'antitrasformata è considerevolmente più semplice (equivalente alla trasformata, ma su $df$ anziché $dt$).
 
 \subsubsection{Spettri di ampiezza e fase}
 Abbiamo detto che la trasformata $X(f)$ è sempre una funzione complessa. In particolare, può essere divisa nelle componenti polari modulo ed angolo:
@@ -229,6 +258,48 @@ dove:
 	\item L'argomento $\mathrm{arg}(X(f))$ ci dà lo spettro di \textit{fase} del segnale.
 \end{itemize}
 
+Quello che rappresentano gli spettri della trasformata di Fourier sono quindi rispettivamente l'ampiezza del segnale e la sua fase in relazione alle varie frequenze $f$. Ciò permette di analizzare segnali periodici ottenendo informazioni riguardo alle frequenze che questi contengono. Prendiamo ad esempio la seguente funzione, che presenta componenti periodiche a $1 \mathrm{Hz}$ e a $2 \mathrm{Hz}$
+$$
+x(t) = \sin(2 \pi t) + \frac{\sin(4 \pi t)}{2}
+$$
+
+Svolgiamo numericamente la trasformata di Fourier, tracciando un grafico sul tempo e un grafico dello spettro di ampiezza sulla frequenza:
+\begin{center}
+	\includegraphics[scale=0.65]{../figures/fourier_sinesum.png}
+\end{center}
+Vediamo subito come i picchi a $1 \mathrm{Hz}$ e a $2 \mathrm{Hz}$ vengono individuati dalla trasformata, e viene individuata anche l'informazione riguardo alla diversa intensità delle due componenti (la componente a $2 \mathrm{Hz}$ è a circa metà dell'ampiezza di quella a $1 \mathrm{Hz}$).
+
+Lo script usato per la generazione del grafico è basato sull'implementazione dell'algoritmo \textbf{DFT} (\textit{Discrete Fourier Transform}), in particolare nella versione di \textit{Cooley}-\textit{Tukey}. Se ne trova una versione nella directory \texttt{code/python} di questi appunti.
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Scale logaritmiche}}
+
+\noindent
+Per i grafici delle trasformate di Fourier può essere utile adottare scale logaritmiche sia alle ascisse (frequenze) che alle ordinate (ampiezze). A tal proposito, vediamo un grafico generato con lo stesso script di prima, stavolta preso in argomento un campione di voce umana: 
+\begin{center}
+	\includegraphics[scale=0.65]{../figures/fourier_voxhumana.png}
+\end{center}
+
+Notiamo le scale logaritmiche, in particolare applicate a questo grafiche:
+\begin{itemize}
+	\item La scala logaritmica alle \textit{ascisse} porta le frequenze più basse a coprire una regione maggiore del grafico. Questa rispecchia in qualche modo la percezione dei suoni dell'orecchio umano, ed è quindi indicata per diagrammi che rappresentano trasformate di Fourier di segnali sonori. In questo esempio la scala logaritmica ci permette di notare che il picco più grande del segnale è fra le note di La sulla seconda e sulla terza ottava;
+	\item La scala logaritmica alle \textit{ordinate} ci riporta nel dominio dei \textit{decibel} ($\mathrm{dB}$). In particolare, si prende la solita formula:
+$$
+| X(f) |_\mathrm{dB} = 10 \log_{10} \left( \frac{|X(f)|^2}{|X(f_0)|^2} \right) = 20 \log_{10} (|X(f)|) 
+$$
+che ci riporta in rapporti fra grandezze. Anche questo approccio è particolarmente utile e usato nell'analisi dei segnali sonori. Inoltre, torna utile anche nell'analisi dei segnali elettrici (come avevamo visto gli stessi diagrammi di \textit{Bode} per gli elementi di filtraggio erano tracciati in scala logaritmica: ricordiamo che anche questi lavoravano su soli comportamenti periodici, sullo spettro delle frequenze).
+\end{itemize}
+
+\par\smallskip
+
+\newpage
+
+\noindent
+\textbf{\textsf{Simmetrie degli spettri}}
+
+\noindent
 Per i segnali reali $\in \mathbb{R}$ vale la simmetria \textit{hermitiana} degli spettri:
 $$
 X(-f) = X^*(f)
@@ -241,16 +312,20 @@ X^*(f) = \int \left( x(t) e^{-i 2 \pi f t} \, dt \right)*
 $$
 Visto che $x(t)^* = x(t)$ (se $x(t) \in \mathbb{R}$). Notiamo che questo non è soddisfatto automaticamente dai segnali $\in \mathbb{C}$ (in quanto non si può imporre quest'ultima proprietà). \hfill $\square$
 
-Da questo deriva anche che si hanno particolari simmetrie dello spettro:
+Vale quindi, riassumendo:
 \begin{itemize}
-	\item Lo spettro di \textit{ampiezza} del segnale ha simmetria \textit{pari}:
-		$$
-		|X(f)| = |X(-f)|
-		$$
-	\item Lo spettro di \textit{fase} del segnale ha simmetria \textit{dispari}:
-		$$
-		\mathrm{arg}(X(f)) = -\mathrm{arg}(X(-f))
-		$$
+	\item Per i segnali reali $\in \mathbb{R}$ abbiamo determinate  simmetrie dello spettro:
+	\begin{itemize}
+		\item Lo spettro di \textit{ampiezza} del segnale ha simmetria \textit{pari}:
+			$$
+			|X(f)| = |X(-f)|
+			$$
+		\item Lo spettro di \textit{fase} del segnale ha simmetria \textit{dispari}:
+			$$
+			\mathrm{arg}(X(f)) = -\mathrm{arg}(X(-f))
+			$$
+	\end{itemize}
+	\item Per i segnali complessi $\in \mathbb{C}$ le simmetrie appena nominate non si applicano, e possiamo avere forma qualsiasi degli spettri di \textit{ampiezza} e \textit{fase}. 
 \end{itemize}
 
 \par\smallskip
@@ -272,6 +347,14 @@ $$
 $$
 = \frac{\tau}{1 + i 2 \pi f \tau}
 $$
+\hfill $\square$
+
+\newpage
+
+Vediamo la funzione ottenuta su un grafico, generato con lo script precedente:
+\begin{center}
+	\includegraphics[scale=0.65]{../figures/fourier_exp.png}
+\end{center}
 
 \item \textbf{\textsf{Impulso rettangolare}} \\
 Come secondo esempio, vediamo lo spettro della funzione \textit{rettangolare}, anch'essa già vista in 3.2:
@@ -292,6 +375,14 @@ $$
 $$
 = - \frac{1}{i 2 \pi f} \cdot - 2 i \sin (\pi f t) = \frac{\sin(\pi f \tau)}{\pi f} 
 $$
+\hfill $\square$
+
+\newpage
+
+Vediamo la funzione ottenuta su un grafico, generato con lo script precedente:
+\begin{center}
+	\includegraphics[scale=0.65]{../figures/fourier_step.png}
+\end{center}
 
 La funzione che abbiamo incontrato prende il nome di \textit{seno cardinale}, indicato come:
 $$
@@ -326,6 +417,7 @@ $$
 $$
 = \int_{-\infty}^{\infty} X^*(f) X(f) \, df
 $$
+\hfill $\square$
 
 Chiamiamo quindi $\mathcal{E}_x(f)$ \textit{densità spettrale di energia}:
 $$
