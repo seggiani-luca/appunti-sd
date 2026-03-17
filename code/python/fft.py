@@ -1,4 +1,3 @@
-import math
 import cmath
 
 def hann(x):
@@ -27,6 +26,6 @@ def fft(x):
         res = [None] * ln 
         for k in range(0, hln):
             twid = cmath.exp(-2j * math.pi * k / ln)
-            res[k]          = even[k] + twid * odd[k] 
+            res[k]       = even[k] + twid * odd[k] 
             res[k + hln] = even[k] - twid * odd[k] 
         return res

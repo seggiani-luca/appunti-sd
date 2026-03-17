@@ -64,8 +64,8 @@ print("Streaming... Press Ctrl+C to stop")
 try:
     while True:
         # get last buffer
-        signal = signal_buffer.copy()
-        signal = fft.hann(signal)
+        raw_signal = signal_buffer.copy()
+        signal = fft.hann(raw_signal)
 
         # calculate FFT
         spec = fft.fft(signal)
@@ -74,7 +74,7 @@ try:
 
         # update plots
         set_graphs()
-        ax1.plot(times, signal)
+        ax1.plot(times, raw_signal)
         ax2.plot(freqs, spec_mag)
 
         plt.pause(0.001)
