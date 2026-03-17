@@ -374,7 +374,7 @@ che è la tesi. \hfill $\square$
 \item \begin{theorem}{Dualità della trasformata di Fourier}
 Vale che:
 $$
-x(t) \rightarrow X(f) \implies X(t) \Rightarrow x(-f)
+x(t) \rightarrow X(f) \implies X(t) \rightarrow x(-f)
 $$
 \end{theorem}
 Questo viene in qualche modo dalle osservazioni sulla simmetria fatte in 6.1.1. In particolare, scambiando $t$ ed $f$ nell'equazione di sintesi, si ha:
@@ -389,8 +389,77 @@ che è la tesi. \hfill $\square$
 
 Applicando questo teorema, ad esempio, ala funzione rettangolare (vista sempre in 6.1.1), otteniamo:
 $$
-x(t) = \mathrm{rect} \left( \frac{t}{\tau} \right) = \tau \mathrm{sinc} (f \tau) \implies \tau \mathrm{sinc} (t \tau) = \mathrm{rect} \left(\frac{f}{\tau}\right) 
+x(t) = \mathrm{rect} \left( \frac{t}{\tau} \right) \rightarrow \tau \mathrm{sinc} (f \tau) \implies \tau \mathrm{sinc} (t \tau) \rightarrow \mathrm{rect} \left(\frac{f}{\tau}\right) 
 $$
+mentre applicandolo alla funzione esponenziale monolatera si ha:
+$$
+x(t) = e^{-\frac{t}{\tau}} u(t) \rightarrow \frac{\tau}{1 + i 2 \pi f \tau} \implies \frac{\tau}{1 + i 2 \pi t \tau} \rightarrow e^{\frac{f}{\tau}} u(-f)
+$$
+Notiamo una particolarità di questo ultimo spettro è che non è simmetrico: questo è reso possibile dal fatto che il segnale considerato, cioè:
+$$
+X(t) = \frac{\tau}{1 + i 2 \pi t \tau}
+$$
+è \textit{complesso} $\in \mathbb{C}$ (quindi non ha ipotesi di simmetria).
+
+\item \begin{theorem}{Ritardo della trasformata di Fourier}
+Vale che:
+$$
+y(t) = x(t - t_0) \implies Y(f) = X(f) e^{-i 2 \pi f t_0}
+$$
+\end{theorem}
+
+Cioè un ritardo temporale introduce una variazione di fase che cambia linearmente con la frequenza, ma non cambia lo spettro di ampiezza. Diciamo linearmente, in quanto dobbiamo ricordare che:
+$$
+|Y(f)| = |X(f)|, \quad \mathrm{arg} \left( Y(f) \right) = \mathrm{arg} \left( X(f) \right) - 2 \pi f t_0
+$$
+
+Questo si dimostra dall'equazione di analisi:
+$$
+X(f) = \int_{-\infty}^{\infty} x(t - t_0) e^{-i 2 \pi f t} \, dt
+$$
+Ponendo il cambio di variabile $\alpha = t - t_0$, si ottiene:
+$$
+X(f) = \int_{-\infty}^{\infty} x(\alpha) e^{-i 2 \pi f \alpha + t_0} \, d \alpha = e^{-i 2 \pi f t_0} \int_{-\infty}^{\infty} x(\alpha) e^{-i 2 \pi f \alpha} \, d \alpha
+$$
+che è la tesi. \hfill $\square$
+
+\item \begin{theorem}{Teorema della modulazione}
+Vale che:
+$$
+x(t) \cos(2 \pi f_0 t) \rightarrow \frac{X(f - f_0) + X(f + f_0)}{2}
+$$
+\end{theorem}
+
+Il teorema della modulazione è utile, appunto, nel contesto della \textit{modulazione} dei segnali in fase di preparazione alla trasmissione sul mezzo. Nell'analisi del trasmettitore fatta in 1.2, siamo nel componente \textit{modulator}, che prende il segnale digitale preso dal channel encoder, e lo transforma in una forma d’onda adatta a essere trasmessa sul mezzo.
+
+Ad esempio, nelle radio vecchio stile, la manopola del sintonizzatore variava la capacità di un circuito che faceva da filtro passa-banda, cioè isolava una sola regione dello spettro, dove era contenuto il segnale da ricevere (modulato). Oggi nella radio vale un processo simile, ma svolto attraverso transistor o in digitale.
+
+Il fatto che si possano modulare segnali a diverse frequenze, assieme al teorema 7.1 (di \textit{linearità}), significa che possiamo piazzare più segnali temporali a frequenze diverse dello spettro (dello spettro radio, ad esempio). Questo permette a più dispositivi di usare lo stesso mezzo di trasmissione, dividendolo in diverse porzioni di frequenze. Chiaramente, se vogliamo riportarci al segnale in dominio tempo originale, dobbiamo prevedere un passaggio di \textit{filtraggio} simile a quello della radio a capacità visto sopra. Fra l'altro, questo è il processo dell'accesso multiplo in \textbf{FDMA} (\textit{Frequency Division Multiple Access}) visto in 1.2.4.
+
+\begin{center}
+	\includegraphics[scale=0.25]{../figures/spec_spec.png}
+\end{center}
+
+Inoltre, perché la modulazione abbia l'effetto desiderato, dobbiamo scegliere frequenze di modulazione $f_0$ molto più grandi di quelle del segnale originale $f$, in modo che $f + f_0$ ci porti a destra nelo spettro di frequenze (nella regione di frequenze che allochiamo al segnale) e $f - f_0$ finisca nella regione $f < 0$ (e non crei due "lobi" attorno alla $f$ originale).
+
+Dimostriamo quindi il teorema. Il risultato ottenuto si ha dall'equazione di analisi applicata all'espressione data:
+$$
+X(f) = \int_{-\infty}^{\infty} x(t) \cos(2 \pi f_0 t) e^{-i 2 \pi f t} \, dt
+$$
+e prendendo il coseno nella forma esponenziale data dalle equazioni di Eulero:
+$$
+\cos(\alpha) = \frac{e^{i\alpha} + e ^{-i\alpha}}{2}
+$$
+da cui:
+$$
+X(f) = \int_{-\infty}^{\infty} x(t) \frac{e^{i 2\pi f_0 t} + e^{-i 2 \pi f_0 t}}{2} e^{-i 2 \pi f t} \, dt 
+$$
+$$
+= \frac{1}{2} \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi (f - f_0) t} \, dt + \frac{1}{2} \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi (f + f_0) t} \, dt = \frac{X(f - f_0) + X(f + f_0)}{2}
+$$
+che è la tesi. \hfill $\square$
+
 \end{enumerate}
+
 
 \end{document}
