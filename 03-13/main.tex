@@ -207,6 +207,11 @@ Data una funzione $x(t)$, la sua trasformata di Fourier continua $X(f)$ è:
 $$
 X(f) = \int_{-\infty}^{+\infty} x(t) e^{-i 2 \pi f t} \, dt \quad \quad \text{(equazione di analisi)}
 $$
+ammesso che:
+\begin{itemize}
+	\item $x(t)$ sia continua $C^1$ a pezzi su $\mathbb{R}$;
+	\item $x(t)$ sia integrabile su tutto $\mathbb{R}$.
+\end{itemize}
 \end{definition}
 Chiamiamo la formula data anche \textit{equazione di analisi}, in quanto permette di passare allo spettro (dominio di frequenze) del segnale (\textit{analizzarlo}).
 
@@ -220,6 +225,7 @@ Data una funzione $X(f)$, la sua antitrasformata di Fourier continua $x(t)$ è:
 $$
 x(t) = \int_{-\infty}^{+\infty} X(f) e^{i 2 \pi f t} \, df \quad \quad \text{(equazione di sintesi)}
 $$
+ammesse le stesse ipotesi di 6.2.
 \end{definition}
 Chiamiamo la formula data anche \textit{equazione di sintesi}, in quanto permette di ricostruire un segnale dal suo spettro (dominio di frequenze) (\textit{sintetizzarlo}).
 
@@ -270,7 +276,7 @@ $$
 
 Svolgiamo numericamente la trasformata di Fourier, tracciando un grafico sul tempo e un grafico dello spettro di ampiezza sulla frequenza:
 \begin{center}
-	\includegraphics[scale=0.65]{../figures/fourier_sinesum.png}
+	\includegraphics[scale=0.6]{../figures/fourier_sinesum.png}
 \end{center}
 Vediamo subito come i picchi a $1 \mathrm{Hz}$ e a $2 \mathrm{Hz}$ vengono individuati dalla trasformata, e viene individuata anche l'informazione riguardo alla diversa intensità delle due componenti (la componente a $2 \mathrm{Hz}$ è a circa metà dell'ampiezza di quella a $1 \mathrm{Hz}$).
 
@@ -284,7 +290,7 @@ Lo script usato per la generazione del grafico è basato sull'implementazione de
 \noindent
 Per i grafici delle trasformate di Fourier può essere utile adottare scale logaritmiche sia alle ascisse (frequenze) che alle ordinate (ampiezze). A tal proposito, vediamo un grafico generato con lo stesso script di prima, stavolta preso in argomento un campione di voce umana: 
 \begin{center}
-	\includegraphics[scale=0.65]{../figures/fourier_voxhumana.png}
+	\includegraphics[scale=0.6]{../figures/fourier_voxhumana.png}
 \end{center}
 
 Notiamo le scale logaritmiche, in particolare applicate a questo grafiche:
@@ -341,25 +347,49 @@ Vediamo quindi alcuni esempi di \textit{spettri} di alcune funzioni importanti:
 	\item \textbf{\textsf{Segnale esponenziale monolatero}} \\
 Come primo esempio, vediamo lo spettro dell'\textit{esponenziale monolatero}, già vista in 3.2:
 $$
-x(t) = e^{-\frac{t}{\tau}} \cdot u(t)
+x(t) = e^{-\frac{t}{\tau}} \cdot u(t), \quad \tau > 0
 $$
-dove $u(t)$ è il comune gradino di Heaviside.
+dove $u(t)$ è il comune gradino di Heaviside. Notiamo che è fondamentale porre $\tau > 0$, in quanto altrimenti la $x(t)$ diverge e diventa impossibile applicare la definizione 6.1.
 
-Questo si ottiene direttamente applicando la definizione di trasformata di Fourier:
+Quindi, lo spettro si ottiene direttamente applicando la definizione di trasformata di Fourier:
 $$
-X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi f t} \, dt = \int_0^{\infty} e^{-\frac{t}{\tau}} e^{-i 2 \pi f t} \, dt = \int_0^\infty e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)} \, dt = \frac{e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)}}{\frac{1}{\tau} + i 2 \pi f} \Big|^{\infty}_0
+X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi f t} \, dt = \int_0^{\infty} e^{-\frac{t}{\tau}} e^{-i 2 \pi f t} \, dt = \int_0^\infty e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)} \, dt 
 $$
+
 $$
+= -\frac{e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)}}{\frac{1}{\tau} + i 2 \pi f} \Big|^{\infty}_0
 = \frac{\tau}{1 + i 2 \pi f \tau}
+$$
+\hfill $\square$
+
+Nel caso si voglia prendere $\tau < 0$, bisogna capovolgere il gradino $u(t)$ in modo da prendere sempre la parte convergente dell'esponenziale:
+$$
+x(t) = e^{-\frac{t}{\tau}} \cdot u(-t), \quad \tau < 0
+$$
+Per cui con passaggi simili si ottiene:
+$$
+X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi f t} \, dt = \int_{-\infty}^0 e^{-\frac{t}{\tau}} e^{-i 2 \pi f t} \, dt = \int_{-\infty}^0 e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)} \, dt 
+$$
+$$
+= -\frac{e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)}}{\frac{1}{\tau} + i 2 \pi f} \Big|^{-\infty}_0
+= -\frac{\tau}{1 + i 2 \pi f \tau}
 $$
 \hfill $\square$
 
 \newpage
 
-Vediamo la funzione ottenuta su un grafico, generato con lo script precedente:
+Vediamo la funzione ottenuta nel caso $\tau > 0$ su un grafico, generato con lo script precedente:
 \begin{center}
-	\includegraphics[scale=0.65]{../figures/fourier_exp.png}
+	\includegraphics[scale=0.6]{../figures/fourier_exp.png}
 \end{center}
+
+Abbiamo quindi trovato una trasformata \textit{fondamentale} (effettivamente una coppia di esse):
+$$
+x(t) = e^{-\frac{t}{\tau}} u(t) \Leftrightarrow X(f) = \frac{\tau}{1 + i 2 \pi f \tau}, \quad \tau > 0
+$$
+$$
+x(t) = e^{-\frac{t}{\tau}} u(-t) \Leftrightarrow X(f) = -\frac{\tau}{1 + i 2 \pi f \tau}, \quad \tau < 0
+$$
 
 \item \textbf{\textsf{Impulso rettangolare}} \\
 Come secondo esempio, vediamo lo spettro della funzione \textit{rettangolare}, anch'essa già vista in 3.2:
@@ -375,18 +405,21 @@ $$
 Questo si ottiene direttamente applicando la definizione di trasformata di Fourier:
 $$
 X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi ft} \, dt = \int_{-\frac{\tau}{2}}^{\frac{\tau}{2}} e^{-i 2 \pi f t} \, dt
-= - \frac{1}{i 2 \pi f} e ^{-i 2 \pi f t} \Big|^{\frac{\tau}{2}}_{-\frac{\tau}{2}} = - \frac{1}{i 2 \pi f} \left( e^{-i \pi f \tau} - e^{i 2 \pi f \tau} \right)
+= - \frac{1}{i 2 \pi f} e ^{-i 2 \pi f t} \Big|^{\frac{\tau}{2}}_{-\frac{\tau}{2}} 
 $$
 $$
+= - \frac{1}{i 2 \pi f} \left( e^{-i \pi f \tau} - e^{i 2 \pi f \tau} \right)
 = - \frac{1}{i 2 \pi f} \cdot - 2 i \sin (\pi f t) = \frac{\sin(\pi f \tau)}{\pi f} 
 $$
 \hfill $\square$
 
+Notiamo che in questo caso non dobbiamo preoccuparci rispetto alle condizioni in 6.1, in quanto queste sono automaticamente rispettate, ovvero $x(t)$ è integrabile su $\mathbb{R}$ per qualsiasi valore di $\tau$ (finché $\tau$ è finito).
+
 \newpage
 
-Vediamo la funzione ottenuta su un grafico, generato con lo script precedente:
+Vediamo quindi la funzione ottenuta su un grafico, generato con lo script precedente:
 \begin{center}
-	\includegraphics[scale=0.65]{../figures/fourier_step.png}
+	\includegraphics[scale=0.6]{../figures/fourier_step.png}
 \end{center}
 
 La funzione che abbiamo incontrato prende il nome di \textit{seno cardinale}, indicato come:
@@ -395,7 +428,7 @@ $$
 $$
 dove in zero eliminiamo la discontinuità eliminabile.
 
-Abbiamo quindi trovato la trasformata \textit{fondamentale}:
+Abbiamo quindi trovato un'altra trasformata \textit{fondamentale}:
 $$
 x(t) = \mathrm{rect} \left( \frac{t}{\tau} \right) \, \Leftrightarrow \, X(f) = \frac{\sin(\pi f \tau)}{\pi f} \cdot \frac{\tau}{\tau} = \tau \mathrm{sinc}(f \tau)
 $$

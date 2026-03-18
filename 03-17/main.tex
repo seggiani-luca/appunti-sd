@@ -317,8 +317,6 @@ vengono detti \textit{fattori di twiddle}, ed è solitamente utile precalcolarli
 
 Questo costituisce il nucleo dell'algoritmo FFT radice 2. Possiamo applicare l'operazione di divisione in 2 finestre "dimezzate" un numero arbitrario di volte (anche se in casi reali a conviene fermarsi prima), scendendo ricorsivamente fino al caso di dimensione 1 (dove restituiamo l'unico campione dato).
 
-\newpage
-
 Questo, in codice Python, ha il seguente (semplicissimo) aspetto:
 \begin{lstlisting}[language=python, style=codestyle]	
 def fft(x):
@@ -371,13 +369,34 @@ X(f) = \alpha_1 X_1(f) + \alpha_2 X_2(f)
 $$
 che è la tesi. \hfill $\square$
 
+\item \begin{theorem}{Opposta della trasformata di Fourier}
+Vale che:
+$$
+x(t) \rightarrow X(f) \implies x(-t) \rightarrow X(-f)
+$$
+\end{theorem}
+
+Anche questo si ricava direttamente dalla definizione di trasformata nell'equazione di analisi:
+$$
+\int_{-\infty}^{\infty} x(-t) e^{-j 2 \pi f t} \, dt
+$$
+operando il cambio di variabile:
+$$
+t' = -t, \quad dt' = -dt
+$$
+per cui (ricordando di scambiare gli estremi per il capovolgimento della variabile):
+$$
+= \int_{\infty}^{-\infty} x(t') e^{j 2 \pi f t'} (-dt') = \int_{-\infty}^{\infty} x(t') e^{-j 2 \pi (-f) t'} \, dt' = X(-f)
+$$
+che è la tesi. \hfill $\square$
+
 \item \begin{theorem}{Scalabilità della trasformata di Fourier}
 Vale che:
 $$
-x(kt) \rightarrow \frac{1}{k} X\left(\frac{f}{k}\right) 
+x(kt) \rightarrow \frac{1}{|k|} X\left(\frac{f}{k}\right) 
 $$
 \end{theorem}
-Questo si dimostra prendendo l'espressione di sintesi:
+Possiamo considerare questo teorema una generalizzazione del precedente. Lo si dimostra prendendo l'espressione di sintesi:
 $$
 \int_{-\infty}^{\infty} x(kt) e^{-i 2 \pi f t} \, dt
 $$
@@ -387,7 +406,15 @@ u = kt, \quad du = k \, dt
 $$
 per cui:
 $$
-= \int_{-\infty}^{\infty} x(u) e^{-i 2 \pi f \frac{u}{k}} \, \frac{du}{k} = \frac{1}{k} X\left(\frac{f}{k}\right)
+\int_{-\infty}^{\infty} x(kt) e^{-i 2 \pi f t} \, dt
+\begin{cases}
+\int_{-\infty}^{\infty} x(u) e^{-i 2 \pi f \frac{u}{k}} \, \frac{du}{k} = \frac{1}{k} X\left(\frac{f}{k}\right) \\
+\int_{\infty}^{-\infty} x(u) e^{-i 2 \pi f \frac{u}{k}} \, \frac{du}{k} = - \int_{-\infty}^{\infty} x(u) e^{-i 2 \pi f \frac{u}{k}} \, \frac{du}{k} = \frac{1}{-k} X\left(\frac{f}{k}\right) \\
+\end{cases}
+$$
+o in breve:
+$$
+= \frac{1}{|k|} X \left( \frac{f}{k} \right)
 $$
 che è la tesi. \hfill $\square$
 
@@ -407,19 +434,117 @@ x(-f) = \int_{-\infty}^{\infty} X(t) e^{-i 2 \pi f t} \, dt
 $$
 che è la tesi. \hfill $\square$
 
+Vediamo alcuni esempi di applicazione di questo teorema, che è abbastanza insidioso.
+\begin{enumerate}
+	\item
 Applicando questo teorema, ad esempio, ala funzione rettangolare (vista sempre in 6.1.1), otteniamo:
 $$
 x(t) = \mathrm{rect} \left( \frac{t}{\tau} \right) \rightarrow \tau \mathrm{sinc} (f \tau) \implies \tau \mathrm{sinc} (t \tau) \rightarrow \mathrm{rect} \left(\frac{f}{\tau}\right) 
 $$
-mentre applicandolo alla funzione esponenziale monolatera si ha:
+In questo caso possiamo stare tranquilli che le ipotesi di applicabilità dell'equazione di analisi (viste in 6.1) sono soddisfatte, in quanto la funzione $\mathrm{sinc}$ è sempre integrabile su $\mathbb{R}$.
+
+Possiamo ottenere dei risultati interessanti interrogandoci sulla coerenza dimensionale (in termini fisici) dell'ultima espressione ricavata. Infatti il termine $\tau$, che nel contesto dell'$x(t)$ originale rappresentava un tempo, ora va a moltiplicare un tempo (cosa che fisicamente a poco significato). Possiamo quindi imporre una cosa del tipo:
 $$
-x(t) = e^{-\frac{t}{\tau}} u(t) \rightarrow \frac{\tau}{1 + i 2 \pi f \tau} \implies \frac{\tau}{1 + i 2 \pi t \tau} \rightarrow e^{\frac{f}{\tau}} u(-f)
+\tau = 2 B
 $$
-Notiamo che una particolarità di questo ultimo spettro è che non è simmetrico: questo è reso possibile dal fatto che il segnale considerato, cioè:
+dove $B$ sarà una \textit{larghezza di banda}, cioè una frequenza. In questo caso otterremo la forma:
+$$
+2B \mathrm{sinc} (2Bt) \rightarrow \mathrm{rect} \left( \frac{f}{2B} \right) \implies
+\mathrm{sinc} (2Bt) \rightarrow \frac{1}{2B} \mathrm{rect} \left( \frac{f}{2B} \right)
+$$
+
+Questa formula è interessante in quanto presenta a destra l'equazione del filtro \textit{passa-basso} ideale, detto anche \textit{brickwall filter}. Questo perché, come sappiamo, lo spettro di frequenze della trasformata di Fourier è simmetrico rispetto allo 0, e il grafico della funzione $\mathrm{rect}$ rappresenta una regione a $1$ fino ad una data frequenza ($B$) in entrambe le regioni (negativa e positiva) simmetriche dello spettro. L'$\frac{1}{2B}$ a moltiplicare fa da termine di normalizzazione.
+
+Sulla sinistra abbiamo invece l'antitrasformata, che anticipiamo rappresenterà la risposta all'impulso del filtro sul dominio dello spettro, del filtro brickwall. Questa è una funzione $\mathrm{sinc}$ (per nostra convenzione normalizzata) a frequenza $2B$. Vediamo che nel caso di segnali campionati, la funzione $\mathrm{sinc}$ si comporta da base come la funzione $\sin$ si comporta da base su tutto il dominio $t$.
+
+Il risultato è quindi che un segnale con spettro limitato alla frequenza massima $B$ contiene al massimo informazione a frequenza $2B$ (ricostruibile a partire di funzioni $\mathrm{sinc}$ in base a frequenza $2B$), ovvero se la frequenza $f$ delle sue componenti sarà:
+$$
+|f| \leq B
+$$
+lo potremo ricostruire con le funzioni base:
+$$
+\mathrm{sinc}(2Bt)
+$$
+
+In particolare, prendiamo la forma:
+$$
+x(t) = \sum x(n T_s) \mathrm{sinc} \left( f_s (t - n T_s) \right)
+$$
+per il segnale campionato $x(t)$ sui campioni $n$. $T_s$ sarà il \textit{periodo di campionamento} e $f_s$ la \textit{frequenza di campionamento}, con:
+$$
+f_s = \frac{1}{T_s}
+$$
+
+La resa esatta del segnale sarà data scegliendo:
+$$
+f_s = 2B
+$$
+cioè campionando alla frequenza di \textit{Nyquist}. Campionare a frequenze ulteriori otterremo sempre lo stesso segnale (anche se in maniera più stabile, in un regime detto di \textit{oversampling}). Ciò che abbiamo ottenuto è quindi un'affermazione del teorema di \textit{campionamento di Nyquist-Shannon}, già introdotto in 3.1.2.
+
+	\item
+Applicandolo alla funzione esponenziale monolatera si ha un caso più complesso:
+$$
+x(t) = e^{-\frac{t}{\tau}} u(t) \rightarrow \frac{\tau}{1 + i 2 \pi f \tau} \implies \frac{\tau}{1 + i 2 \pi t \tau} \rightarrow e^{\frac{f}{\tau}} u(-f), \quad \tau > 0
+$$
+Dove dobbiamo imporre $\tau > 0$, altrimenti la trasformata della monolatera $x(t)$ non esiste e non è valido neanche il passaggio inverso. Questo anche se la funzione trasformanda:
 $$
 X(t) = \frac{\tau}{1 + i 2 \pi t \tau}
 $$
-è \textit{complesso} $\in \mathbb{C}$ (quindi non ha ipotesi di simmetria).
+rimane finita.
+
+Notiamo che una ulteriore particolarità di questo ultimo spettro è che non è simmetrico: questo è reso possibile dal fatto che il segnale considerato è \textit{complesso} $\in \mathbb{C}$ (quindi non ha ipotesi di simmetria).
+
+\par\smallskip
+
+\textbf{\textsf{Esempio}}
+
+Fissiamo i concetti con un semplice esempio. Prendiamo di voler calcolare la trasformata di:
+$$
+z(t) = \mathrm{Re} \left\{ \frac{1}{1 + i 2 \pi \frac{t}{\tau} } \right\} = \{ x(t) \}, \quad x(t) = \frac{1}{1 + i 2 \pi \frac{t}{\tau}}
+$$
+
+Prendiamo prima la $x(t)$ e discutiamo poi dell'operatore parte reale.
+In questo caso ci tornerà utile sfruttare la dualità (teorema 7.4) dell'esponenziale monolatera, cioè dire:
+$$
+\frac{\tau}{1 + i 2 \pi t \tau} \rightarrow e^{\frac{f}{\tau}} u(-f)  , \quad \tau > 0
+$$
+che operando il cambio di variabile $\tau' = \frac{1}{\tau}$ diventa:
+$$
+\frac{1}{\tau' \left( 1 + i 2 \pi \frac{t}{\tau'} \right) } \rightarrow e^{\tau' f} u(-f), \quad
+\frac{1}{ 1 + i 2 \pi \frac{t}{\tau'} } \rightarrow \tau' e^{\tau' f} u(-f), \quad
+$$
+correggendo il fattore $\tau'$ a denominatore (sfruttando la linearità, teorema 7.1). Da qui in poi, chiamiamo $\tau'$ semplicemente $\tau$ e proseguiamo.
+
+Abbiamo quindi trasformato $x(t)$ con successo. Il problema sarà a questo punto trasformare $z(t)$, lavorando con l'operatore parte reale. Per fare ciò ricordiamo l'identità:
+$$
+\mathrm{Re} \{ x(t) \} = \frac{x(t) + x^*(t)}{2}
+$$
+e calcoliamo $x^*(t)$ come:
+$$
+x^*(t) = \left( \frac{1}{1 + i 2 \pi \frac{t}{\tau} }\right)^* = \left( \frac{1 - i 2 \pi \frac{t}{\tau} }{ \left( 1 + i 2 \pi \frac{t}{\tau} \right) \left( 1 - i 2 \pi \frac{t}{\tau} \right) } \right)^*
+$$
+$$
+= \frac{1 + 2 \pi \frac{t}{\tau} }{ \left( 1 + i 2 \pi \frac{t}{\tau} \right) \left( 1 - i 2 \pi \frac{t}{\tau} \right) } = \frac{1}{ 1 - i 2 \pi \frac{t}{\tau} }
+$$
+
+A questo punto ci rendiamo conto che vale $x^*(t) = x(-t)$ (almeno per questa funzione), e possiamo semplicemente porre (sfruttando il teorema dell'opposto in 7.2):
+$$
+\frac{x(t) + x^*(t)}{2} = \frac{1}{2} \left( e^{\tau f} u(-f) + e^{-\tau f} u(f) \right)
+$$
+
+Notiamo che sarebbe potuto venirci in mente di usare un metodo di sostituzione di variabile anche per calcolare $x^*(t)$, cioè dire:
+$$
+\frac{\tau}{1 + i 2 \pi t \tau} \rightarrow -e^{\frac{f}{\tau}} u(f) , \quad \tau < 0
+$$
+che operando il cambio di variabile $\tau' = -\frac{1}{\tau}$ diventa:
+$$
+-\frac{1}{\tau' \left( 1 - i 2 \pi \frac{t}{\tau'} \right) } \rightarrow -e^{-\tau' f} u(f), \quad
+\frac{1}{ 1 - i 2 \pi \frac{t}{\tau'} } \rightarrow \tau' e^{-\tau' f} u(f), \quad
+$$
+usando sempre la linearità. Ricordiamo che dobbiamo prendere la versione con $f$ positiva della trasformata notevole, in quanto la sostituzione che facciamo prevede un $\tau'$ negativo (che altrimenti divergerebbe), come visto in 6.1.1. Il risultato, in ogni caso, è lo stesso.
+
+
+\end{enumerate}
 
 \item \begin{theorem}{Ritardo della trasformata di Fourier}
 Vale che:
