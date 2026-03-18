@@ -371,6 +371,26 @@ X(f) = \alpha_1 X_1(f) + \alpha_2 X_2(f)
 $$
 che è la tesi. \hfill $\square$
 
+\item \begin{theorem}{Scalabilità della trasformata di Fourier}
+Vale che:
+$$
+x(kt) \rightarrow \frac{1}{k} X\left(\frac{f}{k}\right) 
+$$
+\end{theorem}
+Questo si dimostra prendendo l'espressione di sintesi:
+$$
+\int_{-\infty}^{\infty} x(kt) e^{-i 2 \pi f t} \, dt
+$$
+e operando il cambio di variabile:
+$$
+u = kt, \quad du = k \, dt
+$$
+per cui:
+$$
+= \int_{-\infty}^{\infty} x(u) e^{-i 2 \pi f \frac{u}{k}} \, \frac{du}{k} = \frac{1}{k} X\left(\frac{f}{k}\right)
+$$
+che è la tesi. \hfill $\square$
+
 \item \begin{theorem}{Dualità della trasformata di Fourier}
 Vale che:
 $$
@@ -395,7 +415,7 @@ mentre applicandolo alla funzione esponenziale monolatera si ha:
 $$
 x(t) = e^{-\frac{t}{\tau}} u(t) \rightarrow \frac{\tau}{1 + i 2 \pi f \tau} \implies \frac{\tau}{1 + i 2 \pi t \tau} \rightarrow e^{\frac{f}{\tau}} u(-f)
 $$
-Notiamo una particolarità di questo ultimo spettro è che non è simmetrico: questo è reso possibile dal fatto che il segnale considerato, cioè:
+Notiamo che una particolarità di questo ultimo spettro è che non è simmetrico: questo è reso possibile dal fatto che il segnale considerato, cioè:
 $$
 X(t) = \frac{\tau}{1 + i 2 \pi t \tau}
 $$
