@@ -437,13 +437,13 @@ che è la tesi. \hfill $\square$
 Vediamo alcuni esempi di applicazione di questo teorema, che è abbastanza insidioso.
 \begin{enumerate}
 	\item
-Applicando questo teorema, ad esempio, ala funzione rettangolare (vista sempre in 6.1.1), otteniamo:
+Applicando questo teorema, ad esempio, alla funzione rettangolare (vista sempre in 6.1.1), otteniamo:
 $$
 x(t) = \mathrm{rect} \left( \frac{t}{\tau} \right) \rightarrow \tau \mathrm{sinc} (f \tau) \implies \tau \mathrm{sinc} (t \tau) \rightarrow \mathrm{rect} \left(\frac{f}{\tau}\right) 
 $$
 In questo caso possiamo stare tranquilli che le ipotesi di applicabilità dell'equazione di analisi (viste in 6.1) sono soddisfatte, in quanto la funzione $\mathrm{sinc}$ è sempre integrabile su $\mathbb{R}$.
 
-Possiamo ottenere dei risultati interessanti interrogandoci sulla coerenza dimensionale (in termini fisici) dell'ultima espressione ricavata. Infatti il termine $\tau$, che nel contesto dell'$x(t)$ originale rappresentava un tempo, ora va a moltiplicare un tempo (cosa che fisicamente a poco significato). Possiamo quindi imporre una cosa del tipo:
+Possiamo ottenere dei risultati interessanti interrogandoci sulla coerenza dimensionale (in termini fisici) dell'ultima espressione ricavata. Infatti il termine $\tau$, che nel contesto dell'$x(t)$ originale rappresentava un tempo, ora va a moltiplicare un tempo (cosa che fisicamente ha poco significato). Possiamo quindi imporre una cosa del tipo:
 $$
 \tau = 2 B
 $$
@@ -585,7 +585,7 @@ Il fatto che si possano modulare segnali a diverse frequenze, assieme al teorema
 	\includegraphics[scale=0.25]{../figures/spec_spec.png}
 \end{center}
 
-Inoltre, perché la modulazione abbia l'effetto desiderato, dobbiamo scegliere frequenze di modulazione $f_0$ molto più grandi di quelle del segnale originale $f$, in modo che $f + f_0$ ci porti a destra nelo spettro di frequenze (nella regione di frequenze che allochiamo al segnale) e $f - f_0$ finisca nella regione $f < 0$ (e non crei due "lobi" attorno alla $f$ originale).
+Inoltre, perché la modulazione abbia l'effetto desiderato, dobbiamo scegliere frequenze di modulazione $f_0$ molto più grandi di quelle del segnale originale $f$, in modo che $f + f_0$ ci porti a destra nello spettro di frequenze (nella regione di frequenze che allochiamo al segnale) e $f - f_0$ finisca nella regione $f < 0$ (e non crei due "lobi" attorno alla $f$ originale).
 
 Dimostriamo quindi il teorema. Il risultato ottenuto si ha dall'equazione di analisi applicata all'espressione data:
 $$

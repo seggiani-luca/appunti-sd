@@ -239,6 +239,8 @@ $$
 
 \par\smallskip
 
+\newpage
+
 \noindent
 \textbf{\textsf{Teoremi di probabilità condizionata}}
 
@@ -261,7 +263,7 @@ Questo è banale dalla definizione, visto che $a \cap b = \emptyset$ e quindi $P
 \end{theorem}
 Questo si ha notando che se $a \subset b$, allora $a \cap b = a$ per cui:
 $$
-P[a | b] = \frac{P(a \cap b)}{P(b)} = \frac{P(a)}{P(b)} \geq P(b)
+P[a | b] = \frac{P(a \cap b)}{P(b)} = \frac{P(a)}{P(b)} \geq P(a)
 $$
 visto che $P(b) \geq 0$ dall'assioma di non negatività. Questo, intuitivamente, significa che un evento che si verifica sempre assieme ad un secondo evento è più probabile dato il secondo evento. \hfill $\square$
 
@@ -508,7 +510,11 @@ si ha che l'indipendenza è verificata quando:
 $$
 P(a) = P(a_1 \times a_2) = P((a_1 \times \Omega_2) \cap (a_2 \times \Omega_1)) = P(a_1 \times \Omega_2) P(\Omega_1 \times a_2) = P_1(a_1) P_2(a_2)
 $$
-ovvero quando concediamo il passaggio $P((a_1 \times \Omega_2) \cap (a_2 \times \Omega_1)) = P(a_1 \times \Omega_2) P(\Omega_1 \times a_2)$, cioè:
+ovvero quando concediamo il passaggio:
+$
+P(a_1 \times \Omega_2) P(\Omega_1 \times a_2) = P_1(a_1) P_2(a_2)
+$
+, cioè:
 \begin{theorem}{Esperimenti indipendenti}
 Imporre che 2 esperimenti, formato un esperimento composto, sono indipendenti, significa imporre che $a_1 \times \Omega_2$ e $\Omega_1 \times a_2$ rappresentano sempre eventi indipendenti.
 \end{theorem}

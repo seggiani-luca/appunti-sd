@@ -418,6 +418,8 @@ Per risolvere questi problemi si è affermata una seconda definizione di probabi
 	$$
 \end{definition}
 
+\newpage
+
 I vantaggi di questa definizione sono che:
 \begin{itemize}
 	\item Non si basa su ipotesi a propri ma sulla conoscenza a posteriori di un dato ottenuta attraverso prove;
@@ -475,11 +477,11 @@ I 3 assiomi di Kolmogorov (definizione 2.4) possono essere usati per dimostrare 
 		$$
 
 	\end{theorem} 
-		Questo si diomstra a partire dall'assioma di \textit{addittività}. In particolare:
+		Questo si dimostra a partire dall'assioma di \textit{addittività}. In particolare:
 		$$
 		P(a \cup \bar{a}) = P(a) + P(\bar{a}) = P(\Omega) = 1 \implies P(\bar{a}) = 1 - P(A)
 		$$
-		ricordando che $a \cup \bar{a}$ da cui la tesi. \hfill $\square$
+		ricordando che $a \cup \bar{a} = \Omega$ da cui la tesi. \hfill $\square$
 
 	\item \begin{theorem}{Probabilità dell'evento impossibile}
 		La probabilità dell'evento impossibile è uguale a zero, cioè:
@@ -523,7 +525,7 @@ I 3 assiomi di Kolmogorov (definizione 2.4) possono essere usati per dimostrare 
 	$$
 	a questo punto possiamo applicare il terzo assioma $n - 1$ volte per dire:
 	$$
-		P(a_1 + a_2 + ...) = P(a_1) + P(a_2) + ... = \sum_i P(a_i)
+		P(a_1 \cup a_2 \cup ...) = P(a_1) + P(a_2) + ... = \sum_i P(a_i)
 	$$
 	da cui la tesi. \hfill $\square$
 

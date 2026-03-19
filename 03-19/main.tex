@@ -300,7 +300,21 @@ $$
 P[T_0 | R_0] = \frac{(1 - P_e) (1 - \alpha)}{(1 - P_e) \cdot (1 - \alpha) + P_e \cdot \alpha} = \frac{1}{1 + \frac{P_e \cdot \alpha}{(1 - P_e) (1 - \alpha)}}
 $$
 
-% casi particolari P_e = 0.5 e 0
+\newpage
+
+Mantenuto $\alpha = 0.3$, tracciamo un grafico di $P[T_O | R_0]$ in funzione di $P_e$:
+\begin{center}
+	\includegraphics[scale=0.25]{../figures/bin_chan_prob.png}
+\end{center}
+
+Da questo grafico, notiamo alcuni valori particolari:
+\begin{itemize}
+	\item Per $P_e = 0$, la probabilità è piena, cioè possiamo fidarci pienamente del mezzo (non c'è possibilità di errore);
+	\item Per $P_e = \frac{1}{2}$, cioè errori completamente aleatori, il meglio che possiamo assicurare è la probabilità:
+$$P[T_0 | R_0] = 1 - \alpha = P(T_0)$$
+cioè la possibilità che $T_0$ si sia effettivamente verificato dato il segnale $R_0$ è al minimo uguale alla probabilità di $T_0$ stesso. Vedremo che questo sarà un risultato che tornerà in futuro, quando ci soffermeremo sui canali di comunicazione con segnali aleatori, cioè che soffrono di un certo livello di rumore sul mezzo (rappresentato dal nostro $P_e$);
+	\item Infine, per completezza, notiamo che a $P_e = 1$ la probabilità è nulla, cioè nuovamente abbiamo informazione piena il segnale è sempre sbagliato.
+\end{itemize}
 
 \subsection{Variabili aleatorie}
 Consideriamo uno esperimento aleatorio avente uno spazio campione $\Omega$, una classe degli eventi $S$ e una legge di probabilità $P$. 
@@ -309,6 +323,8 @@ Inizialmente, possiamo definire una \textit{corrispondenza}:
 \begin{definition}{Corrispondenza}
 Una corrispondenza $X(\omega)$ è una funzione dei risultati di un esperimento $\omega$ che associa ad ogni risultato un numero reale.
 \end{definition}
+
+\newpage
 
 Dalla definizione di corrispondenza ricaviamo direttamente la definizione di \textbf{variabile aleatoria}:
 \begin{definition}{Variabile aleatoria}
