@@ -1,0 +1,379 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Comunicazioni Numeriche}
+\author{Luca Seggiani}
+\date{2026}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=~\thetcbcounter: #2,
+	#1
+}
+
+% U.D.M
+\newcommand{\amp}{\ensuremath{\mathrm{A}}}
+\newcommand{\volt}{\ensuremath{\mathrm{V}}}
+\newcommand{\meter}{\ensuremath{\mathrm{m}}}
+\newcommand{\second}{\ensuremath{\mathrm{s}}}
+\newcommand{\farad}{\ensuremath{\mathrm{F}}}
+\newcommand{\henry}{\ensuremath{\mathrm{H}}}
+\newcommand{\siemens}{\ensuremath{\mathrm{S}}}
+
+% circuiti
+\usepackage{circuitikz}
+\usetikzlibrary{babel}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 20-03-26}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsubsection{Esempi di variabili aleatorie discrete}
+Nella scorsa lezione abbiamo visto le variabili aleatorie discrete. Vediamone adesso alcuni esempi:
+\begin{itemize}
+\item \textbf{\textsf{Variabili aleatorie di Bernoulli}} \\
+Consideriamo un esperimento casuale che assume uno dei 2 valori possibili:
+\begin{itemize}
+	\item Il valore $1$ con probabilità $p$;
+	\item Il valore $0$ con probabilità $1 - p$.
+\end{itemize}
+Una variabile aleatoria di questo tipo è detta variabile aleatoria di \textit{Bernoulli}:
+$$
+X \in \mathrm{Bernoulli}(p)
+$$
+
+\item \textbf{\textsf{Variabili aleatorie binomiali}} \\
+Si ripeta $N$ volte un esperimento aleatorio nel quale un certo evento $A$ (evento favorevole) si può presentare con probabilità $p$ in ciascuna prova (prove indipendenti). Si può definire una variabile aleatoria $X$ il cui valore si identifica con il numero di volte in cui si verifica l’evento $A$ sul totale delle $N$ prove. Tale variabile aleatoria, detta numero di successi, è di tipo discreto e può assumere i valori $X_k = 0, 1, 2, ..., N$ con massa di probabilità:
+$$
+p_X(k) = P(\{ X = k \}) = \binom{N}{k} p^k (1 - p)^{N - k}, \quad 0 < p < 1, \ k = 0, 1, ..., N
+$$
+
+Una variabile aleatoria di questo tipo è detta variabile aleatoria \textit{binomiale}:
+$$
+X \in \mathrm{Binomiale}(p, N)
+$$
+che notiamo a differenza della variabile aleatoria di Bernoulli è definita da 2 parametri (probabilità e numero di prove);
+
+\item \textbf{\textsf{Variabili aleatorie di Poisson}} \\
+	Una variabile aleatoria è detta di \textit{Poisson} con parametro $\Lambda$ (con $\Lambda > 0$) se è discreta, definita per i valori interi positivi, ed ha la seguente massa di probabilità:
+$$
+p_X(k) = P({X = k}) = \frac{\Delta^k}{k!}e ^{-\Delta}, \quad k = 0, 1, 2, ...
+$$
+dove notiamo che $k$ non chiude ad $N$ ma prosegue ad $\rightarrow +\infty$.
+
+Visto che andiamo su $k \in \mathbb{N}$, verifichiamo che è rispettata la normalizzazione della funzione di massa di probabilità:
+$$
+\sum_{k=0}^\infty p_X(k) = e^{-\Lambda} \sum_{k=0}^\infty \frac{\Lambda^k}{k!} = e^{-\Lambda}e^\Lambda = 1
+$$
+dallo sviluppo di Taylor dell'esponenziale.
+
+Vediamo alcune proprietà:
+\begin{itemize}
+	\item Se $\Lambda < 1$, il picco di probabilità della funzione massa di probabilità si ha in $k^* = 0$;
+	\item Se $\Lambda > 1$, il picco di probabilità della funzione massa di probabilità si ha in $k$ uguale alla parte intera di $\Lambda$, cioè:
+$$
+k^* = \left \lfloor{\Lambda}\right \rfloor 
+$$
+\end{itemize}
+
+Come abbiamo già detto, chiamiamo questa variabile aleatoria di \textit{Poisson}:
+$$
+X \in \mathrm{Poisson}(\Lambda)
+$$
+che ha nuovamente un solo parametro ($\Lambda$).
+\end{itemize}
+
+\subsubsection{Dalla distribuzione di probabilità discreta alla funzione massa di probabilità}
+Vediamo nel dettaglio come passare dalla distribuzione di probabilità discreta alla funzione massa di probabilità. Se la $F_X(x)$ (funzione massa di probabilità, 8.5) di una variabile aleatoria discreta è nota, è possibile dedurre si i valori assunti dalla variabile aleatoria, sia le corrispondenti probabilità
+
+In particolare, come sappiamo, la distribuzione della variabile aleatoria discreata è una funzione a gradini: i gradini sono in corrispondenza degli $x_i$ (risultati) dove è definita la funzione massa di probabilità. In simboli: 
+$$
+F_X(x) = P(\{ X \leq x \}) = \sum_{i, \ x_i \leq x} P( \{X = x_i\} ) = \sum_{i, \ x_i \leq x} p_X (x_i) = \sum_i p_X(x_i) u (x - x_i) 
+$$
+dove la funzione gradino di \textit{Heaviside} $u(x)$, già vista nel campo delle trasformate di Fourier continue:
+$$
+u(x) = \begin{cases}
+	0, \quad x < 0 \\
+	1, \quad x \geq 0
+\end{cases}
+$$
+ci permette di riportare gli $i, \ x_i \leq x$ a pedice a semplici $i$ sui risultati dell'esperimento. 
+
+\subsection{Variabili aleatorie continue}
+Veniamo quindi alle variabili aleatorie \textit{continue}:
+\begin{definition}{Variabile aleatoria continua}
+Una variabile aleatoria si dice \textit{continua} se assume un numero infinito non numerabile di valori (ad esempio, tutti i reali in un intervallo $[a ,b]$).
+\end{definition}
+
+Nello specifico, la continuità si definirà come:
+$$
+F_X(x^+) = F_X(x^-)
+$$
+
+Notiamo che se prendiamo questa definizione, la probabilità di trovare la variabile aleatoria ad un qualsiasi valore è nulla, cioè:
+$$
+P(\{ X = x \}) = 0, \ \forall x
+$$
+
+L'unica cosa che potremo prendere $\neq 0$ sarà allora la probabilità su un \textit{intervallo}:
+$$
+P(\{ x_1 \leq X \leq x_2 \}) \neq 0, \in [0, 1]
+$$
+
+Inoltre, prendere funzioni continue ci permette di sollevare le condizioni sulla strettezza delle diseguaglianze che definiscono i nostri intervalli, in quanto nulla cambia se prendiamo $<$ o $\leq$. Varrà quindi:
+$$
+P(\{ x_1 \leq X \leq x_2 \}) = F_X(x_2) - F_X(x_1)
+$$
+
+Nota una definizione di variabile aleatoria continua, possiamo definire la funzione \textbf{densità} di probabilità:
+\begin{definition}{Funzione densità di probabilità}
+Si indica come funzione densità di probabilita di una variabile aleatoria continua $X$ la funzione:
+$$
+f_X(x) = \frac{d F_X(x)}{dx}
+$$
+\end{definition}
+cioè la \textit{derivata prima} della funzione distribuzione di probabilità della variabile aleatoria.
+
+Sulla funzione densità di probabilità valgono le seguenti proprietà:
+\begin{enumerate}
+	\item $f_X(x) \geq 0$, visto che è la derivata prima di una funzione monotona decrescente;
+	\item Dal teorema fondamentale del calcolo integrale, si ha:
+$$
+F_X(x) = \int_{-\infty}^x f_X(\alpha) \, d\alpha
+$$
+	\item Sempre riguardo all'integrazione, vale sugli intervalli (come avevamo parzialmente già detto):
+$$
+P(\{ x_1 \leq X \leq x_2 \}) = F_X(x_2) - F_X(x_1) = \int_{x_1}^{x_2} f_X(\alpha) \, d\alpha
+$$
+	\item Prendendo gli estremi a $\pm \infty$ nell'ultima proprietà, otteniamo la proprietà di normalizzazione:
+$$
+ F_X(\infty) - F_X(-\infty) = \int_{\infty}^{-\infty} f_X(\alpha) \, d\alpha = 1
+$$
+Notiamo che un corollario di ciò è che:
+$$
+\lim_{x\rightarrow-\infty} f_X(x) = \lim_{x\rightarrow\infty} f_X(x) = 0
+$$
+\end{enumerate}
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Intuizione dietro la densità di probabilità}}
+
+\noindent
+Prendiamo un intervallino $[x_1, x_2]$: 
+$$
+x_1 = x, \quad x_2 = x + dx
+$$
+con $dx$ infinitesimo. Dalla terza proprietà della densità di probabilità, si ha che:
+$$
+\int_{x}^{x + dx} f_X(x) \, dx = f_X(x) \, dx = P(x < X \leq x + dx)
+$$
+per cui:
+$$
+f_X(x) = \frac{P(x < X \leq x + dx)}{dx}
+$$
+Quindi, la densità probabilità rappresenta la probabilità (al variare di $x$) che la variabile aleatoria $X$ assuma valori appartenenti all’intervallo infinitesimo $[x, x+dx]$, diviso l’ampiezza infinitesima $dx$ dell’intervallo.
+
+Questa proprietà è utile per misurare sperimentalmente la densità di probabilità di una variabile aleatoria passando alla frequenza relativa; infatti, se ripetiamo l’esperimento $N$ volte e contiamo il numero $\Delta n(x)$ di risultati per cui $x < X \leq x + \Delta x$, ottieniamo:
+$$
+f_X(x) \Delta x \approx P(x < x \leq x + \Delta x) \approx \frac{\Delta n(x)}{N}
+$$
+purché $\Delta x$ sia sufficientemente piccolo ed $N$ sufficientemente grande, quindi la densità di probabilità si può ottenere come segue:
+$$
+f_X(x) = \frac{\Delta n(x)}{N\Delta x}
+$$
+
+\subsubsection{Esempi di variabili aleatorie continue}
+Vediamo quindi alcuni esempi di variabili aleatorie continue:
+\begin{itemize}
+	\item \textbf{\textsf{Variabili aleatorie uniformi}} \\
+Una variabile aleatoria è detta appunto \textit{uniforme} nell'intervallo $[a, b]$, se la sua densità di probabilità è costante in tale intervallo:
+$$
+f_X(x) = 
+\begin{cases}
+	\frac{1}{b-a}, \quad a \leq x \leq b \\
+	0, \quad \text{altrove}
+\end{cases}, \quad
+F_X(x) = 
+\begin{cases}
+	0, \quad x < a \\
+	\frac{x - a}{b-a}, \quad a \leq x \leq b \\
+	1, \quad x > b 
+\end{cases}
+$$
+Come abbiamo detto, $X$ è uniforme e si dice:
+$$
+X \in \mathrm{Uniforme}(a, b)
+$$
+
+\end{itemize}
+
+\end{document}

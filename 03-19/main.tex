@@ -332,7 +332,7 @@ Una corrispondenza fra lo spazio $\Omega$ e l’asse reale è una variabile alea
 $$
 X(\omega) \leq a
 $$
-è un evento, comunque si scelga il valore del parametro reale $a$
+è un evento, comunque si scelga il valore del parametro reale $a$.
 \end{definition}
 
 Questo significherà che possiamo associare al generico evento del tipo $\{x(\omega) \leq a\}$ una probabilità $P$ nel sistema di probabilità definito sopra.
@@ -417,7 +417,7 @@ $$
 Le proprietà della funzione di distribuzione:
 \begin{itemize}
 	\item $P(x_1 < X < x_2) = F_X (x_2) - F_X( x_1)$
-	\item $F_X(x) - F_X(x^{-}) = P\{ X = x \}$
+	\item $F_X(x^{+}) - F_X(x^{-}) = P\{ X = x \}$
 \end{itemize}
 mostrano che dalla conoscenza di $F_X$, cioè la funzione di distribuzione di probabilità, è possibile determinare la probabilità di qualunque evento: 
 $$
@@ -427,13 +427,13 @@ essendo $I$ un qualunque insieme reale ottenuto come somma di intervalli (chiusi
 
 Una descrizione statistica equivalente, ma a volte più semplice, è data dalla funzione \textit{massa di probabilità}, nel caso di variabili aleatorie discrete, e dalla funzione \textit{densità di probabilità}, nel caso di variabili aleatorie continue.
 
-\subsubsection{Variabili aleatorie discrete}
+\subsection{Variabili aleatorie discrete}
 Concentriamoci quindi sulle variabili aleatorie \textit{discrete}:
 \begin{definition}{Variabile aleatoria discreta}
 	Una variabile aleatoria si dice \textit{discreta} se assume un numero finito o una infinità numerabile di valori distinti: $\{x_1, ... x_n\}$.
 \end{definition}
 
-Nota una definizione di variabile aleatoria, possiamo definire la funzione \textbf{massa} di probabilità:
+Nota una definizione di variabile aleatoria discreta, possiamo definire la funzione \textbf{massa} di probabilità:
 \begin{definition}{Funzione massa di probabilità}
 Si indica come funzione massa di probabilità di una variabile aleatoria discreta $X$ la funzione:
 $$
@@ -446,27 +446,6 @@ Si può dare una definizione \textit{frequentista} della massa di probabilità, 
 $$
 p_X(x) = P(\{ X = x_i \}) = \lim_{N \rightarrow + \infty} \frac{n(x_i)}{N}
 $$
-dove $n(x_i)$ è il numero di volte che l'evento $n_i$ si verifica su $N$ tentativi.
-
-\par\smallskip
-
-\noindent
-\textbf{\textsf{Esempi di variabili aleatorie}}
-
-\noindent
-Vediamo alcuni esempi di variabili aleatorie:
-\begin{itemize}
-\item \textbf{\textsf{Variabili aleatorie di Bernoulli}} \\
-Consideriamo un esperimento casuale che assume uno dei 2 valori possibili:
-\begin{itemize}
-	\item Il valore $1$ con probabilità $p$;
-	\item Il valore $0$ con probabilità $1 - p$.
-\end{itemize}
-Una variabile aleatoria di questo tipo è detta variabile aleatoria di Bernoulli:
-$$
-X \in \mathrm{Bernoulli}(p)
-$$
-\end{itemize}
-
+dove $n(x_i)$ è il numero di volte che l'evento $x_i$ si verifica su $N$ tentativi.
 
 \end{document}

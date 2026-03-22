@@ -297,7 +297,7 @@ b = b \cap \Omega = b \cap \bigcup_{i=1}^K a_i = \bigcup_{i=1}^K b \cap a_i
 $$
 Con tutti gli eventi $b \cap a_i$ sempre disgiunti. A questo punto basta applicare l'additività nel calcolo della probabilità:
 $$
-P(b) = P\left( \bigcup_{i=1}^K b \cap a_i \right) = \bigcup_{i=1}^K P(b \cap a_i) = P[b | a_i] P(a_i)
+P(b) = P\left( \bigcup_{i=1}^K b \cap a_i \right) = \sum_{i=1}^K P(b \cap a_i) = \sum_{i=1}^K P[b | a_i] P(a_i)
 $$
 che è la tesi. \hfill $\square$
 
