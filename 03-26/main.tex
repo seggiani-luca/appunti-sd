@@ -202,6 +202,8 @@ x(t) \cos(2 \pi f_0 t) \rightarrow \frac{X(f - f_0) + X(f + f_0)}{2}
 $$
 cioè si otteneva una trasformata analoga a quella del segnale non modulato, ma scostata in frequenza di $f_0$.
 
+Sfruttare il teorema di modulazione ci permette di realizzare sistemi di comunicazione a \textit{modulazione}, dove un \textit{modulatore} trasforma il segnale prima di trasmetterlo per occupare una certa banda, e un \textit{demodulatore} estrae il segnale da tale banda prima di riprodurlo.
+
 \begin{itemize}
 	\item Vediamo innanzitutto il componente \textbf{modulatore}:
 \begin{center}
@@ -235,7 +237,7 @@ Saremmo quindi riusciti ad ottenere nuovamente il segnale demodulato (o una sua 
 \end{itemize}
 
 \subsubsection{Somma di più segnali}
-Vediamo nello specifico questo processo studiando cosa succede nel caso di più segnali modulati trasmessi sullo stesso mezzo di comunicazione. Siano questi $s_1$, $s_2$ e $s_3$ funzione del tempo trasmessi da altrettante antenne collegate a modulatori. Ad ogni modulatore verrà chiaramente assegnata la sua frequenza di modulazione $f_i$. Avremo quindi che il segnale complessivo che viaggia sul mezzo condiviso sarà:
+Vediamo nello specifico questo processo studiando cosa succede nel caso di più segnali modulati trasmessi sullo stesso mezzo di comunicazione. Siano questi $s_1$, $s_2$ e $s_3$ funzione del tempo trasmessi da altrettante antenne collegate a modulatori. Ad ogni modulatore verrà chiaramente assegnata la sua frequenza di modulazione $f_i$. Avremo che il segnale complessivo che viaggia sul mezzo condiviso sarà:
 $$
 \{s_1(t), s_2(t), s_3(t) \} \rightarrow s_1(t) \cos(2 \pi f_1 t) +  s_2(t) \cos(2 \pi f_2 t) +  s_3(t) \cos(2 \pi f_3 t)
 $$
@@ -245,7 +247,7 @@ $$
 s_i(t) + s_u(t) \cos(4 \pi f_i t)
 $$
 
-L'idea è che le frequenze $4 \pi f_i$ andranno a finire distanti l'una dall'altra, per cui in fase di filtraggio dell'$i$-esimo segnale potremo rimuvoere completamente l'effetto degli altri segnali modulati, e quindi ottenere l'isolamento che ci prefissavamo di avere.
+L'idea è che le frequenze $4 \pi f_i$ andranno a finire distanti l'una dall'altra, per cui in fase di filtraggio dell'$i$-esimo segnale potremo rimuovere completamente l'effetto degli altri segnali modulati, e quindi ottenere l'isolamento che ci prefissavamo di avere.
 
 \par\smallskip
 
@@ -293,8 +295,7 @@ In 4.1 avevamo discusso la formula di Friis, e avevamo definito il rapporto di p
 $$
 \beta = \frac{P_r}{P_t} = \frac{\lambda^2}{(4 \pi d^2)}
 $$
-dove la distanza $d$ non sarà altro che la distanza dell'ostacolo stesso (in questo caso il trasmettitore e il ricevitore sono nella stessa posizione).
-Visto che 
+dove $\lambda$ è la lunghezza d'onda del segnale $x(t)$, e la distanza $d$ non sarà altro che la distanza dell'ostacolo stesso (in questo caso il trasmettitore e il ricevitore sono nella stessa posizione).
 
 Il sistema funziona quando i due segnali ($x(t)$ e $y(t)$) non si sovrappongono, ossia il segnale trasmesso $x(t)$ non si sovrappone con il segnale che si riceve $y(t)$. La condizione imposta sarà quindi:
 $$
@@ -361,20 +362,43 @@ che notiamo è esattamente la tesi. \hfill $\square$
 \noindent
 Facciamo quindi alcuni richiami su cosa è esattamente il prodotto di convoluzione fa due funzioni $x(t)$ e $y(t)$ (queste non sono le funzioni della dimostrazione precedente, che moltiplicavamo in dominio tempo, ma altre 2 funzioni nel dominio tempo arbitrarie, di cui facciamo il prodotto di convoluzione). Lavoriamo nel dominio tempo anziché il dominio frequenziale in quanto è più comodo. 
 
-% finire questa sezione
-
+Procediamo quindi ad una descrizione qualitativa prendendo le due funzioni $x(t)$ e $y(t)$:
 \begin{center}
-	\includegraphics[scale=0.26]{../figures/conv_intro.png}
+	\includegraphics[scale=0.2]{../figures/conv_intro.png}
 \end{center}
 
+Osservando la formula del prodotto di convoluzione:
+$$
+\left[ x(t) \circledast y(t) \right] (t) = \int_{-\infty}^{\infty}f\left(\alpha\right)g\left(t-\alpha\right)d\alpha
+$$
+si ha che prendiamo per ogni valore di $t$ (prendiamo uno specifico $t = t_0$) un integrale in $\alpha$. $t_0$ è quindi sostanzialmente un parametro per una serie di integrali che calcoliamo, al variare di $t$ su $\mathbb{R}$.
+
+Ciò che facciamo per ogni valore $t_0$ è quindi:
+\begin{itemize}
+	\item Invertire la funzione $y(\alpha)$, prendendo $y(-\alpha)$;
+	\item Scostare temporalmente la $y(\alpha)$ di un fattore $t_0$, prendendo $y(t_0 - \alpha)$.
+\end{itemize}
+
+Ciò che abbiamo detto è meglio esemplificato dal grafico:
 \begin{center}
-	\includegraphics[scale=0.26]{../figures/conv_rev.png}
+	\includegraphics[scale=0.2]{../figures/conv_rev.png}
+\end{center}
+dove vediamo chiaramente la $y(t)$ invertita e scostata temporalmente di $t_0$.
+
+A questo punto non resterà altro che calcolare l'integrale in $\alpha$ nell'intervallo $[-\infty, \infty]$:
+$$
+\int_{-\infty}^{\infty}f\left(\alpha\right)g\left(t_0-\alpha\right)d\alpha
+$$
+Il valore che otteniamo per $t_0$ sarà quello dell'integrale di convoluzione a $t = t_0$. Sul grafico:
+\begin{center}
+	\includegraphics[scale=0.2]{../figures/conv_int.png}
 \end{center}
 
-In generale, quindi, ricordiamo che il supporto dell’integrale di convoluzione tra due funzioni aventi estensione limitata è dato dalla somma delle estensioni delle due funzioni.
+Ripetendo questo processo per ogni $t$ su $\mathbb{R}$, si potrà ottenere tutta la funzione dell'integrale di convoluzione. 
 
+In generale, poi, ricordiamo che il supporto dell’integrale di convoluzione tra due funzioni aventi estensione limitata è dato dalla somma delle estensioni delle due funzioni.
 \begin{center}
-	\includegraphics[scale=0.26]{../figures/conv_support.png}
+	\includegraphics[scale=0.2]{../figures/conv_support.png}
 \end{center}
 
 \par\smallskip
@@ -386,8 +410,94 @@ In generale, quindi, ricordiamo che il supporto dell’integrale di convoluzione
 Vediamo quindi alcuni esempi significativi di prodotto di convoluzione fra due funzioni $x(t)$ e $y(t)$.
 
 \begin{enumerate}
-	\item % esempio 1
-	\item % esempio 2
+	\item Innanzitutto, riprendiamo la funzione $\mathrm{rect}$ con $T = 2B$ (larghezza di banda) già studiata in 7.2 come filtro passa basso ideale:
+$$
+x(t) = \mathrm{sinc}(2Bt) \rightarrow X(f) = \frac{1}{2B} \mathrm{rect}\left(\frac{f}{2B}\right)
+$$
+
+Prendiamo $x(t) = y(t) = \mathrm{sinc}(2Bt)$ per calcolare l'antitrasformata del quadrato della funzione $\mathrm{sinc}$:
+$$
+z(t) = x(t) \cdot y(t) =  \mathrm{sinc}^2(2Bt)
+$$
+
+Avremo quindi da calcolare l'integrale di convoluzione:
+$$
+Z(f) = X(f) \circledast Y(f) = \frac{1}{2B} \mathrm{rect}\left( \frac{f}{2B} \right) \circledast \frac{1}{2B} \mathrm{rect}\left( \frac{f}{2B} \right)
+$$
+Notiamo allora che entrambe le funzioni sono rettangoli, di larghezza $2B$ e altezza $\frac{1}{2B}$, e che per il principio dell'operazione di convulazione ne fissiamo uno facendo scorrere l'altro (come una sorta di \textit{sliding window}) al variare di $f$:
+$$
+Z(f) = \int_{-\infty}^{\infty} X(v) Y(x - v) \, dv
+$$
+Questo significherà, fissato un certo $f_0$, che avremo 4 regioni:
+$$
+\begin{cases}
+f_0 < -2B \rightarrow 0 \\
+-2B < f_0 < 0 \rightarrow \int_{-B}^{f_0 + B} \frac{1}{4B^2} \, dv  \\ 
+0 < f_0 < 2B \rightarrow \int_{f_0 - B}^{B} \frac{1}{4B^2} \, dv \\ 
+f_0 > 2B \rightarrow 0 \\
+\end{cases}
+$$
+e quindi la funzione complessiva sarà, svolti gli integrali (gli estremi sono banali, e i due integrali centrali pure in quanto semplificano a moltiplicazioni):
+$$
+Z(f) =
+\begin{cases}
+	\frac{1}{2B} \left( \frac{f}{2B} + 1 \right), \quad -2B < f < 0 \\
+	\frac{1}{2B} \left( 1 - \frac{f}{2B} \right), \quad 0 < f < 2B \\
+	0, \quad \text{altrimenti}
+\end{cases}
+$$
+
+La funzione che abbiamo ottenuto prende anche il nome di \textit{funzione triangolare} $\mathrm{tri}$, che indichiamo come:
+$$
+x(t) =
+\begin{cases}
+	1 - |2t|, \quad |t| < \frac{\tau}{2} \\
+	0, \quad |t| > \frac{\tau}{2}
+\end{cases}
+$$
+per cui il risultato della convoluzione può essere indicato anche come:
+$$
+\mathrm{sinc}^2 (2Bt) \rightarrow \frac{1}{2B} \mathrm{tri} \left( \frac{f}{4B} \right)
+$$
+
+	\item Sempre per dimostrare il funzionamento dell'integrale di convoluzione, svolgiamo una semplice convoluzione in dominio tempo, fra le funzioni:
+$$
+x(t) = \mathrm{rect} \left( \frac{t}{T} \right), \quad y(t) = \mathrm{rect} \left( \frac{2t}{T} \right)
+$$
+Ciò che vorremo calcolare sarà quindi:
+$$
+\left[ x(t) \circledast y(t) \right] (t) = \int_{-\infty}^{\infty} x(\tau) Y(t - \tau) \, d\tau
+$$
+
+Come prima, sfruttiamo le proprietà della funzione $\mathrm{rect}$ per dividere l'integrale in regioni. Manteniamo quindi fissa la $x(t)$ e facciamo scorrere la $y(t)$ prendendo un istante $t_0$:
+$$
+\begin{cases}
+t_0 < -\frac{3}{4} \rightarrow 0 \\
+-\frac{3}{4}T < t_0 < -\frac{1}{4}T \rightarrow \int_{-T}^{t_0 + \frac{1}{4}T} d\tau \\
+-\frac{1}{4}T < t_0 < \frac{1}{4}T \rightarrow \int_{t_0 - \frac{1}{4}T}^{t_0 + \frac{1}{4}T} d\tau \\
+\frac{1}{4}T < t_0 < \frac{3}{4}T \rightarrow \int_{t_0 - \frac{T}{4}}^{T} d\tau \\
+t_0 > \frac{3}{4} \rightarrow 0 \\
+\end{cases}
+$$
+e quindi la funzione complessiva sarà, svolti gli integrali (gli estremi sono banali, e i tre integrali centrali pure in quanto semplificano a moltiplicazioni):
+$$
+\left[ x(t) \circledast y(t) \right] (t) = 
+\begin{cases}
+t + \frac{3}{4}T, \quad -\frac{3}{4}T<t<-\frac{1}{4}T \\
+\frac{T}{2}, \quad -\frac{1}{4}T<t<\frac{1}{4}T \\
+-t + \frac{3}{4}T, \quad -\frac{3}{4}T<t<-\frac{1}{4}T \\
+0, \quad \text{altrimenti}
+\end{cases}
+$$
+
+Abbiamo quindi ricavato la funzione dell'integrale di convoluzione per ogni $t \in \mathbb{R}$. Il risultato sarà una sorta di trapezio con picco costante in $\frac{T}{2}$ da $-\frac{1}{4}T$ a $+\frac{1}{4}T$.
+
+Una cosa da notare è che quanto avevamo detto riguardo al supporto risulta dimostrato: $x(t)$ si esprime su un supporto di larghezza $T$, e $y(t)$ su un supporto di $\frac{T}{2}$. Sommando gli estremi trovati per l'integrale di convoluzione si ha:
+$$
+\frac{3}{4}T + \frac{3}{4}T = \frac{3}{2}T = T + \frac{T}{2}
+$$
+che è esttamente la somma dei supporti delle funzioni coinvolte nella convoluzione.
+
 \end{enumerate}
 
 \subsubsection{Teorema della convoluzione}
@@ -399,7 +509,7 @@ z(t) = x(t) \circledast y(t) \implies Z(f) = \int_{\alpha=-\infty}^{\alpha=\inft
 $$
 \end{theorem}
 
-Cioè alla convoluzione nel tempo corrisponde il prodotto delle trasformate. Questo è un altro risultato fondamentale per i sistemi lineari e tempo invarianti, e si dimostra direttamente dal teorema del prodotto della trasformata di Fourier in 10.1
+Cioè alla convoluzione nel tempo corrisponde il prodotto delle trasformate. Questo è un altro risultato fondamentale per i sistemi lineari e tempo invarianti, e si dimostra direttamente dal teorema del prodotto della trasformata di Fourier in 10.1.
 
 \subsection{Definizione di banda}
 Prendiamo un segnale $x(t)$ a durata finita. Ad esempio, il modo per assicurarsi di avere durata finita può essere moltiplicare per la funzione $\mathrm{rect}$ (che per definizione ha durata finita).
@@ -416,7 +526,7 @@ z(t) = x(t) \mathrm{rect}\left( \frac{t}{\frac{T}{2}} \right)
 $$
 equivale a prendere la $y(t) = \mathrm{rect}\left( \frac{t}{\frac{T}{2}} \right)$ nel teorema del prodotto e quindi ottenere il prodotto di convoluzione:
 $$
-X(f) = X(f) \circledast 2 T \matrm{sinc}(2 f T)
+X(f) = X(f) \circledast 2 T \mathrm{sinc}(2 f T)
 $$
 che ha per forza banda infinita da quanto detto prima: il supporto dell’integrale di convoluzione tra due funzioni aventi estensione limitata è dato dalla somma delle estensioni delle due funzioni.
 
@@ -437,6 +547,24 @@ cioè i $-3 \, \mathrm{dB}$ equivalgono a raggiungere metà della potenza massim
 \end{center}
 
 Da un punto di vista meno teorico, la banda a $-3 \, \mathrm{dB}$ rappresenta un’indicazione “pratica” della banda di un segnale: frequenze inferiori alla banda sono ritenute “importanti”, mentre quelle superiori sono ritenute “trascurabili”. Esistono anche altri tipi di banda, come ad esempio la banda a $-1 \, \mathrm{dB}$, la banda al 99\% dell'energia, ecc...
+
+\begin{itemize}
+	\item A scopo di esempio, calcoliamo la banda a $-3 \, \mathrm{dB}$ del segnale esponenziale monolatero. Ricordiamo che questo si presentava come:
+$$
+e^{-\frac{t}{T}} u(t) \rightarrow \frac{T}{1 - i 2 \pi f T}
+$$
+con la sua trasformata.
+
+Calcoliamo quindi il rapporto fra la banda e il suo valore in $f_0 = 0$, e quindi imponiamolo uguale a $\frac{1}{2}$ (equivalente a $-3 \, \mathrm{3 dB})$):
+$$
+\frac{| X(B_{-3 \, \mathrm{dB}}) |^2}{| X(f_0) |^2}
+= \frac{ \frac{T^2}{1 + 4 \pi^2 f^2 T^2} }{ T^2 } = \frac{1}{ 1 + 4 \pi^2 f^2 T^2 } = \frac{1}{2}
+$$
+da cui si ricava immediatamente:
+$$
+f_{3\,\mathrm{dB}} = \frac{1}{2 \pi T}
+$$
+\end{itemize}
 
 \subsubsection{Banda a -3 dB per segnali modulati}
 Per un segnale modulato abbiamo che l'intera banda, come dal teorema di modulazione, viene spostata della freuenza modulante $f_0$.
