@@ -336,6 +336,28 @@ Z(f) = \frac{X(f - f_0) + X(f + f_0)}{2}
 $$
 che è esattamente la tesi del teorema di modulazione, che risulta quindi dimostrato. \hfill $\square$
 
+\item \textbf{\textsf{Segnale gradino}} \\
+Come ultimio esempio, vediamo come calcolare la trasformata di Fourier generalizzata del classico gradino di \textit{Heaviside}:
+$$
+u(t) =
+\begin{cases}
+	0, \quad t < 0 \\
+	1, \quad t \geq 0
+\end{cases}
+$$
+In questo caso preferiamo usare la notazione alternativa:
+$$
+u(t) = \frac{1}{2} + \frac{1}{2} \mathrm{sgn}(t)
+$$
+Questa ci permette di usare la trasformata (che assumiamo nota, la dimostrazione è nota dal fatto che la funzione segno deriva alla delta di Dirac e dalle proprietà delle trasformate delle derivate, non viste in questi appunti):
+$$
+\frac{1}{t} \rightarrow -j \pi \mathrm{sgn}(x)
+$$
+Per cui il calcolo risulta:
+$$
+u(t) = \frac{1}{2} + \frac{1}{2} \mathrm{sgn}(t) = \frac{1}{2} \delta(t) + \frac{1}{j 2 \pi f}
+$$
+
 \end{enumerate}
 
 \end{document}
