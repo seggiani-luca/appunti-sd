@@ -432,8 +432,8 @@ Questo significherà, fissato un certo $f_0$, che avremo 4 regioni:
 $$
 \begin{cases}
 f_0 < -2B \rightarrow 0 \\
--2B < f_0 < 0 \rightarrow \int_{-B}^{f_0 + B} \frac{1}{4B^2} \, dv  \\ 
-0 < f_0 < 2B \rightarrow \int_{f_0 - B}^{B} \frac{1}{4B^2} \, dv \\ 
+-2B \leq f_0 < 0 \rightarrow \int_{-B}^{f_0 + B} \frac{1}{4B^2} \, dv  \\ 
+0 \leq f_0 \leq 2B \rightarrow \int_{f_0 - B}^{B} \frac{1}{4B^2} \, dv \\ 
 f_0 > 2B \rightarrow 0 \\
 \end{cases}
 $$
@@ -441,8 +441,8 @@ e quindi la funzione complessiva sarà, svolti gli integrali (gli estremi sono b
 $$
 Z(f) =
 \begin{cases}
-	\frac{1}{2B} \left( \frac{f}{2B} + 1 \right), \quad -2B < f < 0 \\
-	\frac{1}{2B} \left( 1 - \frac{f}{2B} \right), \quad 0 < f < 2B \\
+	\frac{1}{2B} \left( \frac{f}{2B} + 1 \right), \quad -2B \leq f < 0 \\
+	\frac{1}{2B} \left( 1 - \frac{f}{2B} \right), \quad 0 \leq f \leq 2B \\
 	0, \quad \text{altrimenti}
 \end{cases}
 $$
@@ -451,7 +451,7 @@ La funzione che abbiamo ottenuto prende anche il nome di \textit{funzione triang
 $$
 x(t) =
 \begin{cases}
-	1 - |2t|, \quad |t| < \frac{\tau}{2} \\
+	1 - |2t|, \quad |t| \leq \frac{\tau}{2} \\
 	0, \quad |t| > \frac{\tau}{2}
 \end{cases}
 $$
@@ -473,19 +473,19 @@ Come prima, sfruttiamo le proprietà della funzione $\mathrm{rect}$ per dividere
 $$
 \begin{cases}
 t_0 < -\frac{3}{4} \rightarrow 0 \\
--\frac{3}{4}T < t_0 < -\frac{1}{4}T \rightarrow \int_{-T}^{t_0 + \frac{1}{4}T} d\tau \\
--\frac{1}{4}T < t_0 < \frac{1}{4}T \rightarrow \int_{t_0 - \frac{1}{4}T}^{t_0 + \frac{1}{4}T} d\tau \\
-\frac{1}{4}T < t_0 < \frac{3}{4}T \rightarrow \int_{t_0 - \frac{T}{4}}^{T} d\tau \\
-t_0 > \frac{3}{4} \rightarrow 0 \\
+-\frac{3}{4}T \leq t_0 < -\frac{1}{4}T \rightarrow \int_{-T}^{t_0 + \frac{1}{4}T} d\tau \\
+-\frac{1}{4}T \leq t_0 < \frac{1}{4}T \rightarrow \int_{t_0 - \frac{1}{4}T}^{t_0 + \frac{1}{4}T} d\tau \\
+\frac{1}{4}T \leq t_0 < \frac{3}{4}T \rightarrow \int_{t_0 - \frac{T}{4}}^{T} d\tau \\
+t_0 \geq \frac{3}{4} \rightarrow 0 \\
 \end{cases}
 $$
 e quindi la funzione complessiva sarà, svolti gli integrali (gli estremi sono banali, e i tre integrali centrali pure in quanto semplificano a moltiplicazioni):
 $$
 \left[ x(t) \circledast y(t) \right] (t) = 
 \begin{cases}
-t + \frac{3}{4}T, \quad -\frac{3}{4}T<t<-\frac{1}{4}T \\
-\frac{T}{2}, \quad -\frac{1}{4}T<t<\frac{1}{4}T \\
--t + \frac{3}{4}T, \quad -\frac{3}{4}T<t<-\frac{1}{4}T \\
+t + \frac{3}{4}T, \quad -\frac{3}{4}T \leq t<-\frac{1}{4}T \\
+\frac{T}{2}, \quad -\frac{1}{4}T<t \leq \frac{1}{4}T \\
+-t + \frac{3}{4}T, \quad -\frac{3}{4}T \leq t<-\frac{1}{4}T \\
 0, \quad \text{altrimenti}
 \end{cases}
 $$
@@ -551,7 +551,7 @@ Da un punto di vista meno teorico, la banda a $-3 \, \mathrm{dB}$ rappresenta un
 \begin{itemize}
 	\item A scopo di esempio, calcoliamo la banda a $-3 \, \mathrm{dB}$ del segnale esponenziale monolatero. Ricordiamo che questo si presentava come:
 $$
-e^{-\frac{t}{T}} u(t) \rightarrow \frac{T}{1 - i 2 \pi f T}
+e^{-\frac{t}{T}} u(t) \rightarrow \frac{T}{1 + i 2 \pi f T}
 $$
 con la sua trasformata.
 
@@ -562,8 +562,30 @@ $$
 $$
 da cui si ricava immediatamente:
 $$
-f_{3\,\mathrm{dB}} = \frac{1}{2 \pi T}
+f_{3\,\mathrm{dB}} = \pm \frac{1}{2 \pi T}
 $$
+\item La banda a $-3 \, \mathrm{dB}$ può essere generalizzata a qualsiasi valore di decibel negativo, per cui si potranno calcolare bande a $-5$, $-10$, ecc... $\mathrm{dB}$.
+
+	Ad esempio, anche a calcolare la banda a $-10 \, \mathrm{dB}$ di un segnale rettangolare. Ricordiamo che questo si presentava come:
+$$
+\mathrm{rect} \left( \frac{t}{T} \right) \rightarrow T \mathrm{sinc} (fT) 
+$$
+con la sua trasformata.
+
+Calcoliamo anche qui il rapporto fra la banda e il suo valore in $f_0 = 0$, e quindi imponiamolo uguale a $\frac{1}{2}$ (equivalente a $-3 \, \mathrm{3 dB})$):
+$$
+\frac{| X(B_{-3 \, \mathrm{dB}}) |^2}{| X(f_0) |^2}
+= \frac{ \frac{\sin^2(\pi f T)}{\pi^2 f^2} }{ T^2 } = \frac{\sin^2(\pi f T)}{\pi^2 f^2 T^2} = 0.1
+$$
+questo si riduce all'equazione trascendente data dalla $\mathrm{sinc}$:
+$$
+\sin(\alpha) - \sqrt{0.1} \alpha = 0
+$$
+che possiamo risolvere in maniera numerica per trovare le soluzioni $\pm 2.31858$. Si ha quindi che la banda risulta facile da calcolare visto che:
+$$
+\alpha = \pi f T \implies f_{3\,\mathrm{dB}} = \pm \frac{2.31858}{\pi T}
+$$
+
 \end{itemize}
 
 \subsubsection{Banda a -3 dB per segnali modulati}
@@ -577,6 +599,48 @@ prenderemo $f_0$ alla frequenza modulante.
 Un altra caratteristica è che per i segnali modulati, quindi, possiamo identificare due limiti di banda a $-3 \, \mathrm{db}$: quello sopra $f_0$ e quello sotto.
 Come conseguenza si ha un’\textit{ampiezza di banda} a $-3 \, \mathrm{dB}$ come differenza tra i due limiti.
 
+\par\smallskip
+
+Per fare un esempio, riprendiamo la stessa banda a $-3 \, \mathrm{dB}$ della funzione trovata prima, cioè l'esponenziale \textit{monolatera}:
+$$
+x(t) = e^{\frac{-t}{T}} \cdot u(t) \rightarrow f_{3\,\mathrm{dB}} = \pm \frac{1}{2 \pi T}
+$$
+Moduliamo quindi tale funzione per un fattore $\cos{2 \pi f_o t}$ e vediamo di dimostrare quella che sarebbe l'intuizione, cioè di avere due nuove bande a $-3\,\mathrm{dB}$:
+\begin{itemize}
+	\item Una centrata su $f_0$, cioè data dai valori:
+		$$
+		B'^{-3 \, \mathrm{dB}} = f_0 \pm \frac{1}{2 \pi T}
+		$$
+	\item E una centrata su $-f_0$, cioè data dai valori:
+		$$
+		B''^{-3 \, \mathrm{dB}} = -f_0 \pm \frac{1}{2 \pi T}
+		$$
+\end{itemize}
+
+Iniziamo ponendo la funzione modulata:
+$$
+x(t) = e^{\frac{-t}{T}} \cdot u(t) \cdot \cos(2 \pi f_0 t)
+$$
+da cui la trasformata è immediata per il teorema di modulazione (teorema 7.6):
+$$
+X(f) = \frac{1}{2} X(f - f_0) + \frac{1}{2} X(f + f_0) 
+= \frac{T}{2 + 4 i (f - f_0) T} + \frac{T}{2 + 4 i (f + f_0) T}
+$$
+Procediamo quindi con gli stessi calcoli di prima per calcolare la banda a $-3 \, \mathrm{dB}$. Abbiamo il numeratore:
+$$
+|X(f)|^2 = \frac{T^2}{4 + 16(f - f_0)^2 T^2} + \frac{T^2}{4 + 16(f + f_0)^2 T^2}
+$$
+Per il denominatore notiamo che possiamo scegliere sia $+f_0$ che $-f_0$ per trovare le 2 bande sopra e sotto lo zero. Facciamo l'esempio con $+f_0$:
+$$
+|X(f_0)|^2 = \frac{T^2}{4 + 16 (0)^2 T^2} + \frac{T^2}{4 + 16(2 f_0)^2 T^2} \approx \frac{T^2}{4}
+$$
+operiamo una semplificazione concessa dalle considerazioni fatte sul teorema 7.6: si ha che in genere $f_0 >> f$, cioè la frequenza modulante è molto grande per permettere una corretta separazione nello spettro di frequenze disponibili. Per lo stesso motivo, prendendo il quadrato $(2 f_0)^2$ al numeratore del secondo termine, si ottiene qualcosa di grande che porta quel termine $\sim 0$. Lo trascuriamo.
+Abbiamo quindi ottenuto l'espressione della banda:
+$$
+\frac{|X(f)|^2}{|X(f_0)|^2} = \frac{1}{1 + 4 (f - f_0)^2 T^2} \implies B'{-3 \, \mathrm{dB}} = f_0 \pm \frac{1}{2 \pi T}
+$$
+per gli stessi calcoli della sezione precedente. A questo punto, ponendo $-f_0$ al denominatore, si otterrà la seconda espressione della banda che avevamo dato ($B''^{-3 \, \mathrm{dB}} = -f_0 \pm \frac{1}{2 \pi T}$) con procedimenti simili. La nostra intuizione è (almeno in maniera approssimata) giustificata.
+
 \subsubsection{Banda al 99\% dell'energia}
 Vediamo un'altra definizione di banda, che avevamo anticipato, e che deriva da un \textit{criterio energetico}. Questa sarà la \textbf{banda al 99\% dell'energia}:
 $$
@@ -584,5 +648,43 @@ $$
 $$
 
 Dal teorema di Parseval (teorema 6.1) avevamo che l'energia sul dominio temporale è uguale a quella sul dominio frequenziale. Quindi, possiamo dare una definizione di banda anche prendendo gli estremi che racchiudono il 99\% dell'energia di un segnale. Saranno questi gli estremi della banda al 99\% come volevamo definire.
+
+\par\smallskip
+
+Impostiamo un ultimo esempio riguardante la banda al 99\% dell'energia. Prendiamo il segnale $\mathrm{rect}\left( \frac{t}{T} \right)$, con trasformata:
+$$
+\mathrm{rect}\left( \frac{t}{T} \right) \rightarrow T \mathrm{sinc}{T f} 
+$$
+da cui la potenza:
+$$
+T^2 \mathrm{sinc}^2{T f} 
+$$
+Cerchiamo allora di calcolarne la banda $B_{99}$ tale che l'energia rispetti:
+$$
+\int_{-B_{99}}^{B_{99}} T^2 \mathrm{sinc}^2 \left( T f \right) \, df = 0.99 E_X
+$$
+
+Per calcolare l'energia totale $0.99 E_X$, può essere utile sfruttare il teorema di Parseval (6.1) e farlo nel dominio tempo:
+$$
+E_X = 0.99 \int_{-\infty}^{\infty} | \mathrm{rect}\left( \frac{t}{T} \right) |^2 ,\ dt = \int_{-\frac{T}{2}}^{\frac{T}{2}} \, dt = T
+$$
+
+L'espressione che si va ad impostare è quindi:
+$$
+\int_{-B_{99}}^{B_{99}} T^2 \mathrm{sinc}^2 \left( T f \right) \, df 
+= T^2 \left( 2 B_{99} - \frac{1}{\pi} \left( \mathrm{Si}(2 \pi B_{99}) - \mathrm{sinc} (2 \pi B_{99}) \right) \right)
+= 0.99 T
+$$
+dove compare l'integrale della funzione $\mathrm{sinc}$:
+$$
+\int_{-b}^{b} \mathrm{sinc}(x) \, dx =
+2 b - \frac{1}{\pi} \left( \mathrm{Si}(2 \pi b) - \mathrm{sinc} (2 \pi b) \right)
+$$
+che contiene la funzione \textit{seno integrale}:
+$$
+Si(x) = \int_0^x \frac{sin(t)}{t} \, dt
+$$
+
+Anche qui notiamo che è difficile dare una soluzione che non sia numerica. In generale, questo dovrebbe mostrarci che la banda al 99 \% è più spesso una misura empirica per la banda dei segnali, e comunque viene usata più di rado rispetto ad altre definizioni di banda (come la banda a $-3 \, \mathrm{dB}$).
 
 \end{document}

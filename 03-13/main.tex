@@ -371,7 +371,7 @@ $$
 X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi f t} \, dt = \int_{-\infty}^0 e^{-\frac{t}{\tau}} e^{-i 2 \pi f t} \, dt = \int_{-\infty}^0 e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)} \, dt 
 $$
 $$
-= -\frac{e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)}}{\frac{1}{\tau} + i 2 \pi f} \Big|^{-\infty}_0
+= +\frac{e^{-t\left( \frac{1}{\tau} + i 2 \pi f \right)}}{\frac{1}{\tau} + i 2 \pi f} \Big|^{-\infty}_0
 = -\frac{\tau}{1 + i 2 \pi f \tau}
 $$
 \hfill $\square$
@@ -408,7 +408,7 @@ X(f) = \int_{-\infty}^{\infty} x(t) e^{-i 2 \pi ft} \, dt = \int_{-\frac{\tau}{2
 = - \frac{1}{i 2 \pi f} e ^{-i 2 \pi f t} \Big|^{\frac{\tau}{2}}_{-\frac{\tau}{2}} 
 $$
 $$
-= - \frac{1}{i 2 \pi f} \left( e^{-i \pi f \tau} - e^{i 2 \pi f \tau} \right)
+= - \frac{1}{i 2 \pi f} \left( e^{-i \pi f \tau} - e^{i \pi f \tau} \right)
 = - \frac{1}{i 2 \pi f} \cdot - 2 i \sin (\pi f t) = \frac{\sin(\pi f \tau)}{\pi f} 
 $$
 \hfill $\square$

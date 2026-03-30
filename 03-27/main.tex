@@ -209,12 +209,21 @@ u(t) =
 $$
 ha energia infinita. La TCF generalizzata vale invece per tutti i segnali ad energia infinita, ad esempio i segnali periodici.
 
-\subsubsection{Delta di Dirac}
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Delta di Dirac}}
+
+\noindent
 Definiamo innanzitutto la funzione \textbf{delta di Dirac}, $\delta(t)$, come:
 $$
 \delta(t) = \frac{d}{dt} u(t), \quad u(t) = \int \delta(t) \, dt
 $$
-già incontrata in fondamenti di automatica. Sempre da fondamenti di automatica, ricordiamo che le proprietà importanti della delta di Dirac sono:
+già incontrata in fondamenti di automatica. 
+
+\newpage
+
+Sempre da fondamenti di automatica, ricordiamo che le proprietà importanti della delta di Dirac sono:
 \begin{enumerate}
 	\item L'\textbf{integrale}:		
 		$$
@@ -266,10 +275,10 @@ direttamente dalla proprietà di campionamento esibita dalla delta di Dirac.
 
 \par\smallskip
 
-\noindent
-\textbf{\textsf{Segnale costante}}
+Iniziamo quindi a calcolare alcune trasformate di Fourier generalizzate sfruttando le proprietà appena trovate riguardo alla trasformata della delta di Dirac.
 
-\noindent
+\begin{enumerate}
+	\item  \textbf{\textsf{Segnale costante}} \\
 Prendiamo quindi un segnale ad energia infinita, come ad esempio la funzione costante:
 $$
 x(t) = 2
@@ -279,28 +288,25 @@ $$
 \rightarrow 2 \cdot \delta(t)
 $$
 
-\par\smallskip
+Questo è banale, ma ci dimostra che è effettivamente possibile calcolare trasformate di segnali ad energia infinita. Vedremo adesso come trasformare segnali ad energia infinita più complessi (ma anche più utili);
 
-\noindent
-\textbf{\textsf{Segnale con ritardo}}
-
-\noindent
+\item  \textbf{\textsf{Segnale con ritardo}} \\
 Nel caso della semplice delta di Dirac con scostamento temporale, si ottiene direttamente dal teorema del ritardo:
 $$
 \delta(t - t_0) \rightarrow e^{-i 2 \pi f t_0}
 $$
-da cui segue direttamente (per il teorema della dualità):
+da cui segue direttamente (per il teorema della dualità, 7.4):
 $$
 e^{i 2 \pi f_0 t} \rightarrow \delta(f - f_0)
 $$
 
-\par\smallskip
+Questo risultato è estremamente utile in quanto ci mostra come trasformare la forma tipica dalle formule di Eulero:
+$$
+e^{i 2 \pi f_0 t} = \cos (2 \pi f_0 t) + i \sin (2 \pi f_0 t)
+$$
 
-\noindent
-\textbf{\textsf{Segnali periodici}}
-
-\noindent
-L'ultima proprietà trovata può tornarci utile per calcolare la trasformata di funzioni periodiche. Abbiamo detto che questo non era possibile in quanto è necessario che i segnali che trasformiamo (con la trasformata non generalizzata) abbiano energia finita.
+\item \textbf{\textsf{Segnali periodici}} \\
+Vediamo quindi come l'ultima proprietà trovata può tornarci utile per calcolare la trasformata di funzioni periodiche. Abbiamo detto che questo non era possibile in quanto è necessario che i segnali che trasformiamo (con la trasformata non generalizzata) abbiano energia finita.
 
 Sfruttando le formule di Eulero, ed applicando la trasformata delta di Dirac, abbiamo invece:
 $$
@@ -309,9 +315,27 @@ x_c(t) = \cos(2 \pi f_0 t) = \frac{e^{i 2 \pi f_0 t} + e^{-i 2 \pi f_0 t}}{2} \r
 $$
 $$
 x_s(t) = \sin(2 \pi f_0 t) = \frac{e^{i 2 \pi f_0 t} - e^{-i 2 \pi f_0 t}}{2} \rightarrow
-\frac{\delta(f - f_0) . \delta(f + f_0)}{2j} = X_c(f)
+\frac{\delta(f - f_0) - \delta(f + f_0)}{2j} = X_s(f)
 $$
 
 Questo è esattamente in accordo con quanto avevamo visto, seppur anticipandolo in maniera approssimata, introducendo la trasformata di Fourier in 6.1.1 (notiamo che al tempo avevamo usato la DCT, che di per sé mostra questo comportamento della delta di Dirac in maniera "discretizzata").
+
+\par\smallskip
+
+Fissiamo i concetti notando come è possibile dimostrare il teorema della modulazione 7.6 sfruttando il teorema della moltiplicazione e l'appena trovata trasformata del segnale coseno. Avevamo detto che una modulazione non era altro che il prodotto per una cosinusoide: 
+$$
+z(t) = x(t) \cdot y(t) = x(t) \cos{2 \pi f_0 t}
+$$
+Questo ci porta ad applicare direttamente la convoluzione nel dominio frequenziale:
+$$
+Z(f) = X(f) \circledast \frac{\delta(f - f_0) + \delta(f + f_0)}{2}
+$$
+dalla trasformata del coseno appena calcolata. Ora, visto che la delta di dirac rappresenta il componente neutro della convoluzione (per la proprietà di campionamento), sarà immediato dire:
+$$
+Z(f) = \frac{X(f - f_0) + X(f + f_0)}{2}
+$$
+che è esattamente la tesi del teorema di modulazione, che risulta quindi dimostrato. \hfill $\square$
+
+\end{enumerate}
 
 \end{document}
