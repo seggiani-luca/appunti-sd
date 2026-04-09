@@ -255,7 +255,7 @@ Veniamo quindi al tipo più celebre di variabile aleatoria, cioè quella \textit
 \end{itemize}
 Viene quindi definita come:
 $$
-f_X(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2} \left( \frac{x - \eta}{\sigma} \right)^2} = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{(x - \eta)}{2\sigma^2}}
+f_X(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2} \left( \frac{x - \eta}{\sigma} \right)^2} = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{(x - \eta)^2}{2\sigma^2}}
 $$
 Se una $X$ è normale o gaussiana scriviamo:
 $$
@@ -311,6 +311,8 @@ cioè la probabilità che la variabile aleatoria gaussiana $X$ si trovi sopra $\
 In generale, data una variabile aleatoria gaussiana $X \in \mathcal{N}(\eta, \sigma^2)$, la probabilità associata ad un qualunque evento di interesse può essere calcolata mediante la funzione $\Phi$, o equivalentemente mediante la funzione $Q$:
 $$
 P(a < x \leq b) = \int_a^b f_X(\alpha) \, d\alpha = F_X(b) - F_X(a) 
+$$
+$$
 = \Phi\left(\frac{b - \eta}{\sigma}\right) - \Phi\left(\frac{a - \eta}{\sigma}\right)
 = Q\left(\frac{a - \eta}{\sigma}\right) - Q\left(\frac{b - \eta}{\sigma}\right)
 $$
