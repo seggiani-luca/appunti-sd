@@ -216,7 +216,7 @@ P_{x, \mathrm{dB}} = 10 \log_{10} \left( \frac{|x(t)|^2}{|x(t_0)|^2} \right) = 2
 $$
 dove possiamo riportare il quadrato al coefficiente, quando si parla di ampiezze anziché potenze. Infine, in relazione alle ampiezze varrà la stessa cosa:
 $$
-A_\mathrm{dB} = 10 \log_{10} \left( \frac{A^2}{A_0} \right) = 20 \log_{10} \left( \frac{A}{A_0} \right)
+A_\mathrm{dB} = 10 \log_{10} \left( \frac{A^2}{A_0^2} \right) = 20 \log_{10} \left( \frac{A}{A_0} \right)
 $$
 analogamente a quanto detto per le potenze.
 
@@ -234,7 +234,7 @@ $$
 P_r = A P = A \frac{P_t}{4 \pi d^2}
 $$
 
-Se sostituiamo l'area $A$ con l'\textit{area efficiente}:
+Se sostituiamo l'area $A$ con l'\textit{area efficiente}, che intendiamo come una misura dell'area che l'antenna offre al fronte d'onda del segnale (ricavata da caratteristiche elettriche e non geometriche):
 $$
 A = \frac{\lambda^2}{4 \pi}
 $$
@@ -242,7 +242,7 @@ si ottiene:
 \begin{definition}{Formula di Friis}
 La potenza ricevuta da un antenna ricevitrice $P_r$, che si trova a distanza $d$ da un antenna trasmettitrice di potenza $P_t$, è
 $$
-P_r = \frac{P_t}{4 \pi d^2} \frac{\lambda^2}{4 pi} = \frac{P_t}{\left( \frac{4 \pi d}{\lambda} \right)^2} = \beta P_t
+P_r = \frac{P_t}{4 \pi d^2} \frac{\lambda^2}{4 \pi} = \frac{P_t}{\left( \frac{4 \pi d}{\lambda} \right)^2} = \beta P_t
 $$
 \end{definition}
 Da questa legge possiamo quindi ricavare il rapporto fra le potenze a ricevitore e trasmettitore:
@@ -268,9 +268,9 @@ Tracciamo tali valori della potenza in decibel su un grafico con la distanza $d$
 \begin{center}
 	\includegraphics[scale=0.28]{../figures/friis.png}
 \end{center}
-I colori dal rosso al verde indicano 3 frequenze di trasmissione diverse:
+I colori dal rosso al verde indicano un range di frequenze di trasmissione diverse:
 $$
-f = \left[3\cdot10^{9},\ 30\cdot10^{9},\ 300\cdot10^{9}\right]
+f = \left[3\cdot10^{9},\ 300\cdot10^{9}\right]
 $$
 dove chiaramente la lunghezza d'onda si ricava come:
 $$
@@ -297,7 +297,7 @@ Un altro modo per incrementare la potenza ricevuta è quella di incrementare l'a
 \noindent
 Se si hanno $N$ antenne di superficie $A$ disposte in maniera sferica rispetto al trasmettitore, la potenza ricevuta $P_r$ aumenterà di $N$. Per riempire l'intera sfera di propagazione di antenne, avremmo bisogno di un numero di antenne pari a:
 $$
-N = \frac{4 \pi d^2}{A} = \frac{(4 \pi d)^2}{l^2} = \frac{1}{\beta}
+N = \frac{4 \pi d^2}{A_{eff}} = \frac{(4 \pi d)^2}{\lambda^2} = \frac{1}{\beta}
 $$
 Questo è chiaro dal fatto che la relazione fra potenza ricevuta e trasmessa è:
 $$
@@ -313,7 +313,7 @@ per cui se $N = \frac{1}{\beta}$ si recupera tutta la potenza (ignorando il \tex
 \noindent
 Nel caso di array disposte in maniera planare rispetto al trasmettitore, avremo che di base la potenza massima che potremo ricevere sarà quella ottenuta nell'ipotesi di una configurazione planare infinita:
 $$
-P_t = \frac{P_r}{2}
+P_r = \frac{P_t}{2}
 $$
 dal fatto che solo un emisfero dei fronti d'onda trasmessi andrà ad incontrare il piano.
 
