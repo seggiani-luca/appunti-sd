@@ -306,7 +306,7 @@ Abbiamo quindi la possibilità di trovare l'espressione esplicita di $y(t)$ in f
 $$
 y(t) = \sqrt{\beta} x(t - \tau)
 $$
-dove l'$(x - \tau)$ indica effettivamente lo scostamento temporale dato dalla distanza $2d$ complessiva che il segnale deve percorrere. Prendiamo la radice quadrata dell'attenuazione $\beta$ in quanto i segnali $x(t)$ e $y(t)$ si trovano nel dominio di potenza, e non ampiezza, per cui dobbiamo passare alle radici.
+dove l'$(x - \tau)$ indica effettivamente lo scostamento temporale dato dalla distanza $2d$ complessiva che il segnale deve percorrere. Prendiamo la radice quadrata dell'attenuazione $\beta$ in quanto i segnali $x(t)$ e $y(t)$ si trovano nel dominio di ampiezza, e non potenza, per cui dobbiamo passare alle radici.
 
 \par\smallskip
 
@@ -314,19 +314,22 @@ dove l'$(x - \tau)$ indica effettivamente lo scostamento temporale dato dalla di
 \textbf{\textsf{Modulazione nei sistemi radar}}
 
 \noindent
-Il teorema di modulazione, di cui abbiamo visto i vantaggi nei sistemi di comunicazione per il partizionamento dello spettro dei mezzi di trasmissione, ha una sua utilità anche nei sistemi radar. Abbiamo infatti che la riflessione è migliore per segnali ad alta frequenza (questo dal $\lambda$ a numeratore del fattore di attenuazione $\beta$, maggiore frequenza significa minore attenuazione). In simboli questo si ha da:
-$$
-\lambda = \frac{c}{f_0}
-$$
+Il teorema di modulazione, di cui abbiamo visto i vantaggi nei sistemi di comunicazione per il partizionamento dello spettro dei mezzi di trasmissione, ha una sua utilità anche nei sistemi radar. Abbiamo infatti che la risoluzione radar è migliore per segnali ad alta frequenza.
 
 Il problema è che è molto difficile ottenere segnali che superino una certa soglia di frequenza. Di base, infatti, vorremo usare segnali $\mathrm{rect}$ che consistono in una singola oscillazione dallo zero al valore massimo (come la nostra $x(t)$), ed è improbabile ridurre ulteriormente la durata del segnale oltre una certa soglia.
 
 La soluzione consiste nel modulare il segnale ad una frequenza maggiore, approfittando del fatto che questo porta tutto lo spettro del segnale ad una frequenza maggiore $f_0$.
 In particolare notiamo i range:
 \begin{itemize}
-	\item $24.0 \, \mathrm{MHz}$ - $25.25 \, \mathrm{MHz}$ per il \textbf{SRR} (\textit{Short Range Radar});
-	\item $76 \, \mathrm{MHz}$ - $81 \, \mathrm{MHz}$ per il \textbf{MRR} (\textit{Medium Range Radar}).
+	\item $24.0 \, \mathrm{MHz}$ - $25.25 \, \mathrm{GHz}$ per il \textbf{SRR} (\textit{Short Range Radar});
+	\item $76 \, \mathrm{MHz}$ - $81 \, \mathrm{GHz}$ per il \textbf{MRR} (\textit{Medium Range Radar}).
 \end{itemize}
+
+Notiamo anche che maggiore frequenza significa minore lunghezza d'onda, in quanto in generale:
+$
+\lambda = \frac{c}{f_0}
+$
+Questo significherà che la realizazzione dei radar è un processo che richiede l'ottimizzazione della frequenza di modulazione, dove bisogna bilanciare la risoluzione del radar con l'attenuazione incontrata.
 
 \subsection{Teorema del prodotto}
 Ricolleghiamoci ai teoremi di 7.6 introducendo il cosiddetto \textit{teorema del prodotto}, che è un affermazione simile a quella del \textit{prodotto di convoluzione} sulla trasformata di Laplace:
@@ -445,9 +448,9 @@ $$
 
 La funzione che abbiamo ottenuto prende anche il nome di \textit{funzione triangolare} $\mathrm{tri}$, che indichiamo come:
 $$
-x(t) =
+\mathrm{tri}(t) =
 \begin{cases}
-	1 - |\frac{t}{\tau}|, \quad |t| \leq \frac{\tau}{2} \\
+	1 - |2\frac{t}{\tau}|, \quad |t| \leq \frac{\tau}{2} \\
 	0, \quad |t| > \frac{\tau}{2}
 \end{cases}
 $$
