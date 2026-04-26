@@ -1,0 +1,345 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Comunicazioni Numeriche}
+\author{Luca Seggiani}
+\date{2026}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=~\thetcbcounter: #2,
+	#1
+}
+
+% U.D.M
+\newcommand{\amp}{\ensuremath{\mathrm{A}}}
+\newcommand{\volt}{\ensuremath{\mathrm{V}}}
+\newcommand{\meter}{\ensuremath{\mathrm{m}}}
+\newcommand{\second}{\ensuremath{\mathrm{s}}}
+\newcommand{\farad}{\ensuremath{\mathrm{F}}}
+\newcommand{\henry}{\ensuremath{\mathrm{H}}}
+\newcommand{\siemens}{\ensuremath{\mathrm{S}}}
+
+% circuiti
+\usepackage{circuitikz}
+\usetikzlibrary{babel}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 24-04-26}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+Concluso l'argomento del campionamento dei segnali, passiamo a discutere la \textit{teoria dei codici} per quanto riguarda la parte della codifica dei segnali per poi trasmetterli su un mezzo. 
+
+\subsection{Teoria dei codici}
+L'obiettivo della codifica di sorgente e di canale al trasmettitore è, rispettivamente:
+\begin{itemize}
+	\item Per quanto riguarda la \textit{codifica di sorgente} (\textbf{source encoder}), questa rimuove la ridondanza del segnale, per ottimizzare la quantità di informazione inviata (compressione);
+	\item Per quanto riguarda la \textit{codifica di canale} (\textbf{channel encoder}), questa introduce nuova ridondanza, sotto forma di meccanismi di protezione dagli errori.
+\end{itemize}
+
+In ricezione, i decoder ricostruiscono:
+\begin{itemize}
+	\item Prima la parola di codice dal canale;
+	\item Quindi il segnale originale dalla parola di codice (che codificava il segnale originale stesso).
+\end{itemize}
+
+Esistono 2 categorie principali di codici:
+\begin{enumerate}
+	\item I codici a \textbf{rivelazione} di errore individuano la presenza di errori, senza correggerli;
+	\item I codici a \textbf{correzione} di errore riescono sia ad individuare che a correggere gli errori.
+\end{enumerate}
+
+\subsubsection{Codici di canale lineari}
+I \textit{codici di canale lineari} sono particolari tipi di codici basati su combinazioni lineari di bit. Di questi ne esistono altre 2 categorie:
+\begin{itemize}
+	\item Codici a \textbf{blocco}: operano su blocchi finiti di bit;
+	\item Codici a \textbf{convoluzione}: operano su sequenze con memoria (quindi stream) di bit.
+\end{itemize}
+
+Il \textit{rapporto} $R$ di un codice a blocco è il rapporto fra numero di bit in ingresso $k$ e numero di bit in uscita $n$ per unità di trasmissione:
+$$
+R = \frac{k}{n}
+$$
+Idealmente vorremo un rapporto il più basso possibile, in quanto questo significherà che introdurremo meno ridondanza possibile.
+Il rapporto di un codice è anche legato al tempo di trasmissione di una parola. Infatti varrà:
+$$
+k T_b = n T_c
+$$
+dove $T_b$ è il tempo di ciascun bit di ingresso e $T_c$ il tempo di ciascun bit di uscita.
+L'uguaglianza dovrà reggere affinché il sistema funzioni in tempo continuo, cioè si riescano a reintrodurre bit nel mezzo con la stessa frequenza con la quale si ottengono dal campionatore. 
+Da questo seguirà che:
+$$
+T_c = \frac{k}{n} T_b \leq T_b
+$$
+cioè il tempo di trasmissione sul canale dovrà essere \textit{minore} del tempo di ricezione di bit di ingresso. Riguardo alle frequenze $R_c$ e $R_b$ di uscita e di ingresso rispettivamente, varrà invece:
+$$
+R_c = \frac{1}{T_c} = \frac{n}{k} \frac{1}{T_b} = \frac{n}{k}R_b \geq R_b
+$$
+cioè in maniera analoga a prima, la frequenza di trasmissione sul canale dovrà essere \textit{maggiore} della frequenza di ricezione di bit di ingresso. 
+
+\subsubsection{Codici a blocco}
+Iniziamo a vedere 2 semplici esempi di codice a blocco.
+
+\begin{enumerate}
+\item \textbf{\textsf{Codice a ripetizione}} \\
+Il codice a ripetizionei è uno dei codici a blocco più semplici che esistano. Consiste nel riprodurre il bit che vogliamo trasmettere $n$ volte sul canale di sucita. Ad esempio, un codice di ripetizione con $R = \frac{1}{3}$ mappa i bit direttamente a:
+$$
+m = 0 \rightarrow c = [000], \quad
+m = 1 \rightarrow c = [111]
+$$
+
+Potremmo quindi chiederci come decodificare il codice, tenendo presente che potrebbero esserci errori (bit-flip) lungo il segnale ricevuto. La risposta è scegliendo il bit più frequente nella parola ricevuta, cioè implementando la cosiddetta \textit{decodifica a maggioranza}.
+
+Un codice a ripetizione può \textit{rivelare} fino ad $n - 1$ errori, in quanto si possono rivoltare fino a $n - 1$ prima di ottenere quella che è nuovamente una parola del codice (parole che contengono sia $0$ che $1$ sono automaticamente sbagliate per la definizione di codici a ripetizione).
+
+Allo stesso modo, riesce a \textit{correggere} fino a $\frac{n - 1}{2}$ errori, in quanto quando oltre la metà dei bit viene rivoltata si può si rilevare che si è verificato un errore, ma non verificare se si è risolto in maniera corretta.
+
+Il tradeoff dei codici a ripetizione è che si spende molto più tempo a trasmettere lo stesso bit, in particolare con un fattore $n$. Nel caso in cui vogliamo trasmettere con le ipotesi di prima, cioè con la stessa frequenza di informazione all'ingresso e all'uscita sul canale, l'unica cosa che possiamo fare è aumentare la banda all'uscita, cioè su cui trasmettiamo il segnale. 
+
+Dal punto di vista probabilistico, data la probabilità di sbagliare un bit come $p$, la parola di sbagliare $t$ bit in una parola di $n$ bit è data dalla formula di Bernoulli:
+$$
+p(t, n) = \binom{n}{t} p^t (1 - p)^{n - t}
+$$
+dove:
+$$
+\binom{n}{t} = \frac{n!}{t!(n - t)!}
+$$
+Notiamo che nei sistemi di comunicazione reali la probabilità di sbagliare un bit è nell'ordine di $10^{-2} - 10^{-5}$.
+Siccome siamo capaci di correggere un errore di al massimo $\frac{n - 1}{2}$ bit, la probabilità di errore della parola di codice è pari a:
+$$
+P = \sum_{t = \frac{n + 1}{2}}^n \binom{n}{t} p^t (1 - p)^{n - t} \approx 
+\binom{n}{\frac{n + 1}{2}} p^{\frac{n + 1}{2}} (1 - p)^{\frac{n - 1}{2}} \approx \binom{n}{\frac{n + 1}{2}} p^{\frac{n + 1}{2}}
+$$
+dove facciamo l'approssimazione di porre la maggior pobabilità sull'evento di errore più probabile.
+
+\item \textbf{\textsf{Codice a controllo di parità}} \\
+Consideriamo un altro semplice tipo di codice di rivelazione degli errori, con rapporto:
+$$
+R = \frac{k}{k + 1}
+$$
+Abbiamo che di questi, usiamo:
+\begin{itemize}
+	\item $k$ bit di informazione effettivamente utile;
+	\item $k + 1$ bit di informazione inviata, di cui il bit in più è un bit di \textit{parità} del blocco utile. Questo viene calcolato facendo la somma modulo 2 dei bit nella stringa e trascurando il riporto.
+\end{itemize}
+
+Senza bit di parità, un solo bit sbagliato fa sbagliare tutta la parola. Riprendendo la formula di probabiltà si ha:
+$$
+P = \sum_{t = 1}^{k} \binom{k}{t} p^t (1 - p)^{k - t}
+$$
+che è piuttosto grande. Se aggiungo un bit di parità, la parola diventa di 12 bit, e si sbaglia quando si fanno almeno 2 errori. Gli errori di 1 bit vengono rivelati e corretti (mediante ritrasmissione). Notiamo che dal fatto che la maggior parte di errori si presentano come \textit{spray}, la probabilità di un errore di 1 bit è circa del $50 \%$. Riprendiamo quindi la formula di probabilità, stavolta:
+$$
+P = \sum_{t = 2}^{k} \binom{k}{t} p^t (1 - p)^{k - t}
+$$
+che è molto meglio.
+
+\end{enumerate}
+
+\subsubsection{Codici a blocco}
+I \textbf{codici a blocco} sono rappresentati da trasformazioni lineari di stringhe di $k$ bit, dette \textit{blocchi} $\mathbf{b}$:
+$$
+\mathbf{b} = [ b_1, ..., b_k ]
+$$
+Definendo il codice a blocco in maniera tabulare, dove associamo ad ogni blocco di ingressa un blocco di uscita di lunghezza $n$, un codice a blocco lineare sarà l'\textit{insieme} delle $2^k$ parole $\mathbf{c}$ di uscita generate dalla trasformazione lineare della stringa $\mathbf{b}$:
+$$
+\mathbf{c} = [c_1, ..., c_n] = \mathbf{b} G = \sum_{i = 1}^k b_i \mathbf{g}_i
+$$
+dove $G$ è una matrice $k \times n$ detta \textit{matrice generatrice} del codice. Le $\mathbf{g}_i$ a questo punto sono le $k$ righe di dimensione $n$ della matrice. 
+
+Le proprietà dei codici a blocco (facilmente verificabili) sono:
+\begin{enumerate}
+	\item 
+Ogni parola di codice è combinazione lineare delle righe di $G$;
+	\item
+Il codice è costituito da tutte le possibili combinazioni delle righe di $G$;
+	\item
+La somma di due parole di codice è ancora una parola di codice;
+	\item
+La n-upla di tutti zeri è sempre una parola di codice.
+\end{enumerate}
+
+\subsubsection{Distanza di Hamming}
+Definiamo \textit{distanza di Hammming} fra due parole di codice $\mathbf{c}_1$ e $\mathbf{c}_2$ come il numero di posizioni di cui differiscono le parole di codice. La indichiamo come $d_H$:
+$$
+d_H(\mathbf{c}_1, \mathbf{c}_2)
+$$
+
+Il \textit{peso di Haming} di una parola di codice $\mathbf{c}$, a questo punto, è definito come la distanza dall'origine della parola:
+$$
+w(\mathbf{c}) = d_H(\mathbf{c}, 0)
+$$
+In altre parole, il peso è il numero di bit a 0 di una parola $\mathbf{c}$.
+
+A questo punto, la \textit{distanza minima} di un codice è la minima distanza di Hamming fra tutte le parole di codice:
+$$
+d_{min} = \mathrm{min}_{i, j} d_H(\mathbf{c}_i,, \mathbf{c}_j) = \mathrm{min}_k d_H(\mathbf{c}_k, 0), \quad i \neq j
+$$
+
+\end{document}

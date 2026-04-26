@@ -266,13 +266,13 @@ possiamo dimostrare che questa probabilità ha un limite superiore attraverso il
 \begin{theorem}{Teorema di Tchebycheff}
 Data una qualsiasi variabile aleatoria $X$ con varianza finita, per ogni $k > 1$ vale:
 $$
-P\left\{ |X - \eta_x| \geq k \sigma_x \right\} \geq \frac{1}{k^2}
+P\left\{ |X - \eta_x| \geq k \sigma_x \right\} \leq \frac{1}{k^2}
 $$
 \end{theorem}
 
 Questo teorema ci dice che, per le proprietà della funzione probabilità (dagli assiomi di Kolmogorov), possiamo dire:
 $$
-P\left\{ |X - \eta_x| < k \sigma_x \right\} \geq 1 - \frac{1}{k^2}
+P\left\{ |X - \eta_x| < k \sigma_x \right\} = 1 - P\left\{ |X - \eta_x| \geq k \sigma_x \right\} \geq 1 - \frac{1}{k^2}
 $$
 cioè abbiamo un limite inferiore per un qualsiasi intervallo di $k$ deviazioni standard attorno al valor medio di una variabile aleatoria $X$.
 
@@ -299,10 +299,13 @@ Poiché $X$ e $Y$ sono variabili aleatorie, gli insiemi $\{X \leq x\}$ e $\{Y \l
 $$
 \{X \leq x\} \cap \{Y \leq y\}
 $$
-di cui calcoliamo la probabilità come funzione \textbf{distribuzione di probabilità congiunta}:
+di cui calcoliamo la probabilità come funzione \textbf{distribuzione di probabilità congiunta}.
+\begin{definition}{Distribuzione di probabilità congiunta}
+Per due variabili aleatorie $X$ e $Y$, si definisce la distribuzione di probabilità congiunta:
 $$
 F_{XY}(x) = P\{X \leq x, Y \leq y\}
 $$
+\end{definition}
 La probabilità congiunta è definita come sopra e consiste nella probabilità che le 2 variabili cadano, appunto \textit{congiuntamente}, all'interno dell'intervallo specificato.
 Riguardo alla probabilità congiunta valgono le proprietà:
 \begin{enumerate}
@@ -338,11 +341,14 @@ $$
 \textbf{\textsf{Funzione densità di probabilità congiunta}}
 
 \noindent
-Dalla la funzione distribuzione di probabilità congiunta, come per il caso monodimensionale, si puà calcolare una funzione \textbf{densità di probabilità congiunta}: 
+Dalla la funzione distribuzione di probabilità congiunta, come per il caso monodimensionale, si puà calcolare una funzione \textbf{densità di probabilità congDistribuzioneiunta}: 
+\begin{definition}{Densità di probabilità congiunta}
+Per due variabili aleatorie $X$ e $Y$, si definisce la densità di probabilità congiunta:
 $$
 f_{XY} = \frac{\partial^2 F_{XY}(x, y)}{\partial x \partial y}
 $$
-ammesso che la distribuzione sia derivabile fino al secondo grado. Varrà quindi:
+\end{definition}
+Questo, chiaramente, ammesso che la distribuzione sia derivabile fino al secondo grado. Varrà quindi:
 $$
 f_{XY} (x, y) \, dx dy = P \{ x < X < x + dx, y < Y + y + dy \}
 $$
@@ -366,10 +372,13 @@ $$
 P(a \cap b) = P(a) P(b)
 $$
 Ne possiamo dare una definizione anche per le probabilità congiunto prendendo:
+\begin{definition}{Sistemi di variabili aleatorie indipendenti}
+In un sistema di 2 variabili aleatorie, $X$ e $Y$, si dice	che $X$ e $Y$ sono indipendenti se vale rispetto alle distribuzione di probabilità congiunta e alle distribuzioni di probabilità di $X$ e $Y$:
 $$
 F_{XY}(x, y) = P\{X \leq x, Y \leq y\} = P\{X \leq x\}\{Y \leq y\} = F_X(x) F_Y(y)
 $$
-Da cui segue che anche la densità di probabilità congiunta si fattorizza nel prodotto delle due densità di probabilità marginali:
+\end{definition}
+Da questa definizione segue che anche la densità di probabilità congiunta si fattorizza nel prodotto delle due densità di probabilità marginali:
 $$
 f_{XY}(x, y) = \frac{\partial^2 F_{XY}(x, y)}{\partial x \partial y} = \frac{\partial F_X (x)}{\partial x} \cdot \frac{\partial F_Y (y)}{\partial y} = f_X(x) f_Y(y)
 $$
