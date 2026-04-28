@@ -1,0 +1,301 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Comunicazioni Numeriche}
+\author{Luca Seggiani}
+\date{2026}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=~\thetcbcounter: #2,
+	#1
+}
+
+% U.D.M
+\newcommand{\amp}{\ensuremath{\mathrm{A}}}
+\newcommand{\volt}{\ensuremath{\mathrm{V}}}
+\newcommand{\meter}{\ensuremath{\mathrm{m}}}
+\newcommand{\second}{\ensuremath{\mathrm{s}}}
+\newcommand{\farad}{\ensuremath{\mathrm{F}}}
+\newcommand{\henry}{\ensuremath{\mathrm{H}}}
+\newcommand{\siemens}{\ensuremath{\mathrm{S}}}
+
+% circuiti
+\usepackage{circuitikz}
+\usetikzlibrary{babel}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 28-04-26}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+Avevamo visto in 18.4 la definizione di processo aleatorio, cioè sostanzialmente una "variabile aleatoria" che si traduceva in una \textit{funzione} di $t$ anziché un valore costante. In particolare, campionando un processo aleatorio ad un certo tempo $t^*$, ottenevamo effettivamente una variabile aleatoria come da definizione.
+
+\subsubsection{Definizione statistica del primo ordine}
+Abbiamo detto che fissato un istante $t$, $X(t)$ rappresenta una variabile aleatoria. La sua funzione di distribuzione è detta \textit{funzione di distribuzione del primo ordine} del processo $X(t)$:
+$$
+F_X(x; t) = \mathrm{Pr}\{X(t) \leq x\}
+$$
+Naturalmente questa funzione dipende anche da una variabile temporale perché le proprietà statistiche della variabile aleatoria $X(t)$ cambiano, in generale, al cambiare dell’istante di tempo $t$ al quale si "campiona" il processo. Chiaramente, si può anche descrivere una \textit{funzione densità di probabilità del primo ordine} del processo $X(t)$:
+$$
+f_X(x; t) = \frac{\partial F_X(x, t)}{\partial x}
+$$
+
+Per le distribuzioni del primo ordine si possono definire \textit{indici statistici} del primo ordine, cioè si può avere:
+\begin{itemize}
+\item La funzione \textit{valor medio} $\eta(x)$:
+$$
+\eta(x) = E\{X(t)\} = \int x f_X(x;t) \, dx
+$$
+\item La funzione \textit{potenza media statistica istantanea} $P_X(t)$:
+$$
+P_X(t) = E\{X^2(t)\} = \int x^2 f_X(x;t) \, dx
+$$
+\item La funzione \textit{varianza} $\sigma^2_X(t)$:
+$$
+\sigma^2_X(t) = E\left\{ (X(t) - \eta_X(t))^2 \right\} = \int (x - \eta_X(t)) f_X(x;t) \, dx = P_X(t) - \eta^2_X(t)
+$$
+\end{itemize}
+
+\subsubsection{Definizione statistica del secondo ordine}
+Dopo la definizione statistica del primo ordine, segue chiaramente quella del secondo ordine, che fissa 2 anziché 1 istanti temporali, ottenendo una \textit{funzione distribuzione di probabilità del secondo ordine} che è effettivamente una distribuzione di probabilità \textit{congiunta}:
+$$
+F_X(x_1, x_2; t_1, t_2) = \mathrm{Pr} \{X(t_1) \leq x_1, X(t_2) \leq x_2\}
+$$
+Come prima, possiamo definire anche la \textit{funzione densità di probabilità del secondo ordine}:
+$$
+f_X(x_1, x_2; t_1, t_2) = \frac{\partial^2 F_X(x_1, x_2; t_1, t_2)}{\partial x_1 \partial x_2}
+$$
+
+Il ragionamento può essere esteso a piacere, ovvero la descrizione statistica di un processo è completa solo quando si è in grado di caratterizzare il comportamento statistico congiunto di un numero $N$ arbitrario di variabili aleatorie $X(t_1), ..., X(t_N)$ estratte da $X(t)$ a $N$ istanti diversi, comunque grande sia l’intero $N$, e comunque si scelga la $N$-upla di istanti $\{t_1, ... t_N\}$. Questo processo è esattamente quello che avevamo definito \textit{descrizione statistica} di un processo aleatorio in 18.4.1.
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Autocorrelazione}}
+
+\noindent
+Al secondo ordine si possono definire degli \textit{indici statistici del secondo ordine} specifici, fra cui notiamo l'\textbf{autocorrelazione}. Fissiamo adesso due istanti di tempo arbitrari $t_1$ e $t_2$ sul nostro processo $X(t)$, ottenendo le due variabili aleatorie $Y = X(t_1)$ e $Z = X(t_2)$. A questo punto è significativa la \textit{correlazione}:
+$$
+r_{YZ} = E\left[YZ\right]
+$$
+fra queste due variabili.
+
+Il valore di questa correlazione risulterà funzione dei due istanti $t_1$ e $t_2$ ai quali le variabili sono state estratte, e potrà essere calcolata solo conoscendo la funzione densità di probabilità del secondo ordine del processo:
+$$
+R_X(t_1, t_2) = E\left[ X(t_1) X(t_2) \right] = \int_{x_1 = -\infty}^{\infty} \int_{x_2 = -\infty}^{\infty} x_1 x_2 f_X(x_1, x_2; t_1, t_2) \, dx_1 dx_2
+$$
+La funzione $R_X(t_1, t_2)$ si chiama funzione di \textit{autocorrelazione} perché le due variabili aleatorie di cui si calcola la correlazione sono estratte dallo stesso processo aleatorio.
+
+\par\smallskip
+
+\noindent
+\textbf{\textsf{Autocovarianza}}
+
+\noindent
+Se invece tra le due variabili aleatorie $Y$ e $Z$ calcoliamo la covarianza otteniamo la funzione di \textbf{autocovarianza} $C_X(t_1, t_2)$ di $X(t)$:
+$$
+C_X(t_1, t_2) = E\left[ (X(t_1) - \eta_X(t_1)) \, (X(t_2) - \eta_X(t_2)) \right]
+$$
+$$
+= \int_{x_1 = -\infty}^{\infty} \int_{x_2 = -\infty}^{\infty} (X(t_1) - \eta_X(t_1)) \, (X(t_2) - \eta_X(t_2)) \, f_X(x_1, x_2; t_1, t_2) \, dx_1 dx_2
+$$
+$$
+= R_X(t_1, t_2) - \eta_X(t_1) \eta_X(t_2)
+$$
+
+\par\smallskip
+
+Notiamo poi che ponendo $t_1 = t_2 = t$, cioè valutando un unico punto, l'autocorrelazione e l'autocovarianza si identificano rispettivamente con il valore quadratico medio (potenza media statistica istantanea) e la varianza della variabile aleatoria $X(t)$:
+$$
+R_X(t, t) = E\left[ X^2(t) \right] = P_X(t), \quad C_X(t, t) = E\left[ (X(t) - \eta_X(t))^2 \right] = \sigma^2_X(t)
+$$
+
+\subsubsection{Descrizione in potenza}
+In molti casi, ci si accontenta di studiare il processo analizzando solamente la funzione valore medio e la funzione di autocorrelazione di un processo aleatorio, cioè di effettuare la cosiddetta \textit{descrizione in potenza} del processo.
+
+La funzione valore medio di un processo $X(t)$ è il valore medio della variabile $X(t)$. Solitamente questa è definita come funzione del tempo:
+$$
+\eta_X(t) = E\left[ X(t) \right] =
+\begin{cases}
+	\sum_i x_i \, \mathrm{Pr} \left\{ X(t) = x_i \right\} \\
+	\int_{-\infty}^{\infty} x \, f_X(x; t) \, dx
+\end{cases}
+$$
+
+La funzionedi autocorrelazione di un processo $X(t)$ è la correlazione (momento congiunto ordinario) delle variabili aleatorie $X(t_1)$ e $X(t_2)$. Essa è funzione di $t_1$ e $t_2$:
+$$
+R_X(t_1, t_2) = E \left[ X(t_1) X(t_2) \right] = 
+\begin{cases}
+	\sum_i \sum_j x_i x_j \, \mathrm{Pr} \left\{ X(t_1) = x_i , X(t_2) = x_j \right\}	\\
+	\int_{x_1 = -\infty}^{\infty} \int_{x_2 = -\infty}^{\infty} x_1 x_2 f_X(x_1, x_2; t_1, t_2) \, dx_1 dx_2
+\end{cases}
+$$
+
+\end{document}
