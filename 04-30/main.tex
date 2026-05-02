@@ -1,0 +1,399 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Comunicazioni Numeriche}
+\author{Luca Seggiani}
+\date{2026}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=~\thetcbcounter: #2,
+	#1
+}
+
+% U.D.M
+\newcommand{\amp}{\ensuremath{\mathrm{A}}}
+\newcommand{\volt}{\ensuremath{\mathrm{V}}}
+\newcommand{\meter}{\ensuremath{\mathrm{m}}}
+\newcommand{\second}{\ensuremath{\mathrm{s}}}
+\newcommand{\farad}{\ensuremath{\mathrm{F}}}
+\newcommand{\henry}{\ensuremath{\mathrm{H}}}
+\newcommand{\siemens}{\ensuremath{\mathrm{S}}}
+
+% circuiti
+\usepackage{circuitikz}
+\usetikzlibrary{babel}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 30-04-26}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+Dopo aver introdotto la stazionarietà del primo e del secondo ordine, veniamo alla stazionarietà \textit{in senso lato}.
+
+\subsubsection{Stazionarietà in senso lato}
+Un processo $X(t)$ si dice \textbf{stazionario in senso lato} (o debolmente stazionario) se il suo valore medio è costante e la sua funzione di autocorrelazione dipende soltanto da $\tau = t_2 - t_1$. Questo significa che:
+\begin{definition}{Processo aleatorio stazionario in senso lato}
+Un processo aleatorio si dice stazionario in senso lato se vale rispetto alla sua media e alla sua funzione di autocorrelazione:
+$$
+\begin{cases}
+\eta_X(t) = E\{X(t)\} = \eta_X \\
+R_X(t_1, t_2) = E\{X(t_1) X(t_2)\} = E\{X(t_1)X(t_1 + \tau)\} = R_X(\tau)
+\end{cases}
+$$
+\end{definition}
+
+La stazionarietà in senso lato riguarda soltanto due particolari statistiche del primo e del secondo ordine (quelle coinvolte nell’analisi in potenza). Inoltre, la stazionarietà in senso lato è una condizione più debole della stazionarietà di ordine 2. Se il processo è stazionario di ordine 2 (o maggiore di 2) lo è anche in senso lato, ma non vale in generale il viceversa.
+
+\subsubsection{Proprietà della funzione di autocorrelazione}
+Vediamo alcune proprietà della funzione di autocorrelazione dei processi aleatori:
+\begin{enumerate}
+\item \begin{theorem}{Parità della funzione di autocorrelazione}
+La funzione di autocorrelazione stazionario almeno in senso lato, è una funzione reale e pari:
+$$
+R_X(\tau) = R_X(-\tau)
+$$
+\end{theorem}
+Questo si dimostra dal fatto che:
+$$
+R_X(\tau) = E\{X(t) X(t + \tau)\} = E\{X(t' - \tau)X(t')\} = E\{X(t')X(t' - \tau)\} = R_X(-\tau)
+$$
+che è la tesi. \hfill $\square$
+
+Notiamo inoltre che vale:
+$$
+R_X(0) = E\{X^2(t)\} = P_X > 0
+$$
+$R_X(0)$ viene detta \textit{potenza media statistica} (\textit{istantanea}) del processo $X(t)$. Il valore quadratico medio $R_X(t, t) = E\{X^2(t)\}$ fornisce il valore medio (statistico) della potenza dissipata. Se il processo è stazionario almeno in senso lato, $R_X(t, t) = R_X(0)$ costante è la potenza media dissipata in qualunque istante
+
+\item \begin{theorem}{Massimo della funzione di autocorrelazione}
+La funzione di autocorrelazione di un processo stazionario almeno in senso lato assume il valore massimo nell’origine:
+$$
+|R_X(\tau)| \leq R_X(0)
+$$
+\end{theorem}
+Questo si dimostra prendendo la diseguaglianza (sempre vera):
+$$
+E\{ \left[ X(t + \tau) \pm X(t) \right]^2 \} \geq 0
+$$
+e quindi applicando la linearità dell'operatore aspettazione:
+$$
+E\{ \left[ X(t + \tau) \pm X(t) \right]^2 \} = E\{X^2(t + \tau)\} + E\{X^2(t)\} \pm 2 E \{X(t)X(t + \tau)\} = 2 R_X(0) \pm 2 R_X(\tau) \geq 0 
+$$
+da cui si ricava:
+$$
+|R_X(\tau)| \leq R_X(0)
+$$
+che è la tesi \hfill $\square$
+
+\item \begin{theorem}{Funzioni di autocorrelazione di processi periodici}
+Se un processo casuale $X(t)$ contiene una componente periodica $X(t) = X(t + T_0)$, anche la funzione di autocorrelazione contiene una componente periodica dello stesso periodo $T$.
+\end{theorem}
+Questo si dimostra da:
+$$
+R_X(\tau) = E\{X(t)X(t + \tau)\} = E\{X(t)X(t + \tau + T_0)\} = R_X(\tau + T_0)
+$$
+che è la definzione di periodicità. \hfill $\square$
+
+\item \begin{theorem}{Limiti della funzione di autocorrelazione}
+Se la funzione di autocorrelazione di di un processo stazionario almeno in senso lato non contiene componenti periodiche, vale:
+$$
+\lim_{\tau \rightarrow \infty} R_X(\tau) = \eta_X^2
+$$
+\end{theorem}
+Questo si dimostra da:
+$$
+\lim_{\tau \rightarrow \infty} R_X(\tau) = 
+\lim_{\tau \rightarrow \infty} \left( C_X(\tau) + \eta_X^2 \right) = \lim_{\tau \rightarrow \infty} C_X(\tau) + \eta_X^2 = \eta_X^2
+$$
+che è la tesi \hfill $\square$
+
+Possiamo giustificare l'ultimo risultato notando che, al crescere di $\tau$, la distanza tra gli istanti $t$ e $t - \tau$ aumenta e quindi le realizzazioni del processo "hanno tempo" per variare sensibilmente. Questo significa che i valori delle variabili aleatorie $X(t)$ e $X(t - \tau)$ tendono a diventare incorrelati, cioè la loro covarianza $C_X(\tau)$ si riduce progressivamente (fino a 0), da cui la loro autocorrelazione tende al quadrato del valor medio. Il limite deve essere positivo o nullo, ma la funzione autocorrelazione può anche avere dei tratti in cui assume valori negativi.
+\end{enumerate}
+
+% intuizione della funzione di autocorrelazione
+
+\subsubsection{Filtraggio di un processo aleatorio}
+Inviamo un generico processo aleatorio $X(t)$ in ingresso ad un sistema \textit{lineare tempo-invariante} (\textbf{LTI}), e cerchiamo di stabilire le caratteristiche statistiche del processo aleatorio di uscita $Y(t)$, note quelle di $X(t)$.
+
+Il minimo che ci interessa ricordare sui sistemi lineari tempo invarianti è che questi danno in uscita la convoluzione dell'ingresso (per noi la realizzazione del processo $X(t)$) con una certa \textit{risposta all'impulso}:
+$$
+Y(t) = X(t) \circledast h(t)
+$$
+
+\par\smallskip
+\noindent
+\textbf{\textsf{Processi generici}} \\
+\noindent
+Data la $f_X(x;t)$, cioè la densità di probabilità al primo ordine, non è in genere possibile calcolare la $f_Y(x;t)$. Limitiamoci quindi al calcolo degli indici statistici di $Y(t)$, fra cui in particolare:
+\begin{itemize}
+\item Il \textit{valor medio} del processo $Y(t)$. Questo sarà dato dalla convoluzione: 
+$$
+\eta_Y = E\{Y(t)\} = E\{X(t) \circledast h(t)\} = E \left\{ \int_{-\infty}^{\infty} h(\alpha) X(t - \alpha) \, d\alpha \right\} 
+$$
+$$
+= \int_{-\infty}^{\infty} E\left\{ h(\alpha) X(t - \alpha) \right\} \, d\alpha = \int_{-\infty}^{\infty} h(\alpha) \eta_X(t - \alpha) \, d\alpha = \eta_X(t) \circledast h(t)
+$$
+
+Vediamo quindi che la funzione valor medio del processo di uscita è pari alla convoluzione della funzione valor medio del processo in ingresso con la risposta impulsiva del sistema. Se definiamo il processo a media nulla:
+$$
+X_0(t) = X(t) - \eta_X(t)
+$$
+possiamo pensare il processo d’ingresso $X(t)$ come la somma di una componente puramente aleatoria a valor medio nullo $X_0(t)$ e di una componente determinata pari alla funzione valor medio (nota), che viene filtrata dal sistema come un qualunque segnale determinato;
+\item L'\textit{autocorrelazione} del processo $Y(t)$. Questa sarà data ancora dalla convoluzione:
+$$
+R_Y(t_1, t_2) = E\{ Y(t_1) Y(t_2) \} = E\{ \left[ X(t_1) \circledast h(t_1) \right] \left[ X(t_2) \circledast h(t_2) \right] \}
+$$
+$$
+= E \left\{ \int_{-\infty}^{\infty} X(\alpha) h(t_1 - \alpha) \, d\alpha \, \int_{-\infty}^{\infty} X(\beta) h(t_2 - \beta) \, d\beta \right\}
+$$
+Invertendo le operazioni di media statistica e di integrazione otteniamo:
+$$
+R_Y(t_1, t_2) = \int_{\alpha=-\infty}^{\infty} \int_{\beta=-\infty}^{\infty} 
+E \left\{  X(\alpha) h(t_1 - \alpha) \, X(\beta) h(t_2 - \beta) \right\} \, d\alpha d\beta 
+$$
+$$
+= R_X(t_1, t_2) \circledast h(t_1) \circledast h(t_2) 
+$$
+L’integrale diventa quindi una \textit{doppia convoluzione}: la prima operazione di convoluzione coinvolge solo la variabile $t_1$ e, nello svolgimento di essa, la variabile $t_2$ viene considerata come una costante. Nello svolgimento del secondo prodotto, invece, i ruoli delle variabili si scambiano.
+\end{itemize}
+
+\par\smallskip
+\noindent
+\textbf{\textsf{Processi stazionari}} \\
+\noindent
+Esaminiamo adesso il caso per cui il processo filtrato $X(t)$ è \textbf{stazionario} almeno in senso lato.
+\begin{itemize}
+\item Per la funzione \textit{valor medio} si ha:
+$$
+\eta_X(t) \circledast h(t) = \int_{-\infty}^{\infty} h(\alpha) \eta_X(t - \alpha) \, d\alpha = \eta_X \int_{-\infty}^{\infty} h(\alpha) \, d\alpha = \eta_X H(0) = \eta_Y
+$$
+dove $H(0)$ è il \textit{guadagno in continua} del sistema, dato dalla risposta in frequenza $H$ del sistema. Abbiamo che il processo di uscita $Y(t)$ ha a sua volta valor medio costante.
+
+\item Per la funzione \textit{autocorrelazione} si ha:
+$$
+R_Y(t, t - \tau) = R_X(\tau) \circledast h(\tau) \circledast h(-\tau) = R_X(\tau) \circledast r_h(\tau) = R_Y(\tau) 
+$$
+dove:
+$$
+r_h(\tau) = h(\tau) \times h(-\tau)
+$$
+è la funzione di autocorrelazione della risposta impulsiva del
+filtro. La funzione di autocorrelazione del processo di uscita non dipende dal tempo $t$, segue che $Y(t)$ è stazionario in senso lato.
+\end{itemize}
+
+\subsubsection{Densità spettrale di potenza di processi aleatori}
+Ogni volta che si ha a che fare con questioni di filtraggio è conveniente cercare una descrizione frequenziale del problema, cioè rifarsi all'analisi di \textit{Fourier}. 
+
+Prendiamo in esame il caso di processi stazionari in senso lato: le realizzazioni di un processo stazionario non possono essere segnali a energia finita. I segnali a energia finita, infatti, tendono a zero quando $t\rightarrow \infty$, e se tutte le realizzazioni del processo tendessero a zero, necessariamente tenderebbe a zero anche la funzione valor medio del processo. Questo è in disaccordo con la definizione di processo aleatorio stazionario, che vede la funzione valor medio come costante (non necessariamente $= 0$). 
+
+Segue che le realizzazioni di un processo stazionario sono segnali a potenza finita, e il segnale aleatorio stesso ammetterà una \textit{densità spettrale di potenza}. Avevamo giù introdotto questa con riferimento al teorema di \textit{Parseval} in 6.1.2.
+
+Vediamo quindi il teorema di \textit{Wiener-Khintchine}:
+\begin{theorem}{Teorema di Wiener-Khintchine}
+Possiamo definire la funzione densità spettrale di potenza di un processo aleatorio $S_X(f)$ come la trasformata di Fourier della sua funzione di autocorrelazione $R_X(\tau) = E\left\{ X(t) X(t - \tau) \right\}$:
+$$
+S_X(f) = \int_{-\infty}^{\infty} R_X(\tau) e^{-i 2 \pi f \tau} \, d\tau
+$$
+\end{theorem}
+
+La densità spettrale di potenza $S_X(f)$ è una funzione reale e pari, non negativa (perché $R_X(\tau)$ è una funzione reale e pari).
+La potenza media statistica $P_X$ del processo $X(t)$ può essere calcolata integrando $S_X(f)$ su tutto l’asse delle frequenze:
+$$
+P_X = E\{X^2\} = R_X(0) = \int_{-\infty}^{\infty} S_X(f) \, df
+$$
+
+\par\smallskip
+
+Cerchiamo di mettere in relazione le caratteristiche spettrali dei processi di
+ingresso $X(t)$ e di uscita $Y(t)$, entrambi stazionari in \textit{senso lato}. Questo è facile in quanto:
+\begin{itemize}
+	\item La densità spettrale $S_Y(f)$ è la trasformata continua di Fourier della funzione di autocorrelazione;
+	\item La funzione di autocorrelazione di $Y(t)$ è data dal doppio prodotto di convoluzione su $h(\tau)$ e $h(-\tau)$.
+\end{itemize}
+
+Da questo si ha immediatamente che:
+$$
+S_Y(f) = S_X(f) H(f) H(-f) = S_X(f) H(f) H^*(f) = S_X(f) |H(f)|^2
+$$
+dove si applica la proprietà di simmetria Hermitiana della trasformata di Fourier di segnali reali:
+$$
+H(-f) = H^*(f)
+$$
+
+Vediamo quindi che vale la stessa "relazione del filtraggio" vale per i segnali determinati. Lo spettro di potenza del processo di uscita può essere ricavato da quello del processo d’ingresso una volta note le caratteristiche di selettività in frequenza del sistema, che sono riassunte nella risposta in ampiezza al quadrato. 
+
+Notiamo a questo punto che la risposta in fase del sistema non influenza la potenza del processo di uscita (e infatti si prendono i moduli).
+
+\subsubsection{Intuizione della densità spettrale di potenza}
+La relazione del filtraggio permette di dimostrare che la funzione $S_X(f)$, definita come trasformata di Fourier della $R_X(\tau)$, è non negativa e descrive la distribuzione della potenza sulle varie componenti frequenziali nello spettro del segnale aleatorio $X(t)$. 
+
+
+
+\end{document}
