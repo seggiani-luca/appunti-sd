@@ -302,16 +302,17 @@ che è molto meglio.
 
 \end{enumerate}
 
-\subsubsection{Codici a blocco}
-I \textbf{codici a blocco} sono rappresentati da trasformazioni lineari di stringhe di $k$ bit, dette \textit{blocchi} $\mathbf{b}$:
+\subsubsection{Codici a blocco lineari}
+I codici a blocco \textbf{lineari} sono rappresentati da trasformazioni lineari di stringhe di $k$ bit, dette \textit{blocchi} $\mathbf{b}$:
 $$
 \mathbf{b} = [ b_1, ..., b_k ]
 $$
+notiamo che definiamo questi blocchi come vettori \textbf{riga} (!).
 Definendo il codice a blocco in maniera tabulare, dove associamo ad ogni blocco di ingressa un blocco di uscita di lunghezza $n$, un codice a blocco lineare sarà l'\textit{insieme} delle $2^k$ parole $\mathbf{c}$ di uscita generate dalla trasformazione lineare della stringa $\mathbf{b}$:
 $$
 \mathbf{c} = [c_1, ..., c_n] = \mathbf{b} G = \sum_{i = 1}^k b_i \mathbf{g}_i
 $$
-dove $G$ è una matrice $k \times n$ detta \textit{matrice generatrice} del codice. Le $\mathbf{g}_i$ a questo punto sono le $k$ righe di dimensione $n$ della matrice. 
+dove $G$ è una matrice $k \times n$ detta \textit{matrice generatrice} del codice. Le $\mathbf{g}_i$ a questo punto sono le $k$ righe di dimensione $n$ della matrice. Notiamo che anche $\mathbf{c}$ è un vettore \textit{riga} (!!).
 
 Le proprietà dei codici a blocco (facilmente verificabili) sono:
 \begin{enumerate}
@@ -327,9 +328,13 @@ La n-upla di tutti zeri è sempre una parola di codice.
 
 \subsubsection{Distanza di Hamming}
 Definiamo \textit{distanza di Hammming} fra due parole di codice $\mathbf{c}_1$ e $\mathbf{c}_2$ come il numero di posizioni di cui differiscono le parole di codice. La indichiamo come $d_H$:
+\begin{definition}{Distanza di Hamming}
+Data:
 $$
 d_H(\mathbf{c}_1, \mathbf{c}_2)
 $$
+la $d_H$ (distanza di Hamming) è il numero di posizioni di cui differiscono le parole di codice $\mathbf{c}_1$ e $\mathbf{c}_2$).
+\end{definition}
 
 Il \textit{peso di Haming} di una parola di codice $\mathbf{c}$, a questo punto, è definito come la distanza dall'origine della parola:
 $$
