@@ -1,3 +1,4 @@
+
 \documentclass[a4paper,11pt]{article}
 \usepackage[a4paper, margin=8em]{geometry}
 
@@ -94,11 +95,6 @@
 \usepackage{listings}
 \usepackage[table]{xcolor}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
 \lstdefinestyle{codestyle}{
 		backgroundcolor=\color{black!5}, 
 		commentstyle=\color{codegreen},
@@ -191,33 +187,85 @@
 \makeatother
 
 \begin{document}
+% sezione (data)
+\section{Lezione del 08-05-26}
 
-\pagestyle{fancy}
+% stili pagina
 \thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+\pagestyle{fancy}
 
-\maketitle
-\input{../03-03/main.tex}
-\input{../03-05/main.tex}
-\input{../03-06/main.tex}
-\input{../03-10/main.tex}
-\input{../03-12/main.tex}
-\input{../03-13/main.tex}
-\input{../03-17/main.tex}
-\input{../03-19/main.tex}
-\input{../03-20/main.tex}
-\input{../03-26/main.tex}
-\input{../03-27/main.tex}
-\input{../03-31/main.tex}
-\input{../04-09/main.tex}
-\input{../04-10/main.tex}
-\input{../04-16/main.tex}
-\input{../04-17/main.tex}
-\input{../04-21/main.tex}
-\input{../04-23/main.tex}
-\input{../04-24/main.tex}
-\input{../04-28/main.tex}
-\input{../04-30/main.tex}
-\input{../05-07/main.tex}
-\input{../05-08/main.tex}
+% testo
+Alla fine della scorsa lezione abbiamo visto la decodifica a \textit{massima verosomiglianza} nei sistemi di comunicazione. Avevamo quindi dimostrato che questa può rilevare fino a:
+$$
+d_{min} - 1
+$$
+errori.
+
+\subsubsection{Correzione degli errori}
+Non possiamo mai risolvere tutti gli errori che rileviamo, e anzi quando più della metà degli errori che possiamo rilevare al massimo si verifica, non sappiamo più come correggere la parola di codice. Questo significherà che un codice lineare a blocco può correggere fino a:
+$$
+\frac{d_{min - 1}}{2}
+$$
+errori.
+
+\subsubsection{Scrambling}
+Notiamo che una prerogativa che avevamo nell'analisi matematica della massima verosomiglianza era che la probabilità di errore sul bit fosse distribuita ugualmente, cioè i rumori sui bit fossero incorrelati. Questo non è sempre il caso nei sistemi di comunicazione, in quanto spesso gli errori si presentano in \textit{burst} localmente correlati.
+
+Una soluzione che si può adottare è quella dello \textbf{scrambling} (o \textit{interleaving}) dei bit trasmessi, ammesso che il ricevitore abbia modo di recuperare l'ordine originale. In questo modo il rumore di un burst viene distribuito su un lasso temporale più grande, e reso effettivamente incorrelato da bit a bit.
+
+\subsubsection{Decodifica a sindrome}
+Chiamiamo \textbf{sindrome} di una parola di codice $\mathbf{y}$ il vettore $\mathbf{s}$ ottenuto come:
+$$
+\mathbf{s} = \mathbf{y} H^T = (\mathbf{x} + \mathbf{e})H^T = \mathbf{x} H^T + \mathbf{e} H^T = \mathbf{e} H^T
+$$
+
+La sindrome è composta da $n-k$ cifre binarie, e ciascuna sindrome è associata a $2^k$ pattern di errore ottenuti sommando al vettore $\mathbf{e}$ le $2^k$ parole di codice.
+
+La decodifica a sindrome si compie quindi nei seguenti passaggi:
+\begin{enumerate}
+\item Si calcola la sindrome:
+$$
+\mathbf{s} = \mathbf{y} H^T
+$$
+\item Si associa la sindrome all'errore di peso minimo (detto \textit{coset leader}) corrispondente, cioè l'errore di peso minimo a cui corrisponde la sindrome associata ad $\mathbf{y}$:
+$$
+\mathbf{s} \rightarrow \mathbf{e}_{CL} (\mathbf{s})
+$$
+\item Si corregge l'errore sommando l'errore di peso minimo alla $n$-upla $\mathbf{y}$:
+$$
+\hat{\mathbf{x}} = \mathbf{y} + \mathbf{e}_{CL}(\mathbf{s})
+$$
+\end{enumerate}
+
+Si può dimostrare che la decodifica a sindrome è equivalente a quella a massima verosomiglianza.
+
+\subsubsection{Prestazioni dei codici a blocco}
+Abbiamo detto che la parola $\mathbf{y}$, data da:
+$$
+\mathbf{y} = \mathbf{x} + \mathbf{e}
+$$
+risulta errata solo se il canale introduce più di $t$ errori, dove:
+$$
+t = \frac{d_{min} - 1}{2} \implies d_{min} = 2 t + 1
+$$
+
+Ne segue che la probabilità di errore di una parola è:
+$$
+P_W(e) = P\{ w(e) > t \} = \sum_{j = t + 1}^n \binom{n}{j} p^j (1 - p)^{n - j}
+$$
+Su questa facciamo le classiche approssimazioni di:
+\begin{itemize}
+	\item Prendere solo il primo caso, quello a $t + 1$, visto che è il più pobabile;
+	\item Trascurare $(1 - p)$ in quanto è pressappoco $1$.
+\end{itemize}
+Da cui si ottiene:
+$$
+P_W(e) \approx \binom{n}{t + 1} p^{t + 1}
+$$
+
+La probabilità di errore sul bit si approssima quindi come:
+$$
+P_B(e) \approx \frac{d_{min}}{n} P_W(e)
+$$
+
 \end{document}

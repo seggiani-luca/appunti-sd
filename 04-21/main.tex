@@ -207,7 +207,7 @@ Iniziamo a vedere alcune tipologie di \textbf{interpolatori}, per soddisfare il 
 \subsubsection{Interpolatore a mantenimento}
 Ipotizziamo di usare un interpolatore con risposta impulsiva $\mathrm{rect}$, cioè:
 $$
-p(t) = \mathrm{rect} \left( \frac{t - \frac{T}{2}}{T} \right) \rightarrow P(f) = T \mathrm{sinc}(f T)
+p(t) = \mathrm{rect} \left( \frac{t - \frac{T}{2}}{T} \right) \rightarrow P(f) = T \mathrm{sinc}(f T) e^{-i \pi f T}
 $$
 
 Questo interpolatore viene detto \textbf{a mantenimento}. La forma del segnale ricostruito sarà chiaramente una "scalinata" di $\mathrm{rect}$:
@@ -243,8 +243,9 @@ Proprio per quest'ultimo motivo solitamente i campionatori a mantenimento sono s
 \subsubsection{Interpolatore lineare} 
 L'alternativa che potremmo considerare è quella dell'interpolatore \textbf{lineare}. La sua risposta impulsiva sarà data dalla $\mathrm{tri}$, cioè:
 $$
-p(t) = \mathrm{tri} \left( \frac{t - \frac{T}{2}}{T} \right) \rightarrow P(f) = T \mathrm{sinc}^2(f T)
+p(t) = \mathrm{tri} \left( \frac{t - \frac{T}{2}}{2T} \right) \rightarrow P(f) = T \mathrm{sinc}^2(f T) e^{-i \pi f T}
 $$
+dove notiamo il $2$ a denominatore è dato dal fatto che la $\mathrm{tri}$ si deve estendere a sinistra e a destra del punto campionato (per interpolare appunto linearmente da entrambi i lati).
 
 Il fatto che la risposta in frequenza della $\mathrm{tri}$ è la $\mathrm{sinc}^2$ implica che le limitazioni di questo tipo di interpolatore sono le stesse dell'interpolatore a mantenimento, se non con la differenza che la $\mathrm{sinc}^2$ decade più velocemente verso l'infinito, quindi riducendo il numero di componenti fuori banda incluse nel segnale. 
 
