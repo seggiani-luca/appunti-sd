@@ -1,4 +1,4 @@
-function alphabet = getAlphabet(G)
+function alphabet = get_alphabet(G)
 	function b = count(b)
 		for i_k = 0:k - 1
 			% sum

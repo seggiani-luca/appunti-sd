@@ -1,4 +1,4 @@
-function w = distance(a)
+function w = weight(a)
 	% get size
 	[~, n] = size(a);
 
