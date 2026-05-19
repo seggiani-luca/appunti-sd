@@ -363,7 +363,128 @@ $$
 
 Questa ipotesi è comunque valida se i $\tau_i$ sono abbastanza simili fra lori, e si può prendere la somma delle attenuazioni dei segnali in arrivo come:
 $$
-A = \sum_i \tau_i
+A = \sum_i \beta_i
+$$
+
+\subsection{Struttura del demodulatore}
+Dopo aver studiato la struttura del segnale analogico trasformato dal mezzo di trasmissione, vediamo come il demodulatore riporta tale segnale in una serie di parole corrispondenti (sperabilmente) a quelle codificate dal codificatore di canale, al trasmettitore.
+
+\begin{center}
+	\includegraphics[scale=0.16]{../figures/full_sys.png}
+\end{center}
+
+Ciò che facciamo è prendere il segnale dall'etere, mandarlo in ingresso ad un filtro (che chiamiamo $g_R(t)$), e campionarlo ad intervalli $k T_S$, $k \in \mathbb{Z}$. Notiamo che se nel nostro segnale c'è un dato ritardo $\tau$, dovremo campionare ad intervalli $k T_S + \tau$. 
+
+Tratando matematicamente i segnali, abbiamo che a valle del filtro di ricezione $g_R(t)$ abbiamo un segnale convoluto:
+$$
+x(t) = r(t) \circledast g_R(t) = \sqrt{\beta} S_T(t - \tau) \circledast g_R(t) + w(t) \circledast g_R(t)
+$$
+Chiamiamo $ w(t) \circledast g_R(t) = n(t) $ per il rumore. Sostituendo la $S_T(t)$, otterremo:
+$$
+x(t) = \sqrt{\beta} \sum_i a_i g_T ( t - i T_S - \tau) \circledast g_R(t) + h(t)
+$$
+
+Combiniamo i filtri di trasmissione e di ricezione in un unico termine $g$:
+$$
+g(t) = g_T(t) \circledast g_R(t)
+$$
+per ottenere:
+$$
+x(t) = \sqrt{\beta} \sum_i a_i g(t - i T_S - \tau) + n(t)
+$$
+
+\subsubsection{Rumore}
+Parliamo del rumore $n(t)$. Questo sarà dato dal filtraggio di un rumore bianco ($w(t)$), per cui sarà sempre gaussiano, ma a meno che il filtro non sia piatto su tutta la banda, non sarà sempre bianco.
+Infatti, la distribuzione di potenza non sarà più per forza piatta:
+$$
+S_n(f) = S_w(f) | G_R(f) |^2 = \frac{N_0}{2} | G_R(f) |^2
+$$
+con potenza complessiva:
+$$
+P_n = \int_{-\infty}^{\infty} S_n(f) \, df = \frac{N_0}{2} E_{g_R}
+$$
+
+\subsubsection{Campionamento}
+Dopo aver caratterizzato $x(t)$, cioè l'ultimo stadio \textit{analogico} del demodulatore (dove avevamo il segnale filtrato dal mezzo, più il rumore introdotto, filtrati dal filtro di ricezione), campioniamo tale segnale come campionato a intervalli $k T_S + \tau$:
+$$
+x(k) = x(k T_S + \tau) = \sqrt{\beta} \sum_i a_i g((k - i) T_S) + n(k)
+$$
+Quest'espressione si semplifica ponendo $m = k - i$, per cui:
+$$
+x(k) = \sqrt{\beta} \sum_m a_{k - m} g(m T_S) + n(k) = 
+\sqrt{\beta} \left( a_k g(0) + \sum_{m \neq 0} a_{k - m} g(m T_S) + \frac{n(k)}{\sqrt{\beta}} \right)
+$$
+
+Di questa formula, cio che ci interessa è chiaramente il simbolo $a_k$, a cui sommiamo il rumore $n(k)$ (caricato del guadagno), e il termine:
+$$
+\mathrm{ISI} = \sum_{m \neq 0} a_{k - m} g(m T_S)
+$$
+che denominiamo \textbf{ISI} (o IIS, da\textit{Interferenza Inter-Simbolica}), dato dall'errore introdotto dagli altri simboli (interpolati) sul segnale in $k$.
+
+\subsubsection{Dimensionamento dei filtri}
+Un'incognita che è rimasta finora, sia nel trasmettitore che nel modulatore, è il dimensionamento dei filtri di trasmissione e di ricezione. Facciamolo adesso, che abbiamo una vista di insieme anche di ciò che accade al ricevitore.
+
+L'obiettivo dell'ottimizzazione sarà senza dubbio quello di annullare l'ISI, che ricordiamo definiamo come:
+$$
+\mathrm{ISI} = \sum_{m \neq 0} a_{k - m} g(m T_S), \quad g(t) = g_T(t) \circledast g_R(t)
+$$
+Chiamiamo questa condizione anche \textit{condizione di assenza di interferenza inter-simbolica}.
+Imponiamo quindi la nullità:
+$$
+g(m T_S) = 0, \quad \forall m \neq 0
+$$
+Buone opzioni per questa $g$ sono la $\mathrm{sinc}$ o ad esempio la $\mathrm{tri}$ su supporto $-T_S$, $T_S$, in quanto hanno picco in $0$ e si annullano per la prima volta in $\pm T_S$. Esprimiamo allora la convoluzione:
+$$
+g(t) = \int_{-\infty}^\infty g_T(\alpha) g_R(t - \alpha) \, d\alpha, \quad g(m) = \int_{-\infty}^\infty g_T(\alpha) g_R(m T_S - \alpha) \, d\alpha 
+$$
+
+Passiamo al dominio frequenziale, prendendo la trasformata discreta:
+$$
+\overline{G} (f) = \sum_m g(m T_S) e^{-i 2 \pi f m T_S} = \frac{1}{T_S} \sum_k G\left( f - \frac{k}{T_S} \right) = g(0)
+$$
+Questo significa che imporre $g(0) = \gamma$ con $\gamma$ costante qualsiasi solo per $m = 0$ (e $0$ altrove) equivale a imporre che le immagini in frequenza si sovrappongano, a dare un segnale costante (in dominio frequenziale).
+
+Questo significa che è necessario che la banda del filtro $G$ (chiamiamola $B_G$) sia almeno $\frac{1}{2 T_S}$ (cioè si verifichi sovrapposizione). Il caso $B_G = \frac{1}{2 T_S}$ può funzionare solo se lo spettro di $G$ è una $\mathrm{rect}$. 
+
+\par\smallskip
+
+Se questa condizione è rispettata, quindi, l'espressione per la $x(k)$ diventa molto più semplice:
+$$
+x(k) = \sqrt{\beta} \left( a_k g(0) + \frac{n(k)}{\sqrt{\beta}} \right)
+$$
+cioè si può ignorare l'interferenza inter-simbolica. Il rumore di fondo purtroppo rimane.
+
+\subsection{Decisore}
+Trascuriamo per adesso come si fa il dimensionamento dei singoli filtri (trasmettitore e ricevitore), e passiamo a discutere come ricaviamo le parole di codice a partire dal segnale campionato:
+$$
+x(k) = \sqrt{\beta} \left( a_k g(0) + \frac{n(k)}{\sqrt{\beta}} \right) \sim a_k + \frac{n(k)}{\sqrt{\beta} g(0)}
+$$
+
+Il componente che si occupa di fare ciò viene detto \textit{decisore} o \textbf{demappatore} (l'opposto del \textit{mappatore}). La strategia è quella di prendere la proporzionalità espressa sopra, ed estrapolarla attraverso un passaggio di normalizzazione:
+$$
+y(k) = \frac{x(k)}{\sqrt{\beta} g(0)} = a_k + \frac{n(k)}{\sqrt{\beta} g(0)}
+$$
+che in ipotesi di rumore nullo dà esattamente il simbolo $a_k$.
+
+A questo punto si può pensare di trovare il punto più vicino ad $a_k$ nella costellazione adottata al trasmettitore, e ritrovare la parola di codice mappata a tale simbolo. In verità, la decodifica che vogliamo fare non è a minima distanza, ma a massima verosomiglianza (assunto che i simboli trasmessi siano equiprobabili).
+
+\subsubsection{Trattazione del rumore}
+Vediamo cosa accade al rumore nel decisore. Avevamo detto che questo era rappresentato da:
+$$
+n(k), \quad S_n(f) = \frac{N_0}{2} | G_R(f) |^2
+$$
+Visto che stiamo effettivamente filtrando un processo gaussiano, il risultato sarà anch'esso un processo gaussiano, di cui ci interesseranno le statistiche del primo e del secondo ordine (valor medio e varianza).
+Il valor medio è banale in quanto viene dal valor medio del rumore bianco:
+$$
+\eta_n = E \{ n(k) \} = 0
+$$
+mentre la varianza viene dalla potenza del rumore:
+$$
+\sigma_n^2 = E \{ n^2(k) \} = P_n
+$$
+in quanto lo spettro del rumore bianco è costante (di per sé varianza infinita), e ciò che conta sono solo i parametri $N_0$ e l'integrale della densità di potenza di $G_R(f)$:
+$$
+P_n = \frac{N_0}{2} E_{g_R}
 $$
 
 \end{document}
